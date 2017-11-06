@@ -1,2 +1,3 @@
 django_blog/settings.py
 *.pyc
+blog/migrations/0001_initial.py
