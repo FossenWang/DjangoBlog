@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 # Create your models here.
 
@@ -21,6 +22,7 @@ class Post(models.Model):
 
     title = models.CharField('标题', max_length=100)
     content = models.TextField('内容')
+    excerpt = models.CharField('摘要', max_length=200, blank=True)
     pub_date = models.DateTimeField('发布日期')
     author = models.ForeignKey(User, default=2, on_delete=models.SET_DEFAULT, verbose_name='作者')
     category = models.ForeignKey(Category, default=1, on_delete=models.SET_DEFAULT, verbose_name='分类')
@@ -28,6 +30,9 @@ class Post(models.Model):
     
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('blog:detail', kwargs={'pk': self.pk})
 
 class Comment(models.Model):
     content = models.CharField('评论', max_length=500)
