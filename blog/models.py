@@ -36,10 +36,10 @@ class Post(models.Model):
 
 class Comment(models.Model):
     content = models.CharField('评论', max_length=500)
-    pub_date = models.DateTimeField('发布日期')
+    pub_date = models.DateTimeField('发布日期', auto_now_add=True)
 
     post = models.ForeignKey(Post, on_delete=models.CASCADE, verbose_name='帖子')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='评论人')
     
     def __str__(self):
-        return self.content
+        return self.content[:20]

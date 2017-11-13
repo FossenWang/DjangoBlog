@@ -1,5 +1,7 @@
-from django.shortcuts import render,get_object_or_404
-from .models import Post,Category
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Post, Category, Comment
+from .forms import CommentForm
+
 import markdown
 
 # Create your views here.
@@ -25,4 +27,29 @@ def detail(request, pk):
                                          'markdown.extensions.codehilite',
                                          'markdown.extensions.toc',
                                      ])
-    return render(request, 'blog/detail.html', context={'post': post})
+    form = CommentForm()
+    comment_list = post.comment_set.all()
+    context = {'post': post,
+               'form': form,
+               'comment_list': comment_list
+               }
+    return render(request, 'blog/detail.html', context=context)
+
+def post_comment(request, post_pk):
+    post = get_object_or_404(Post, pk=post_pk)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+            return redirect(post)
+        else:
+            comment_list = post.comment_set.all()
+            context = {'post': post,
+                       'form': form,
+                       'comment_list': comment_list
+                       }
+            return render(request, 'blog/detail.html', context=context)
+    return redirect(post)
