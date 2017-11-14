@@ -228,7 +228,7 @@ img {
 
 .entry-meta {
     text-align: center;
-    color: #DDDDDD;
+    color: rgba(0, 0, 0, 0.678);
     font-size: 13px;
     margin-bottom: 30px;
 }

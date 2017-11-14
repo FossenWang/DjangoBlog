@@ -2,3 +2,5 @@ django_blog/settings.py
 *.pyc
 blog/migrations/0001_initial.py
 blog/migrations/0002_auto_20171109_2005.py
+blog/migrations/0003_auto_20171114_2055.py
+blog/migrations/0004_post_views.py
