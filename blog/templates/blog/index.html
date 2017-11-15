@@ -7,7 +7,7 @@
         <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
     </h1>
     <div class="entry-meta">
-        <span class="post-category"><a href="#">{{ post.category.name }}</a></span>
+        <span class="post-category"><a href="{% url 'blog:category' post.category.name %}">{{ post.category.name }}</a></span>
         <span class="post-date"><a href="#"><time class="entry-date"
                                                   datetime="{{ post.pub_date }}">{{ post.pub_date }}</time></a></span>
         <span class="post-author"><a href="#">{{ post.author }}</a></span>
