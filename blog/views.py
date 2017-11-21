@@ -18,7 +18,7 @@ class CategoryView(IndexView):
     def get_queryset(self):
         cate = get_object_or_404(Category, name=self.kwargs.get('name'))
         return super(CategoryView, self).get_queryset().filter(category=cate)
-
+'''
 class PostDetailView(DetailView):
     model = Post
     template_name = 'blog/detail.html'
@@ -48,7 +48,7 @@ class PostDetailView(DetailView):
             'comment_list': comment_list
         })
         return context
-
+'''
 def detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.increase_views()
