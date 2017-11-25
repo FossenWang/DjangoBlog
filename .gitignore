@@ -6,3 +6,6 @@ blog/migrations/0003_auto_20171114_2055.py
 blog/migrations/0004_post_views.py
 *.gif
 *.png
+*.jpg
+*.svg
+video/migrations/0001_initial.py

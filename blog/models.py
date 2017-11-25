@@ -25,12 +25,11 @@ class Tag(models.Model):
     class Meta:
         verbose_name='标签'
         verbose_name_plural='标签'
-    
 
 class Post(models.Model):
-
-    '''作者与分类的默认值为2和1,代表着相应数据库中id的字段,分别手动将其设置为了unknown和uncategorized'''
-
+    '''
+    作者与分类的默认值为2和1,代表着相应数据库中id的字段,分别手动将其设置为了unknown和uncategorized
+    '''
     title = models.CharField('标题', max_length=100)
     content = models.TextField('内容')
     excerpt = models.CharField('摘要', max_length=200, blank=True)
