@@ -4,7 +4,6 @@
 		margin: 0;
 		padding: 15px 0;
 		list-style: none;
-		
 	}
 	
 	#menu {
@@ -25,11 +24,17 @@
 	#menu {
 		zoom:1;
 	}
-	
+
+	#menu img {
+		max-height: 36px;
+		width: auto;
+		margin-left: 24px;
+		margin-right: 32px;
+	}
+
 	#menu li {
 		float: left;
 		position: relative;
-		
 	}
 	
 	#menu a {
