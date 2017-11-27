@@ -31,13 +31,14 @@ class Video(models.Model):
     '''
     title = models.CharField('标题', max_length=100)
     video = models.URLField('视频链接')
+    video_length = models.CharField('视频时长', max_length=50, default='0:00')
     cover = models.URLField('封面图')
     note = models.TextField('笔记')
     pub_date = models.DateTimeField('发布日期')
     author = models.ForeignKey(User, default=2, on_delete=models.SET_DEFAULT, verbose_name='作者')
     category = models.ForeignKey(Category, default=1, on_delete=models.SET_DEFAULT, verbose_name='分类')
     tags = models.ManyToManyField(Tag, null=True, verbose_name='标签')
-    views = models.PositiveIntegerField('阅读量', default=0)
+    views = models.PositiveIntegerField('播放量', default=0)
 
     def __str__(self):
         return self.title

@@ -64,7 +64,7 @@ input[type="text"]{
 /* ------------------------------------Html-Body------------------------------- */
 /* ---------------------------------------------------------------------------- */
 html, body {width:100%; padding:0; margin:0;}
-body {color: #3F3F3F;font: 14px/25px Arial;font-family: '微软雅黑', '华文细黑', '宋体', Georgia, Sans-serif;letter-spacing: 1px;}
+body {color: #3F3F3F;font: 14px/25px Arial;font-family: 'Microsoft YaHei', '华文细黑', '宋体', Georgia, Sans-serif;letter-spacing: 1px;}
 body .wrap-body{}
 
 /* ---------------------------------------------------------------------------- */
@@ -74,12 +74,12 @@ body .wrap-body{}
 header{}
 header .top-header{border-bottom: 1px solid #ccc;}
 header .wrap-header{padding: 35px 0;}
-header .tagline {color: #1C202A;font-family: '微软雅黑', '华文细黑', '宋体', Georgia, Sans-serif;}
+header .tagline {color: #1C202A;font-family: 'Microsoft YaHei', '华文细黑', '宋体', Georgia, Sans-serif;}
 header #search {margin: auto;}
 header #search input[type="text"] {
     background: url(../images/search-dark.png) no-repeat 10px 6px #fff;
     border: 0 none;
-    font: bold 12px '微软雅黑', '华文细黑', '宋体', Georgia, Sans-serif;
+    font: bold 12px 'Microsoft YaHei', '华文细黑', '宋体', Georgia, Sans-serif;
     color: #222;
     width: 200px;
     padding: 6px 15px 6px 35px;
@@ -176,7 +176,7 @@ header .cat-title{border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;paddi
 .video-player {padding: 40px 0; margin: 0 10px}
 .video-header {text-align: center;color: #4c4c4c;font-size: 13px;margin-bottom: 20px;padding: 10px 20px;}
 .video-title {
-  font-family: '微软雅黑', '华文细黑', '宋体', Georgia, Sans-serif;
+  font-family: 'Microsoft YaHei', '华文细黑', '宋体', Georgia, Sans-serif;
   font-size: 24px;
 	margin-bottom: 15px;
 }
@@ -226,7 +226,7 @@ article .art-content {text-align: center;}
 
 ul.quick-link {margin: 10px;}
 ul.quick-link li{display: inline-block;margin: 0 10px;}
-ul.quick-link li img {width: 32px; height: 32px;}
+ul.quick-link li img {width: 50px; height: 50px;}
 ul.quick-link li:hover .erweima {visibility: visible;opacity: 1;}
 ul.quick-link .erweima {
   position: absolute;
