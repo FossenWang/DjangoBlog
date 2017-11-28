@@ -1,3 +1,4 @@
 from django.contrib import admin
+from .models import Category, Tag, Video
 
-# Register your models here.
+admin.site.register([Category, Tag, Video])

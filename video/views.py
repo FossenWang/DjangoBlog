@@ -1,9 +1,13 @@
 '''
 视频推送相关的视图
 '''
-#from django.shortcuts import render
+from django.shortcuts import render
 from django.views.generic import ListView
+from django.http import HttpResponseRedirect
+
+
 from .models import Video, Category, Tag
+
 
 class IndexView(ListView):
     '首页视图'
@@ -71,3 +75,15 @@ class IndexView(ListView):
         }
 
         return data
+
+'''def upload_image(request):
+    if request.method == 'POST':
+        form = ModelFormWithFileField(request.POST, request.FILES)
+        if form.is_valid():
+            # file is saved
+            form.save()
+            return HttpResponseRedirect('/success/url/')
+    else:
+        form = ModelFormWithFileField()
+    return render(request, 'upload.html', {'form': form})'''
+
