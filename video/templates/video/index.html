@@ -21,7 +21,7 @@
     
     <!-- CSS
   ================================================== -->
-  	<link rel="stylesheet" href="../../static/video/css/zerogrid.css">
+  	<link rel="stylesheet" href="{% static 'video/css/zerogrid.css' %}">
 	<link rel="stylesheet" href="../../static/video/css/style.css">
 	<link rel="stylesheet" href="../../static/video/css/menu.css">
 	<link rel="stylesheet" href="../../static/video/css/responsiveslides.css">
@@ -153,13 +153,13 @@
 							<div class="video-player">
 								<div class="video-header">
 									<div class="video-title">
-										<a href="https://www.bilibili.com/video/av16570718/">【Kevin自怼】我原来这么煞笔？！（精彩必看）</a>
+										<a href="{{ recent_video_list.0.video }}">{{ recent_video_list.0.title }}</a>
 									</div>
-									<span>2017-11-23 18:00 作者: Kevin</span>
+									<span>{{ recent_video_list.0.pub_date }} 作者: {{ recent_video_list.0.author }}</span>
 								</div>
 								<div class="video-content">
 									<div class="zoom-container">
-										<iframe id="b" class="b video_pc" src="http://static.hdslb.com/miniloader.swf?aid=16570718&page=1" frameborder="0" height="600" width="800"></iframe>
+										<iframe id="b" class="b video_pc" src="{{ recent_video_list.0.video }}" frameborder="0" height="600" width="800"></iframe>
 									</div>
 								</div>
 							</div>
@@ -167,26 +167,30 @@
 						<div class="row">
 							<div class="categroy">
 									<p>最近更新</p>
+								{% for video in recent_video_list %}
 								<div class="col-1-4">
 									<div class="wrap-col">
 										<article>
 											<div class="art-header">
 												<div class="entry-title">
-													<a href="https://www.bilibili.com/video/av16505826/">【独家推荐】这本健身书，你不看会后悔！（公告）</a>
+													<a href="{{ video.video }}">{{ video.title }}</a>
 												</div>
-												<span>2017-11-20</span>
+												<span>{{ video.pub_date }}</span>
 											</div>
 											<div class="art-content">
 												<div class="zoom-container">
-													<a href="https://www.bilibili.com/video/av16505826/">
-														<img src="../../static/video/images/6.png" />
+													<a href="{{ video.video }}">
+														<img src="{{ video.cover.url }}" />
 													</a>
 												</div>
 											</div>
 										</article>
 									</div>
 								</div>
-								<div class="col-1-4">
+								{% empty %}
+								<div class="no-video">暂时没有最近发布的视频！</div>
+								{% endfor %}
+								<!--<div class="col-1-4">
 									<div class="wrap-col">
 										<article>
 											<div class="art-header">
@@ -242,9 +246,10 @@
 											</div>
 										</article>
 									</div>
-								</div>
+								</div>-->
 							</div>
 						</div>
+
 						<div class="row">
 							<div class="categroy">
 									<p>训练方案</p>

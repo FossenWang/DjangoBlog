@@ -5,7 +5,6 @@ from django.shortcuts import render
 from django.views.generic import ListView
 from django.http import HttpResponseRedirect
 
-
 from .models import Video, Category, Tag
 
 
@@ -13,21 +12,23 @@ class IndexView(ListView):
     '首页视图'
     model = Video
     template_name = 'video/index.html'
-    context_object_name = 'video_list'
-    paginate_by = 10
+    context_object_name = 'recent_video_list'
+    #paginate_by = 10
 
     def get_context_data(self, **kwargs):
         '''
         覆盖该方法
         '''
         context = super().get_context_data(**kwargs)
-        paginator = context.get('paginator')
-        page = context.get('page_obj')
-        is_paginated = context.get('is_paginated')
-        pagination_data = self.pagination_data(paginator, page, is_paginated)
-        context.update(pagination_data)
+        #paginator = context.get('paginator')
+        #page = context.get('page_obj')
+        #is_paginated = context.get('is_paginated')
+        #pagination_data = self.pagination_data(paginator, page, is_paginated)
+        #context.update(pagination_data)
+        context['recent_video_list'] = Video.objects.all()[:4]
         return context
 
+    '''
     def pagination_data(self, paginator, page, is_paginated):
         if not is_paginated:
             return {}
@@ -75,8 +76,9 @@ class IndexView(ListView):
         }
 
         return data
+        
 
-'''def upload_image(request):
+    def upload_image(request):
     if request.method == 'POST':
         form = ModelFormWithFileField(request.POST, request.FILES)
         if form.is_valid():
@@ -86,4 +88,3 @@ class IndexView(ListView):
     else:
         form = ModelFormWithFileField()
     return render(request, 'upload.html', {'form': form})'''
-
