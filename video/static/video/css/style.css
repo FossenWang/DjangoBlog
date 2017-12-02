@@ -72,7 +72,7 @@ body .wrap-body{}
 /* ---------------------------------------------------------------------------- */
 
 header{}
-header .top-header{border-bottom: 1px solid #ccc;}
+header .top-header{}
 header .wrap-header{padding: 35px 0;}
 header .tagline {color: #1C202A;font-family: 'Microsoft YaHei', '华文细黑', '宋体', Georgia, Sans-serif;}
 header #search {margin: auto;}
@@ -183,7 +183,7 @@ header .cat-title{border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;paddi
 .video-content {text-align: center;}
 
 .categroy {margin: 5px 10px;}
-.categroy p {border-top: 1px solid #ccc; margin: 0 15px; padding-top: 10px; font-size: 17px;}
+.categroy p {border-top: 1px solid gray; margin: 0 15px; padding-top: 10px; font-size: 17px;}
 
 article{padding: 0 0; margin: 0 5px}
 article .art-header {text-align: center;color: #4c4c4c;font-size: 11px;}

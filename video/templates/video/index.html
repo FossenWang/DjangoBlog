@@ -153,13 +153,13 @@
 							<div class="video-player">
 								<div class="video-header">
 									<div class="video-title">
-										<a href="{{ recent_video_list.0.video }}">{{ recent_video_list.0.title }}</a>
+										<a href="{{ latest_video.video }}">{{ latest_video.title }}</a>
 									</div>
-									<span>{{ recent_video_list.0.pub_date }} 作者: {{ recent_video_list.0.author }}</span>
+									<span>{{ latest_video.pub_date }} 作者: {{ latest_video.author }}</span>
 								</div>
 								<div class="video-content">
 									<div class="zoom-container">
-										<iframe id="b" class="b video_pc" src="{{ recent_video_list.0.video }}" frameborder="0" height="600" width="800"></iframe>
+										<iframe id="b" class="b video_pc" src="{{ latest_video.video }}" frameborder="0" height="600" width="800"></iframe>
 									</div>
 								</div>
 							</div>
@@ -167,7 +167,7 @@
 						<div class="row">
 							<div class="categroy">
 									<p>最近更新</p>
-								{% for video in recent_video_list %}
+								{% for video in recent_videos %}
 								<div class="col-1-4">
 									<div class="wrap-col">
 										<article>
@@ -190,471 +190,38 @@
 								{% empty %}
 								<div class="no-video">暂时没有最近发布的视频！</div>
 								{% endfor %}
-								<!--<div class="col-1-4">
-									<div class="wrap-col">
-										<article>
-											<div class="art-header">
-												<div class="entry-title">
-													<a href="https://www.bilibili.com/video/av16413425">【人体极限】你最多，能长多少肌肉？（附公式）</a>
-												</div>
-												<span>2017-11-18</span>
-											</div>
-											<div class="art-content">
-												<div class="zoom-container">
-													<a href="https://www.bilibili.com/video/av16413425">
-														<img src="../../static/video/images/7.png" />
-													</a>
-												</div>
-											</div>
-										</article>
-									</div>
-								</div>
-								<div class="col-1-4">
-									<div class="wrap-col">
-										<article>
-											<div class="art-header">
-												<div class="entry-title">
-													<a href="https://www.bilibili.com/video/av16320355/">【破谣专场】拉伸能瘦腿？你咋不上天？</a>
-												</div>
-												<span>2017-11-15</span>
-											</div>
-											<div class="art-content">
-												<div class="zoom-container">
-													<a href="https://www.bilibili.com/video/av16320355/">
-														<img src="../../static/video/images/8.png" />
-													</a>
-												</div>
-											</div>
-										</article>
-									</div>
-								</div>
-								<div class="col-1-4">
-									<div class="wrap-col">
-										<article>
-											<div class="art-header">
-												<div class="entry-title">
-													<a href="https://www.bilibili.com/video/av16187173/">【黑名单】这个动作，别再浪费时间练了！</a>
-												</div>
-												<span>2017-11-10</span>
-											</div>
-											<div class="art-content">
-												<div class="zoom-container">
-													<a href="https://www.bilibili.com/video/av16187173/">
-														<img src="../../static/video/images/9.png" />
-													</a>
-												</div>
-											</div>
-										</article>
-									</div>
-								</div>-->
 							</div>
 						</div>
-
+						{% for video_cate in video_categories %}
 						<div class="row">
 							<div class="categroy">
-									<p>训练方案</p>
+									<p>{{ video_cate.1.name }}  （{{ video_cate.1.counts }}）</p>
+								{% for video in video_cate.0 %}
 								<div class="col-1-4">
 									<div class="wrap-col">
 										<article>
 											<div class="art-header">
 												<div class="entry-title">
-													<a href="https://www.bilibili.com/video/av16505826/">【独家推荐】这本健身书，你不看会后悔！（公告）</a>
+													<a href="{{ video.video }}">{{ video.title }}</a>
 												</div>
-												<span>2017-11-20</span>
+												<span>{{ video.pub_date }}</span>
 											</div>
 											<div class="art-content">
 												<div class="zoom-container">
-													<a href="https://www.bilibili.com/video/av16505826/">
-														<img src="../../static/video/images/6.png" />
+													<a href="{{ video.video }}">
+														<img src="{{ video.cover.url }}" />
 													</a>
 												</div>
 											</div>
 										</article>
 									</div>
 								</div>
-								<div class="col-1-4">
-									<div class="wrap-col">
-										<article>
-											<div class="art-header">
-												<div class="entry-title">
-													<a href="https://www.bilibili.com/video/av16413425">【人体极限】你最多，能长多少肌肉？（附公式）</a>
-												</div>
-												<span>2017-11-18</span>
-											</div>
-											<div class="art-content">
-												<div class="zoom-container">
-													<a href="https://www.bilibili.com/video/av16413425">
-														<img src="../../static/video/images/7.png" />
-													</a>
-												</div>
-											</div>
-										</article>
-									</div>
-								</div>
-								<div class="col-1-4">
-									<div class="wrap-col">
-										<article>
-											<div class="art-header">
-												<div class="entry-title">
-													<a href="https://www.bilibili.com/video/av16320355/">【破谣专场】拉伸能瘦腿？你咋不上天？</a>
-												</div>
-												<span>2017-11-15</span>
-											</div>
-											<div class="art-content">
-												<div class="zoom-container">
-													<a href="https://www.bilibili.com/video/av16320355/">
-														<img src="../../static/video/images/8.png" />
-													</a>
-												</div>
-											</div>
-										</article>
-									</div>
-								</div>
-								<div class="col-1-4">
-									<div class="wrap-col">
-										<article>
-											<div class="art-header">
-												<div class="entry-title">
-													<a href="https://www.bilibili.com/video/av16187173/">【黑名单】这个动作，别再浪费时间练了！</a>
-												</div>
-												<span>2017-11-10</span>
-											</div>
-											<div class="art-content">
-												<div class="zoom-container">
-													<a href="https://www.bilibili.com/video/av16187173/">
-														<img src="../../static/video/images/9.png" />
-													</a>
-												</div>
-											</div>
-										</article>
-									</div>
-								</div>
+								{% empty %}
+								<div class="no-video">暂时没有训练方案的视频！</div>
+								{% endfor %}
 							</div>
 						</div>
-						<div class="row">
-							<div class="categroy">
-									<p>动作教程</p>
-								<div class="col-1-4">
-									<div class="wrap-col">
-										<article>
-											<div class="art-header">
-												<div class="entry-title">
-													<a href="https://www.bilibili.com/video/av16505826/">【独家推荐】这本健身书，你不看会后悔！（公告）</a>
-												</div>
-												<span>2017-11-20</span>
-											</div>
-											<div class="art-content">
-												<div class="zoom-container">
-													<a href="https://www.bilibili.com/video/av16505826/">
-														<img src="../../static/video/images/6.png" />
-													</a>
-												</div>
-											</div>
-										</article>
-									</div>
-								</div>
-								<div class="col-1-4">
-									<div class="wrap-col">
-										<article>
-											<div class="art-header">
-												<div class="entry-title">
-													<a href="https://www.bilibili.com/video/av16413425">【人体极限】你最多，能长多少肌肉？（附公式）</a>
-												</div>
-												<span>2017-11-18</span>
-											</div>
-											<div class="art-content">
-												<div class="zoom-container">
-													<a href="https://www.bilibili.com/video/av16413425">
-														<img src="../../static/video/images/7.png" />
-													</a>
-												</div>
-											</div>
-										</article>
-									</div>
-								</div>
-								<div class="col-1-4">
-									<div class="wrap-col">
-										<article>
-											<div class="art-header">
-												<div class="entry-title">
-													<a href="https://www.bilibili.com/video/av16320355/">【破谣专场】拉伸能瘦腿？你咋不上天？</a>
-												</div>
-												<span>2017-11-15</span>
-											</div>
-											<div class="art-content">
-												<div class="zoom-container">
-													<a href="https://www.bilibili.com/video/av16320355/">
-														<img src="../../static/video/images/8.png" />
-													</a>
-												</div>
-											</div>
-										</article>
-									</div>
-								</div>
-								<div class="col-1-4">
-									<div class="wrap-col">
-										<article>
-											<div class="art-header">
-												<div class="entry-title">
-													<a href="https://www.bilibili.com/video/av16187173/">【黑名单】这个动作，别再浪费时间练了！</a>
-												</div>
-												<span>2017-11-10</span>
-											</div>
-											<div class="art-content">
-												<div class="zoom-container">
-													<a href="https://www.bilibili.com/video/av16187173/">
-														<img src="../../static/video/images/9.png" />
-													</a>
-												</div>
-											</div>
-										</article>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="categroy">
-									<p>健身知识</p>
-								<div class="col-1-4">
-									<div class="wrap-col">
-										<article>
-											<div class="art-header">
-												<div class="entry-title">
-													<a href="https://www.bilibili.com/video/av16505826/">【独家推荐】这本健身书，你不看会后悔！（公告）</a>
-												</div>
-												<span>2017-11-20</span>
-											</div>
-											<div class="art-content">
-												<div class="zoom-container">
-													<a href="https://www.bilibili.com/video/av16505826/">
-														<img src="../../static/video/images/6.png" />
-													</a>
-												</div>
-											</div>
-										</article>
-									</div>
-								</div>
-								<div class="col-1-4">
-									<div class="wrap-col">
-										<article>
-											<div class="art-header">
-												<div class="entry-title">
-													<a href="https://www.bilibili.com/video/av16413425">【人体极限】你最多，能长多少肌肉？（附公式）</a>
-												</div>
-												<span>2017-11-18</span>
-											</div>
-											<div class="art-content">
-												<div class="zoom-container">
-													<a href="https://www.bilibili.com/video/av16413425">
-														<img src="../../static/video/images/7.png" />
-													</a>
-												</div>
-											</div>
-										</article>
-									</div>
-								</div>
-								<div class="col-1-4">
-									<div class="wrap-col">
-										<article>
-											<div class="art-header">
-												<div class="entry-title">
-													<a href="https://www.bilibili.com/video/av16320355/">【破谣专场】拉伸能瘦腿？你咋不上天？</a>
-												</div>
-												<span>2017-11-15</span>
-											</div>
-											<div class="art-content">
-												<div class="zoom-container">
-													<a href="https://www.bilibili.com/video/av16320355/">
-														<img src="../../static/video/images/8.png" />
-													</a>
-												</div>
-											</div>
-										</article>
-									</div>
-								</div>
-								<div class="col-1-4">
-									<div class="wrap-col">
-										<article>
-											<div class="art-header">
-												<div class="entry-title">
-													<a href="https://www.bilibili.com/video/av16187173/">【黑名单】这个动作，别再浪费时间练了！</a>
-												</div>
-												<span>2017-11-10</span>
-											</div>
-											<div class="art-content">
-												<div class="zoom-container">
-													<a href="https://www.bilibili.com/video/av16187173/">
-														<img src="../../static/video/images/9.png" />
-													</a>
-												</div>
-											</div>
-										</article>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="categroy">
-									<p>饮食</p>
-								<div class="col-1-4">
-									<div class="wrap-col">
-										<article>
-											<div class="art-header">
-												<div class="entry-title">
-													<a href="https://www.bilibili.com/video/av16505826/">【独家推荐】这本健身书，你不看会后悔！（公告）</a>
-												</div>
-												<span>2017-11-20</span>
-											</div>
-											<div class="art-content">
-												<div class="zoom-container">
-													<a href="https://www.bilibili.com/video/av16505826/">
-														<img src="../../static/video/images/6.png" />
-													</a>
-												</div>
-											</div>
-										</article>
-									</div>
-								</div>
-								<div class="col-1-4">
-									<div class="wrap-col">
-										<article>
-											<div class="art-header">
-												<div class="entry-title">
-													<a href="https://www.bilibili.com/video/av16413425">【人体极限】你最多，能长多少肌肉？（附公式）</a>
-												</div>
-												<span>2017-11-18</span>
-											</div>
-											<div class="art-content">
-												<div class="zoom-container">
-													<a href="https://www.bilibili.com/video/av16413425">
-														<img src="../../static/video/images/7.png" />
-													</a>
-												</div>
-											</div>
-										</article>
-									</div>
-								</div>
-								<div class="col-1-4">
-									<div class="wrap-col">
-										<article>
-											<div class="art-header">
-												<div class="entry-title">
-													<a href="https://www.bilibili.com/video/av16320355/">【破谣专场】拉伸能瘦腿？你咋不上天？</a>
-												</div>
-												<span>2017-11-15</span>
-											</div>
-											<div class="art-content">
-												<div class="zoom-container">
-													<a href="https://www.bilibili.com/video/av16320355/">
-														<img src="../../static/video/images/8.png" />
-													</a>
-												</div>
-											</div>
-										</article>
-									</div>
-								</div>
-								<div class="col-1-4">
-									<div class="wrap-col">
-										<article>
-											<div class="art-header">
-												<div class="entry-title">
-													<a href="https://www.bilibili.com/video/av16187173/">【黑名单】这个动作，别再浪费时间练了！</a>
-												</div>
-												<span>2017-11-10</span>
-											</div>
-											<div class="art-content">
-												<div class="zoom-container">
-													<a href="https://www.bilibili.com/video/av16187173/">
-														<img src="../../static/video/images/9.png" />
-													</a>
-												</div>
-											</div>
-										</article>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="categroy">
-									<p>综合</p>
-								<div class="col-1-4">
-									<div class="wrap-col">
-										<article>
-											<div class="art-header">
-												<div class="entry-title">
-													<a href="https://www.bilibili.com/video/av16505826/">【独家推荐】这本健身书，你不看会后悔！（公告）</a>
-												</div>
-												<span>2017-11-20</span>
-											</div>
-											<div class="art-content">
-												<div class="zoom-container">
-													<a href="https://www.bilibili.com/video/av16505826/">
-														<img src="../../static/video/images/6.png" />
-													</a>
-												</div>
-											</div>
-										</article>
-									</div>
-								</div>
-								<div class="col-1-4">
-									<div class="wrap-col">
-										<article>
-											<div class="art-header">
-												<div class="entry-title">
-													<a href="https://www.bilibili.com/video/av16413425">【人体极限】你最多，能长多少肌肉？（附公式）</a>
-												</div>
-												<span>2017-11-18</span>
-											</div>
-											<div class="art-content">
-												<div class="zoom-container">
-													<a href="https://www.bilibili.com/video/av16413425">
-														<img src="../../static/video/images/7.png" />
-													</a>
-												</div>
-											</div>
-										</article>
-									</div>
-								</div>
-								<div class="col-1-4">
-									<div class="wrap-col">
-										<article>
-											<div class="art-header">
-												<div class="entry-title">
-													<a href="https://www.bilibili.com/video/av16320355/">【破谣专场】拉伸能瘦腿？你咋不上天？</a>
-												</div>
-												<span>2017-11-15</span>
-											</div>
-											<div class="art-content">
-												<div class="zoom-container">
-													<a href="https://www.bilibili.com/video/av16320355/">
-														<img src="../../static/video/images/8.png" />
-													</a>
-												</div>
-											</div>
-										</article>
-									</div>
-								</div>
-								<div class="col-1-4">
-									<div class="wrap-col">
-										<article>
-											<div class="art-header">
-												<div class="entry-title">
-													<a href="https://www.bilibili.com/video/av16187173/">【黑名单】这个动作，别再浪费时间练了！</a>
-												</div>
-												<span>2017-11-10</span>
-											</div>
-											<div class="art-content">
-												<div class="zoom-container">
-													<a href="https://www.bilibili.com/video/av16187173/">
-														<img src="../../static/video/images/9.png" />
-													</a>
-												</div>
-											</div>
-										</article>
-									</div>
-								</div>
-							</div>
-						</div>
+						{% endfor %}
 					</div>
 				</div>
 				<div id="sidebar" class="col-1-3">
