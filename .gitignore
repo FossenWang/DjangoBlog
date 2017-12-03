@@ -12,3 +12,6 @@ video/migrations/0001_initial.py
 video/migrations/0002_auto_20171127_2116.py
 video/migrations/0003_auto_20171128_1135.py
 video/migrations/0004_auto_20171128_1315.py
+video/migrations/0005_category_order.py
+video/migrations/0006_auto_20171203_1415.py
+static/favicon.ico

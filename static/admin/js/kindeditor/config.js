@@ -3,6 +3,15 @@ KindEditor.ready(function(K) {
     {
         width:'800px',
         height:'500px',
-        uploadJson: 'upload/image/',
+        //uploadJson: 'upload/image/',
+    });
+});
+
+KindEditor.ready(function(K) {
+    window.editor = K.create('textarea[name=note]',
+    {
+        width:'680px',
+        height:'300px',
+        //uploadJson: 'upload/image/',
     });
 });

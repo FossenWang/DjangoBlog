@@ -1,0 +1,159 @@
+{% extends 'video/base.html' %}
+{% load video_tags %}
+
+{% block main %}
+	<div id="main-content" class="col-2-3">
+		<div class="wrap-content">
+			<div class="row">
+				<div class="video-player">
+					<div class="video-header">
+						<div class="video-title">
+							<a href="#">{{ video.title }}</a>
+						</div>
+						<span>{{ video.pub_date }}&nbsp;&nbsp;作者: {{ video.author }}</span>
+						<div class="video-note">
+							{{ video.note|safe }}
+						</div>
+					</div>
+					<div class="video-content">
+						<iframe id="b" src="{{ video.video }}"></iframe>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="categroy">
+					<p>最近更新</p>
+					{% get_recent_videos as recent_videos %}
+					{% for video in recent_videos %}
+					<div class="col-1-4">
+						<div class="wrap-col">
+							<article>
+								<div class="art-content">
+									<div class="zoom-container">
+										<a href="{{ video.get_absolute_url }}">
+											<img src="{{ video.cover.url }}" />
+										</a>
+									</div>
+								</div>
+								<div class="art-header">
+									<div class="entry-title">
+										<a href="{{ video.get_absolute_url }}">{{ video.title }}</a>
+									</div>
+									<span>{{ video.pub_date }}</span>
+								</div>
+							</article>
+						</div>
+					</div>
+					{% empty %}
+					<div class="no-video">暂时没有最近发布的视频！</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock main %}
+
+{% block side %}
+	<div id="sidebar" class="col-1-3">
+		<!-- Start Widget -->
+		<div class="widget wid-about">
+			<div class="wid-header">
+				<h5>关于Kevin</h5>
+			</div>
+			<div class="wid-content">
+				<img src="../../static/video/images/11.jpg" />
+				<p>创办了运动视频自媒体NowFitness，增肌减脂，力量训练，饮食营养，人体机能 —— 实践加科学，只分享干货。</p>
+			</div>
+		</div>
+		<!-- Start Widget -->
+		<div class="widget wid-follow">
+			<div class="wid-header">
+				<h5>关注NowFitness</h5>
+			</div>
+			<div class="wid-content">
+				<ul class="quick-link">
+					<li>
+						<a href="https://space.bilibili.com/95083523"><img src="../../static/video/images/bilibili1.svg" /></a>
+					</li>
+					<li>
+						<a href=""><img src="../../static/video/images/weixin1.svg" /></a>
+						<div class="erweima">
+							<p>扫码关注微信</p>
+							<img src="../../static/video/images/weixinerweima.png" />
+						</div>
+					</li>
+					<li>
+						<a href="https://weibo.com/nowfitness?refer_flag=0000015010_&from=feed&loc=avatar">
+							<img src="../../static/video/images/weibo1.svg" />
+						</a>
+						<div class="erweima">
+							<p>扫码关注微博</p>
+							<img src="../../static/video/images/weiboerweima.jpg" />
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- Start Widget -->
+		<div class="widget wid-microblog">
+			<div class="wid-header">
+				<h5>微博动态</h5>
+			</div>
+			<div class="wid-content">
+				<div class="microblog">
+					<h5 class="wid-name"><a href="https://weibo.com/nowfitness?refer_flag=0000015010_&from=feed&loc=avatar">NowFitness_Kevin</a></h5>
+					<div class="info">
+						<span>2017/11/24</span> 
+						<p>今天是感恩节后的黑色星期五，Myprotein当然又有优惠活动。虽说双十一刚过，知道各位刚剁完手，但还是把活动信息传达到位，有兴趣的可以自行购买：<br/>
+							<br/>	
+							1、活动时间是今天到周日，活动店铺是MyProtein天猫海外店；<br/>
+							2、跟客服（选人工）说【凯文黑五】，能获得满200-50优惠券，全场适用；<br/>
+							3、订单满999元，跟客服说，会送一个价值800元的黑五礼盒；<br/>
+							4、此外，店铺还有其他礼券活动，可在首页查看。<br/>
+							<br/>剁手快乐！<br/>
+						</p>
+					</div>
+				</div>
+				<div class="microblog">
+					<h5 class="wid-name"><a href="https://weibo.com/nowfitness?refer_flag=0000015010_&from=feed&loc=avatar">NowFitness_Kevin</a></h5>
+					<div class="info">
+						<span>2017/11/23</span> 
+						<p>【Kevin自怼】我原来这么煞笔？！（精彩必看）<br/>
+							<br/>
+							大家好，是我Kevin：）<br/>
+							<br/>	
+							万众瞩目的【Kevin自怼】，终于上线了！！！<br/>
+							<br/>
+							本期推送中，我会回顾NowFitness成立以来，推出过的每一期视频，并一一指出有错误或争议的片段，给予修正，外加自我批斗。<br/>
+							<br/>
+							总之，如果你想看满满15分钟的，Kevin式自我羞辱，那来对地方了。不多做介绍了，本期必看就对了！<br/>
+						</p>
+					</div>
+				</div>
+				<div class="microblog">
+					<h5 class="wid-name"><a href="https://weibo.com/nowfitness?refer_flag=0000015010_&from=feed&loc=avatar">NowFitness_Kevin</a></h5>
+					<div class="info">
+						<span>2017/11/22</span> 
+						<p>跟合作伙伴@Team腹愁者的日常🙄🙄<br/>
+							<br/>
+							大家别忘了这家过气的蛋白棒啊！报我名字全场9折呀！哇咔咔咔咔咔！ ​​​​<br/>
+						</p>
+						<img src="https://wx3.sinaimg.cn/mw690/006H1Ltygy1flqjvh8q58j30kt0sk0ur.jpg" width="360" /><br/>
+						<img src="https://wx2.sinaimg.cn/mw690/006H1Ltygy1flqjvil1d9j30ku0me0uo.jpg" width="360" /><br/>
+						<img src="https://wx1.sinaimg.cn/mw690/006H1Ltygy1flqjvk9yizj30kd0kq0v1.jpg" width="360" /><br/>
+						<img src="https://wx2.sinaimg.cn/mw690/006H1Ltygy1flqjvm1bdbj30ku0q2q4w.jpg" width="360" />
+					</div>
+				</div>
+				<div class="microblog">
+					<h5 class="wid-name"><a href="https://weibo.com/nowfitness?refer_flag=0000015010_&from=feed&loc=avatar">NowFitness_Kevin</a></h5>
+					<div class="info">
+						<span>2017/11/21</span> 
+						<p>我是不是该跟商家要个回扣啥的？ ​​​​
+						</p>
+						<img src="https://wx4.sinaimg.cn/mw690/006H1Ltygy1flpc6lno1mj30fu0fwjt8.jpg" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock side %}

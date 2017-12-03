@@ -1,0 +1,115 @@
+{% load staticfiles %}
+{% load video_tags %}
+
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="zh"> <!--<![endif]-->
+<head>
+
+    <!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>NowFitness - 分享健身知识</title>
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+	<meta name="description" content="Free Responsive Html5 Css3 Templates ">
+	<meta name="author" content="">
+	
+    <!-- Mobile Specific Metas
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <!-- CSS
+  ================================================== -->
+  	<link rel="stylesheet" href="{% static 'video/css/zerogrid.css' %}">
+	<link rel="stylesheet" href="{% static 'video/css/style.css' %}">
+	<link rel="stylesheet" href="{% static 'video/css/menu.css' %}">
+	<link rel="stylesheet" href="{% static 'video/css/responsiveslides.css' %}">
+
+</head>
+
+<body>
+<div class="wrap-body">
+<header>
+	<div class="top-header">
+		<div class="zerogrid">
+			<nav id="menu-wrap"><div id="menu-trigger">Menu</div>
+				<ul id="menu" style="display: none;">
+					<li><img src="{% static 'video/images/nowfitness.png' %}" alt="NowFitness"></li>
+					<li><a href="/">首页</a></li>
+					<li>
+                        <a href="#">视频</a>
+                        {% get_video_categories as cates %}
+						<ul>
+							{% for cate in cates %}
+							<li>
+								<a href="#">{{ cate.name }}</a>
+							</li>
+							{% endfor %}
+						</ul>
+					</li>
+					<li><a href="#">动态</a></li>
+					<li><a href="#">关于我们</a></li>
+					<li style="float:right !important">
+						<form method="get" action="/search" id="search" class="f-right">
+							<input name="q" type="text" size="40" placeholder="Search..." />
+						</form>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</header>
+<section id="container">
+	<div class="wrap-container">
+		<div class="zerogrid">
+			<div class="row">
+                {% block main %}
+                {% endblock main %}
+                {% block side %}
+                {% endblock side %}
+			</div>
+		</div>
+	</div>
+</section>
+<footer>
+	<div class="zerogrid">
+		<div class="wrap-footer t-center">
+			<div class="row">
+				<div class="full">
+					<div class="copy-right">
+						<p><a href="#" />NowFitness</a>©2017</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+
+<script type="text/javascript">
+    $(function() {
+		if ($.browser.msie && $.browser.version.substr(0,1)<7)
+		{
+		$('li').has('ul').mouseover(function(){
+			$(this).children('ul').css('visibility','visible');
+			}).mouseout(function(){
+			$(this).children('ul').css('visibility','hidden');
+			})
+		}
+
+		/* Mobile */
+		$("#menu-trigger").on("click", function(){
+			$("#menu").slideToggle();
+		});
+
+		// iPad
+		var isiPad = navigator.userAgent.match(/iPad/i) != null;
+		if (isiPad) $('#menu ul').addClass('no-transition');      
+    });
+</script>
+
+</div>
+</body>
+</html>

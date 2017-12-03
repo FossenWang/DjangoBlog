@@ -7,9 +7,14 @@ from django.urls import reverse
 
 class Category(models.Model):
     name = models.CharField('分类', max_length=16)
+    number = models.IntegerField('排序', default=0)
 
     def __str__(self):
         return self.name
+
+    def video_number(self):
+        return Video.objects.filter(category__name=self.name).count()
+    video_number.short_description = '视频数'
 
     class Meta:
         verbose_name='分类'
@@ -44,7 +49,7 @@ class Video(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('blog:detail', kwargs={'pk': self.pk})
+        return reverse('video:video', kwargs={'pk': self.pk})
 
     def increase_views(self):
         self.views += 1
