@@ -24,8 +24,16 @@ class IndexView(TemplateView):
         context['video_categories'] = [(Video.objects.filter(category__name=cate.name)[:4], cate) for cate in cates]
         return context
 
-class VideoView(DetailView):
+class VideoDetailView(DetailView):
     '视频详情'
     model = Video
-    template_name = 'video/video.html'
+    template_name = 'video/video_detail.html'
     context_object_name = 'video'
+
+class VideoListView(ListView):
+    model = Video
+    template_name = 'video/video_list.html'
+    context_object_name = 'video_list'
+
+    def get_queryset(self):
+        return super().get_queryset()[:12]
