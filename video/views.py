@@ -31,9 +31,76 @@ class VideoDetailView(DetailView):
     context_object_name = 'video'
 
 class VideoListView(ListView):
+    '视频列表'
     model = Video
     template_name = 'video/video_list.html'
     context_object_name = 'video_list'
+    paginate_by = 30
 
-    def get_queryset(self):
-        return super().get_queryset()[:12]
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        paginator = context.get('paginator')
+        page = context.get('page_obj')
+        is_paginated = context.get('is_paginated')
+        pagination_data = self.pagination_data(paginator, page, is_paginated)
+        context.update(pagination_data)
+
+        video_list = context['video_list']
+        i = 0
+        list_slice = []
+        while i<len(video_list):
+            list_slice.append(video_list[i:i+6])
+            i += 6
+        context['video_list'] = list_slice
+        return context
+
+    def pagination_data(self, paginator, page, is_paginated):
+        '分页数据'
+        if not is_paginated:
+            return {}
+        left = []
+        right = []
+        left_has_more = False
+        right_has_more = False
+        first = False
+        last = False
+        page_number = page.number
+        total_pages = paginator.num_pages
+        page_range = paginator.page_range
+
+        if page_number == 1:
+            right = page_range[page_number:page_number + 2]
+            if right[-1] < total_pages - 1:
+                right_has_more = True
+            if right[-1] < total_pages:
+                last = True
+
+        elif page_number == total_pages:
+            left = page_range[(page_number - 3) if (page_number - 3) > 0 else 0:page_number - 1]
+            if left[0] > 2:
+                left_has_more = True
+            if left[0] > 1:
+                first = True
+        else:
+            left = page_range[(page_number - 3) if (page_number - 3) > 0 else 0:page_number - 1]
+            right = page_range[page_number:page_number + 2]
+            if right[-1] < total_pages - 1:
+                right_has_more = True
+            if right[-1] < total_pages:
+                last = True
+            if left[0] > 2:
+                left_has_more = True
+            if left[0] > 1:
+                first = True
+
+        data = {
+            'left': left,
+            'right': right,
+            'left_has_more': left_has_more,
+            'right_has_more': right_has_more,
+            'first': first,
+            'last': last,
+        }
+
+        return data

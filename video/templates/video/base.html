@@ -40,7 +40,7 @@
 					<li><img src="{% static 'video/images/nowfitness.png' %}" alt="NowFitness"></li>
 					<li><a href="/">首页</a></li>
 					<li>
-                        <a href="{% url 'video:video list' %}">视频</a>
+                        <a href="{% url 'video:video list' 1 %}">视频</a>
                         {% get_video_categories as cates %}
 						<ul>
 							{% for cate in cates %}
@@ -68,8 +68,6 @@
 			<div class="row">
                 {% block main %}
                 {% endblock main %}
-                {% block side %}
-                {% endblock side %}
 			</div>
 		</div>
 	</div>
