@@ -40,12 +40,12 @@
 					<li><img src="{% static 'video/images/nowfitness.png' %}" alt="NowFitness"></li>
 					<li><a href="/">首页</a></li>
 					<li>
-                        <a href="{% url 'video:video list' 1 %}">视频</a>
+                        <a href="{% url 'video:video list' %}">视频</a>
                         {% get_video_categories as cates %}
 						<ul>
 							{% for cate in cates %}
 							<li>
-								<a href="#">{{ cate.name }}</a>
+								<a href="{% url 'video:video list' %}?pk={{ cate.pk }}">{{ cate.name }}</a>
 							</li>
 							{% endfor %}
 						</ul>

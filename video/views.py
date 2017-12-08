@@ -1,7 +1,7 @@
 '''
 视频推送相关的视图
 '''
-from django.shortcuts import render
+from django.shortcuts import  get_object_or_404
 from django.views.generic import TemplateView, ListView, DetailView
 from django.http import HttpResponseRedirect
 from django.db.models.aggregates import Count
@@ -37,16 +37,28 @@ class VideoListView(ListView):
     context_object_name = 'video_list'
     paginate_by = 30
 
+    def get_queryset(self):
+        if self.request.GET.get('pk'):
+            cate = get_object_or_404(Category, pk=self.request.GET.get('pk'))
+            return super().get_queryset().filter(category=cate)
+        else:
+            return super().get_queryset()
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        video_list = context['video_list']
         paginator = context.get('paginator')
         page = context.get('page_obj')
         is_paginated = context.get('is_paginated')
         pagination_data = self.pagination_data(paginator, page, is_paginated)
         context.update(pagination_data)
 
-        video_list = context['video_list']
+        if self.request.GET.get('pk'):
+            context['title'] = video_list[0].category.name
+        else:
+            context['title'] = '所有视频'
+        
         i = 0
         list_slice = []
         while i<len(video_list):
