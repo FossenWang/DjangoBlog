@@ -1,11 +1,28 @@
 {% extends 'video/base.html' %}
+{% load video_tags %}
 
 {% block main %}
 <div id="main-content">
 	<div class="wrap-content">
 		<div class="row">
+			{% get_video_categories as cates %}
+			<ul class="category-bar">
+
+				{% if number == 0 %}
+				<li class="on"><a href="{% url 'video:video list' 0 %}">所有视频</a></li>
+				{% else %}
+				<li><a href="{% url 'video:video list' 0 %}">所有视频</a></li>
+				{% endif %}
+
+				{% for cate in cates %}
+				{% if number == cate.number %}
+				<li class="on"><a href="{% url 'video:video list' cate.number %}">{{ cate.name }}</a></li>
+				{% else %}
+				<li><a href="{% url 'video:video list' cate.number %}">{{ cate.name }}</a></li>
+				{% endif %}
+				{% endfor %}
+			</ul>
 			<div class="categroy">
-				<p>{{ title }}</p>
 				{% for video_list_raw in video_list %}
 				<div class="row">
 					{% for video in video_list_raw %}

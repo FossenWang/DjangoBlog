@@ -9,9 +9,9 @@ from django.db.models.aggregates import Count
 from .models import Video, Category, Tag
 
 
-class IndexView(TemplateView):
+class HomeView(TemplateView):
     '首页视图'
-    template_name = 'video/index.html'
+    template_name = 'video/home.html'
 
     def get_context_data(self, **kwargs):
         '''
@@ -38,11 +38,11 @@ class VideoListView(ListView):
     paginate_by = 30
 
     def get_queryset(self):
-        if self.request.GET.get('pk'):
-            cate = get_object_or_404(Category, pk=self.request.GET.get('pk'))
-            return super().get_queryset().filter(category=cate)
-        else:
+        if self.kwargs.get('number') == '0':
             return super().get_queryset()
+        else:
+            cate = get_object_or_404(Category, number=self.kwargs.get('number'))
+            return super().get_queryset().filter(category=cate)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -54,11 +54,8 @@ class VideoListView(ListView):
         pagination_data = self.pagination_data(paginator, page, is_paginated)
         context.update(pagination_data)
 
-        if self.request.GET.get('pk'):
-            context['title'] = video_list[0].category.name
-        else:
-            context['title'] = '所有视频'
-        
+        context['number'] = int(self.kwargs.get('number'))
+
         i = 0
         list_slice = []
         while i<len(video_list):

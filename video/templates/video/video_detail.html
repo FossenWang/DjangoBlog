@@ -5,6 +5,15 @@
 	<div id="main-content" class="col-2-3">
 		<div class="wrap-content">
 			<div class="row">
+				<div class="current-nav">
+					<a href="/">首页</a>
+					<span>&gt;</span>
+					<a href="{% url 'video:video list' 0 %}">视频</a>
+					<span>&gt;</span>
+					<a href="{% url 'video:video list' video.category.number %}">{{ video.category }}</a>
+				</div>
+			</div>
+			<div class="row">
 				<div class="video-player">
 					<div class="video-header">
 						<div class="video-title">

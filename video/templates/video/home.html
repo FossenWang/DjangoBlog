@@ -18,7 +18,7 @@
 		</div>
 		<div class="row">
 			<div class="categroy">
-				<p>最近更新</p>
+				<p><a href="{% url 'video:video list' 0 %}">最近更新&nbsp;&gt;</a></p>
 				{% for video in recent_videos %}
 				<div class="col-1-4">
 					<div class="wrap-col">
@@ -47,7 +47,7 @@
 		{% for video_cate in video_categories %}
 		<div class="row">
 			<div class="categroy">
-				<p>{{ video_cate.1.name }}  （{{ video_cate.1.counts }}）</p>
+				<p><a href="{% url 'video:video list' video_cate.1.number %}">{{ video_cate.1.name }}&nbsp;&gt;</a></p>
 		    	{% for video in video_cate.0 %}
 				<div class="col-1-4">
 					<div class="wrap-col">

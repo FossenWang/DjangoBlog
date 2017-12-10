@@ -72,8 +72,7 @@ body .wrap-body{}
 /* ---------------------------------------------------------------------------- */
 
 header{}
-header .top-header{}
-header .wrap-header{padding: 35px 0;}
+header .top-header{border-bottom: 1px solid #eee;}
 header .tagline {color: #1C202A;font-family: 'Microsoft YaHei', '华文细黑', '宋体', Georgia, Sans-serif;}
 header #search {margin: auto;}
 header #search input[type="text"] {
@@ -161,7 +160,7 @@ header .cat-title{border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;paddi
 /* -------------------------------------Container------------------------------ */
 /* ---------------------------------------------------------------------------- */
 #container {
-  background-color:rgb(245, 245, 245); 
+  background-color:#f4f5f7; 
 }
 #container.index-page{}
 #container .wrap-container{}
@@ -171,19 +170,27 @@ header .cat-title{border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;paddi
 
 /* ---MainContent-Article--- */
 #main-content{margin-top: 10px;}
-#main-content .wrap-content{background-color: white; padding-bottom: 50px;}
+#main-content .wrap-content{background-color: white; padding-bottom: 50px; border: 1px solid #eee; border-radius: 4px;}
 
-.video-player {padding: 40px 0; margin: 0 10px}
+.current-nav {padding-bottom: 5px;
+ border-bottom: 1px solid #A161BF; 
+ margin: 20px 25px 5px;}
+
+.video-player {padding-top: 20px; padding-bottom: 40px; margin: 0 10px}
 .video-header {text-align: center;color: #4c4c4c;font-size: 13px;margin-bottom: 20px;padding: 10px 20px;}
 .video-title {font-size: 24px; margin-bottom: 15px;}
 .video-note {font-size: 16px;text-align: left; margin-top: 15px;}
 .video-content {text-align: center; padding: 0 20px;}
 #b {height: 600px; width: 100%;}
 
+.category-bar {border-bottom: 1px solid #e5e9ef; margin: 0 20px; padding-top: 20px; font-size: 15px;}
+.category-bar li {padding: 5px 10px;display: inline-block;}
+.category-bar .on {padding: 5px 10px; border-bottom: 1px solid #A161BF;}
 .categroy {margin: 5px 10px;}
-.categroy p {border-top: 1px solid gray; margin: 0 15px; padding-top: 10px; font-size: 17px;}
+.categroy p {border-top: 1px solid #e5e9ef; margin: 0 15px; padding-top: 10px; font-size: 17px;}
+.categroy a {transition: all 0.2s ease-in-out;}
 
-article{padding: 0 0; margin: 0 5px}
+article{padding: 0 0; margin: 0 5px;}
 article .art-header {text-align: center;color: #4c4c4c;font-size: 11px;}
 article .entry-title {font-size: 15px; height: 52px; overflow: hidden;}
 article .art-content {text-align: center;}
@@ -234,6 +241,8 @@ article .art-content {text-align: center;}
   margin-bottom: 10px;
   margin-left: 10px;
   padding: 10px 20px;
+  border: 1px solid #eee;
+  border-radius: 4px;
 }
 .widget:after, .widget:before{clear: both; content: '\0020'; display: block; visibility: hidden; width: 0; height: 0;}
 
@@ -242,7 +251,7 @@ article .art-content {text-align: center;}
 
 .wid-about img{max-width: 360px; display: block; margin: auto}
 
-.microblog {border-top: thin solid gray; margin-bottom: 20px; display: inline-block; text-align: left; width: 100%;}
+.microblog {border-top: thin solid #e5e9ef; margin-bottom: 20px; display: inline-block; text-align: left; width: 100%;}
 .microblog:last-child {margin-bottom: 0;}
 .microblog:after, .microblog:before{clear: both; content: '\0020'; display: block; visibility: hidden; width: 0; height: 0;}
 .microblog img{max-width: 360px; display: block; margin: auto}
