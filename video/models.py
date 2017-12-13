@@ -17,8 +17,9 @@ class Category(models.Model):
     video_number.short_description = '视频数'
 
     class Meta:
-        verbose_name='分类'
-        verbose_name_plural='分类'
+        ordering = ['number']
+        verbose_name = '分类'
+        verbose_name_plural = '分类'
 
 class Tag(models.Model):
     name = models.CharField('标签', max_length=16)
@@ -27,8 +28,8 @@ class Tag(models.Model):
         return self.name
 
     class Meta:
-        verbose_name='标签'
-        verbose_name_plural='标签'
+        verbose_name = '标签'
+        verbose_name_plural = '标签'
 
 class Video(models.Model):
     '''
@@ -56,6 +57,6 @@ class Video(models.Model):
         self.save(update_fields=['views'])
 
     class Meta:
-        ordering=['-pub_date']
-        verbose_name='视频'
-        verbose_name_plural='视频'
+        ordering = ['-pub_date']
+        verbose_name = '视频'
+        verbose_name_plural = '视频'
