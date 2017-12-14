@@ -15,3 +15,6 @@ video/migrations/0004_auto_20171128_1315.py
 video/migrations/0005_category_order.py
 video/migrations/0006_auto_20171203_1415.py
 static/favicon.ico
+training/migrations/0001_initial.py
+training/migrations/0002_program_creator.py
+video/migrations/0007_auto_20171214_1526.py
