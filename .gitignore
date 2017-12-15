@@ -18,3 +18,5 @@ static/favicon.ico
 training/migrations/0001_initial.py
 training/migrations/0002_program_creator.py
 video/migrations/0007_auto_20171214_1526.py
+training/migrations/0003_program_cycle.py
+training/migrations/0004_auto_20171215_1539.py

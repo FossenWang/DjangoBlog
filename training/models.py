@@ -3,6 +3,7 @@
 '''
 from django.db import models
 from django.contrib.auth.models import User
+from django.core import urlresolvers
 
 class ExerciseType(models.Model):
     etype = models.CharField('动作类型', max_length=16)
@@ -42,8 +43,9 @@ class ProgramType(models.Model):
         verbose_name_plural = '方案类型'
 
 class Program(models.Model):
-    name = models.CharField('方案名', max_length=16)
+    name = models.CharField('方案名', max_length=48)
     description = models.TextField('方案说明', blank=True)
+    cycle = models.IntegerField('周期', default=7)
     ptype = models.ForeignKey(ProgramType, default=1, on_delete=models.SET_DEFAULT, verbose_name='方案类型')
     creator = models.ForeignKey(User, default=2, on_delete=models.SET_DEFAULT, verbose_name='创建者')
 
@@ -56,8 +58,16 @@ class Program(models.Model):
 
 class TrainingDay(models.Model):
     day = models.IntegerField('天数', default=0)
-    name = models.CharField('训练日', max_length=16)
+    name = models.CharField('名称', max_length=16)
     program = models.ForeignKey(Program, on_delete=models.CASCADE, verbose_name='训练方案')
+
+    def admin_link(self):
+        if self.pk:
+            day_url = urlresolvers.reverse('admin:training_trainingday_change', args=(self.pk,))
+            return u'<a href="%s" target="_blank">详情</a>' % day_url
+        return u''
+    admin_link.allow_tags = True
+    admin_link.short_description = '详情'
 
     def __str__(self):
         return 'Day ' + str(self.day) + ':' + self.name
@@ -70,7 +80,7 @@ class TrainingDay(models.Model):
 class TrainingSets(models.Model):
     number = models.IntegerField('排序', default=0)
     sets = models.IntegerField('组数', default=1)
-    rest = models.IntegerField('组间歇', default=60)
+    rest = models.IntegerField('组间歇(s)', default=60)
     trainingday = models.ForeignKey(TrainingDay, on_delete=models.CASCADE,  verbose_name='训练日')
 
     def __str__(self):
@@ -99,7 +109,7 @@ class ExercisesInSets(models.Model):
 
 class PowerliftingSets(TrainingSets):
     reps = models.IntegerField('次数', default=1)
-    load = models.FloatField('负重', default=1.0)
+    load = models.FloatField('负重(%1RM)', default=1.0)
     exercise = models.ForeignKey(Exercise, on_delete=models.SET_DEFAULT, default=1, verbose_name='动作')
 
     class Meta:
