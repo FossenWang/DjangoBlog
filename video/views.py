@@ -8,7 +8,6 @@ from django.db.models.aggregates import Count
 
 from .models import Video, Category, Tag
 
-
 class HomeView(TemplateView):
     '首页视图'
     template_name = 'video/home.html'

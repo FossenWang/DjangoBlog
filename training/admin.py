@@ -1,18 +1,27 @@
 from django.contrib import admin
-from .models import ExerciseType, Exercise, ProgramType, Program, TrainingDay, WeightSets, PowerliftingSets
+from .models import ExerciseType, Exercise, ProgramType, Program, TrainingDay, WeightSets, PowerliftingSets, ExercisesInSets
+
+class ExercisesInSetsInline(admin.TabularInline):
+    model = ExercisesInSets
+    extra = 1
 
 class WeightSetsInline(admin.TabularInline):
     model = WeightSets
-    extra = 1
+    extra = 0
+    readonly_fields = ('admin_link', )
+    #fields = ('number', 'sets', 'rest', 'exercises')
 
 class PowerliftingSetsInline(admin.TabularInline):
     model = PowerliftingSets
-    extra = 1
+    extra = 0
 
 class TrainingDayInline(admin.TabularInline):
     model = TrainingDay
     extra = 1
     readonly_fields = ('admin_link', )
+
+class WeightSetsAdmin(admin.ModelAdmin):
+    inlines = [ExercisesInSetsInline]
 
 class TrainingDayAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'program')
@@ -29,4 +38,5 @@ class ExerciseAdmin(admin.ModelAdmin):
 admin.site.register(Exercise, ExerciseAdmin)
 admin.site.register(Program, ProgramAdmin)
 admin.site.register(TrainingDay, TrainingDayAdmin)
-admin.site.register([ExerciseType, ProgramType, WeightSets, PowerliftingSets])
+admin.site.register(WeightSets, WeightSetsAdmin)
+admin.site.register([ExerciseType, ProgramType, PowerliftingSets])

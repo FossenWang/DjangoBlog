@@ -1,0 +1,24 @@
+{% extends 'video/base.html' %}
+{% load video_tags %}
+
+
+
+{% block main %}
+<div id="main-content">
+	<div class="wrap-content">
+		<div class="row">
+			<div class="categroy">
+				<ul>
+					{% for program in program_list %}
+					<li>
+						<a href="{% url 'training:program' program.pk %}">{{ program.name }}</a>
+					</li>
+					{% empty %}
+					<div class="no-program">暂时没有训练方案！</div>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock main %}
