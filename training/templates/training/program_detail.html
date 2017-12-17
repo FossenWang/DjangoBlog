@@ -1,4 +1,4 @@
-{% extends 'video/base.html' %}
+{% extends 'training/base.html' %}
 
 {% block main %}
 	<div id="main-content" class="col-2-3">
@@ -14,7 +14,30 @@
 			</div>
 			<div class="row">
 				<div class="program">
-					<pre>{{ program.description }}</pre>
+					<div class="name">{{ program.name }}</div>
+					<div class="info">周期: {{ program.cycle }}天&nbsp;&nbsp;类型: {{ program.ptype }}&nbsp;&nbsp;创建者: <a href="#">{{ program.creator }}</a></div>
+					<div class="description">{{ program.description }}</div>
+				    {% for training_day in program.trainingday_set.all %}
+				    <div class="training-day">
+						<p>Day {{ training_day.day }} {{ training_day.name }}</p>
+						<table>
+							<tr>
+								<td>动作</td><td>次数 × 组数</td><td>休息</td>
+							</tr>
+							{% for weight_sets in training_day.weightsets_set.all %}
+						    <tr>
+						        <td>{{ weight_sets.exercises.all.0 }}</td>
+						        <td>{{ weight_sets.minreps }}~{{ weight_sets.maxreps }}RM × {{ weight_sets.sets }}</td>
+						        <td>{{ weight_sets.rest }}</td>
+					        </tr>
+							{% empty %}
+							<tr>
+								<td>/</td><td>/</td><td>/</td>
+							</tr>
+							{% endfor %}
+					    </table>
+					</div>
+				    {% endfor %}
 				</div>
 			</div>
 		</div>

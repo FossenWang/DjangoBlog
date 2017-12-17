@@ -81,7 +81,7 @@ class TrainingSets(models.Model):
     number = models.PositiveIntegerField('次序', default=0)
     sets = models.PositiveIntegerField('组数', default=1)
     rest = models.PositiveIntegerField('组间歇(s)', default=60)
-    trainingday = models.ForeignKey(TrainingDay, on_delete=models.CASCADE,  verbose_name='训练日')
+    trainingday = models.ForeignKey(TrainingDay, on_delete=models.CASCADE, verbose_name='训练日')
 
     def __str__(self):
         return 'Set ' + str(self.number)
