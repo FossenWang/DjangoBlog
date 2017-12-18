@@ -1,7 +1,7 @@
 '''
 视频推送相关的视图
 '''
-from django.shortcuts import  get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView, ListView, DetailView
 from django.http import HttpResponseRedirect
 from django.db.models.aggregates import Count

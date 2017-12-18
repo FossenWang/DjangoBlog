@@ -14,25 +14,27 @@
 			</div>
 			<div class="row">
 				<div class="program">
-					<div class="name">{{ program.name }}</div>
+					<div class="name"><a name="name">{{ program.name }}</a></div>
 					<div class="info">周期: {{ program.cycle }}天&nbsp;&nbsp;类型: {{ program.ptype }}&nbsp;&nbsp;创建者: <a href="#">{{ program.creator }}</a></div>
 					<div class="description">{{ program.description }}</div>
 				    {% for training_day in program.trainingday_set.all %}
 				    <div class="training-day">
-						<p>Day {{ training_day.day }} {{ training_day.name }}</p>
+						<p><a name="{{ training_day.day }}">Day {{ training_day.day }} {{ training_day.name }}</a></p>
 						<table>
 							<tr>
-								<td>动作</td><td>次数 × 组数</td><td>休息</td>
+								<td class="col1">动作</td><td class="col2">RM</td>
+								<td class="col2">组数</td><td class="col2">休息/s</td>
 							</tr>
 							{% for weight_sets in training_day.weightsets_set.all %}
 						    <tr>
-						        <td>{{ weight_sets.exercises.all.0 }}</td>
-						        <td>{{ weight_sets.minreps }}~{{ weight_sets.maxreps }}RM × {{ weight_sets.sets }}</td>
-						        <td>{{ weight_sets.rest }}</td>
+						        <td class="col1">{{ weight_sets.exercises.all.0 }}</td>
+						        <td class="col2">{{ weight_sets.minreps }}~{{ weight_sets.maxreps }}</td>
+								<td class="col2">{{ weight_sets.sets }}</td>
+						        <td class="col2">{{ weight_sets.rest }}</td>
 					        </tr>
 							{% empty %}
 							<tr>
-								<td>/</td><td>/</td><td>/</td>
+								<td class="col1">/</td><td class="col2">/</td><td class="col2">/</td><td class="col2">/</td>
 							</tr>
 							{% endfor %}
 					    </table>
@@ -45,24 +47,22 @@
 
 	<div id="sidebar" class="col-1-3">
 		<!-- Start Widget -->
-		<div class="widget wid-microblog">
+		<div class="widget wid-directory">
 			<div class="wid-header">
-				<h5>微博动态</h5>
+				<h5>目录</h5>
 			</div>
 			<div class="wid-content">
-				<div class="microblog">
-					<h5 class="wid-name"><a href="https://weibo.com/nowfitness?refer_flag=0000015010_&from=feed&loc=avatar">NowFitness_Kevin</a></h5>
-					<div class="info">
-						<span>2017/11/24</span> 
-						<p>今天是感恩节后的黑色星期五，Myprotein当然又有优惠活动。虽说双十一刚过，知道各位刚剁完手，但还是把活动信息传达到位，有兴趣的可以自行购买：<br/>
-							<br/>	
-							1、活动时间是今天到周日，活动店铺是MyProtein天猫海外店；<br/>
-							2、跟客服（选人工）说【凯文黑五】，能获得满200-50优惠券，全场适用；<br/>
-							3、订单满999元，跟客服说，会送一个价值800元的黑五礼盒；<br/>
-							4、此外，店铺还有其他礼券活动，可在首页查看。<br/>
-							<br/>剁手快乐！<br/>
-						</p>
-					</div>
+				<div class="directory">
+					<h5 class="name"><a href="#name">{{ program.name }}</a></h5>
+					<ul class="day">
+						{% for training_day in program.trainingday_set.all %}
+						<li>
+							<a href="#{{ training_day.day }}">
+								Day {{ training_day.day }} {{ training_day.name }}
+							</a>
+						</li>
+						{% endfor %}
+					</ul>
 				</div>
 			</div>
 		</div>

@@ -1,20 +1,74 @@
 {% extends 'training/base.html' %}
+{% load training_tags %}
 
 {% block main %}
 <div id="main-content">
 	<div class="wrap-content">
 		<div class="row">
-			<div class="categroy">
+			{% get_program_types as ptypes %}
+		  {% get_program_count as all %}
+			<ul class="category-bar">
+				{% if pk == 0 %}
+				<li class="on">
+					<a href="{% url 'training:program list' 0 %}">所有方案<span>&nbsp;{{ all }}</span></a>
+				</li>
+				{% else %}
+				<li>
+					<a href="{% url 'training:program list' 0 %}">所有方案<span>&nbsp;{{ all }}</span></a>
+				</li>
+				{% endif %}
+				{% for ptype in ptypes %}
+				{% if pk == ptype.pk %}
+				<li class="on">
+					<a href="{% url 'training:program list' ptype.id %}">{{ ptype.name }}<span>&nbsp;{{ ptype.counts }}</span></a>
+				</li>
+				{% else %}
+				<li>
+					<a href="{% url 'training:program list' ptype.id %}">{{ ptype.name }}<span>&nbsp;{{ ptype.counts }}</span></a>
+				</li>
+				{% endif %}
+				{% endfor %}
+			</ul>
+			<div class="category">
 				<ul>
 					{% for program in program_list %}
 					<li>
 						<a href="{% url 'training:program' program.pk %}">{{ program.name }}</a>
 					</li>
 					{% empty %}
-					<div class="no-program">暂时没有训练方案！</div>
+					<li>暂时没有训练方案！</li>
 					{% endfor %}
 				</ul>
 			</div>
+		</div>
+		<div class="row">
+			{% if is_paginated %}
+			<div class="pagination">
+			  {% if first %}
+				<a href="?page=1">1</a>
+			  {% endif %}
+			  {% if left %}
+				{% if left_has_more %}
+					<span>...</span>
+				{% endif %}
+				{% for i in left %}
+					<a href="?page={{ i }}">{{ i }}</a>
+				{% endfor %}
+			  {% endif %}
+			  <a class="current-page" href="?page={{ page_obj.number }}">{{ page_obj.number }}</a>
+			  {% if right %}
+				{% for i in right %}
+					<a href="?page={{ i }}">{{ i }}</a>
+				{% endfor %}
+				{% if right_has_more %}
+					<span>···</span>
+				{% endif %}
+			  {% endif %}
+			  {% if last %}
+				<a href="?page={{ paginator.num_pages }}">{{ paginator.num_pages }}</a>
+			  {% endif %}
+			</div>
+			{% endif %}
 		</div>
 	</div>
 </div>

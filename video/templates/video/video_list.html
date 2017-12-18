@@ -11,7 +11,6 @@
 				{% if number == 0 %}
 				<li class="on">
 					<a href="{% url 'video:video list' 0 %}">所有视频<span>&nbsp;{{ all }}</span></a>
-					
 				</li>
 				{% else %}
 				<li>
@@ -30,7 +29,7 @@
 				{% endif %}
 				{% endfor %}
 			</ul>
-			<div class="categroy">
+			<div class="category">
 				{% for video_list_raw in video_list %}
 				<div class="row">
 					{% for video in video_list_raw %}

@@ -168,14 +168,24 @@ header .cat-title{border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;paddi
 .current-nav {padding-bottom: 5px; border-bottom: 1px solid #A161BF;  margin: 20px 25px 5px;}
 
 .program { margin: 20px 30px; }
-.program .name { margin: 10px 0; text-align: center; font-size: 24px; }
-.program .info { margin: 15px 0 10px; text-align: center; font-size: 13px; }
-.program .description { white-space: pre-wrap; font-size: 15px;}
-.program .training-day { text-align: center; font-size: 17px;}
-.program .training-day table { border: 0px solid #A161BF; width: 100%; border-collapse: collapse; font-size: 15px;}
-.program .training-day table tr { border-top: 1px solid #A161BF; border-bottom: 1px solid #A161BF;}
-.program .training-day table td { text-align: center; }
+.program .name { padding: 20px 10px;  font-size: 24px; }
+.program .info { padding: 0 10px 10px; font-size: 14px; }
+.program .description { padding: 10px 10px; white-space: pre-wrap; font-size: 13px; border-top: 1px solid #ccc;}
+.program .training-day { padding: 20px 0; text-align: center; font-size: 17px;}
+.program .training-day table { margin: auto; width: 80%; border-collapse: collapse; font-size: 15px;}
+.program .training-day table tr { border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; transition: all 0.1s ease-in;}
+.program .training-day table tr:nth-child(odd) { background-color: #f9f9f9;}
+.program .training-day table tr:hover { background-color: rgb(174, 138, 196); color: white;}
+.program .training-day table td { text-align: center; padding: 7px 0;}
+.program .training-day table .col1 { width: 50%; }
+.program .training-day table .col2 { width: 16.66%; }
 
+.category { margin: 20px 30px; }
+.category li { font-size: 17px; }
+.category-bar { border-bottom: 1px solid #e5e9ef; margin: 0 20px; padding-top: 20px; font-size: 15px; }
+.category-bar li {padding: 5px 10px;display: inline-block;}
+.category-bar span {font-size: 10px; color: gray;}
+.category-bar .on {padding: 5px 10px; border-bottom: 1px solid #A161BF;}
 
 .pagination {margin-top: 25px; text-align: center;}
 .pagination a {
@@ -230,19 +240,13 @@ header .cat-title{border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;paddi
 
 .wid-about img{max-width: 360px; display: block; margin: auto}
 
-.microblog {border-top: thin solid #e5e9ef; margin-bottom: 20px; display: inline-block; text-align: left; width: 100%;}
-.microblog:last-child {margin-bottom: 0;}
-.microblog:after, .microblog:before{clear: both; content: '\0020'; display: block; visibility: hidden; width: 0; height: 0;}
-.microblog img{max-width: 360px; display: block; margin: auto}
-.microblog .zoom-container .zoom-caption i.icon-play{font-size: 13px; max-width: 40px;margin: 18% auto 0;}
-.microblog span{display: block;margin: 5px 0;}
-.microblog span i{margin: 0 5px 0 0;}
-.microblog .wid-name {margin-top: 20px;}
-.microblog .wid-name a{font-size: 17px;}
-.microblog .wid-name a:hover {font-size: 17px;color: #A161BF;}
-.microblog .info {font-size: 15px;}
-.microblog .info span{font-size: 13px;}
-.microblog .wid-item  i.icon-play{position: absolute; top: 15px;text-align: center;width: 40px;margin: 0 auto;left: 40px;font-size: 12px;}
+.directory {border-top: thin solid #e5e9ef; margin-bottom: 20px; display: inline-block; text-align: left; width: 100%;}
+.directory:last-child {margin-bottom: 0;}
+.directory:after, .directory:before{clear: both; content: '\0020'; display: block; visibility: hidden; width: 0; height: 0;}
+.directory .name {margin: 20px 0 15px; font-size: 17px;}
+.directory .name a:hover {color: #A161BF;}
+.directory .day {font-size: 15px;}
+.directory .day li { padding: 5px 0; }
 
 /* ---------------------------------------------------------------------------- */
 /* --------------------------------------Footer-------------------------------- */
