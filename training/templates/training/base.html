@@ -66,8 +66,24 @@
 									{% endfor %}
 								</ul>
 							</li>
-							<li><a href="#">训练日志</a></li>
-							<li><a href="#">动作库</a></li>
+							<li>
+								<a href="{% url 'training:exercise list' 0 %}">动作库</a>
+								{% get_exercise_types as etypes %}
+								<ul>
+									{% for etype, v in etypes.items %}
+									<li>
+										<a href="{% url 'training:exercise list' v.1 %}">{{ etype }}</a>
+										<ul>
+											{% for sort in v.0 %}
+											<li>
+												<a href="{% url 'training:exercise list' sort.number %}">{{ sort.sort }}</a>
+											</li>
+											{% endfor %}
+										</ul>
+									</li>
+									{% endfor %}
+								</ul>
+							</li>
 						</ul>
 					</li>
 					<li><a href="#">关于我们</a></li>

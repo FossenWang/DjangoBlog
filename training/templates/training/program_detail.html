@@ -9,13 +9,17 @@
 					<span>&gt;</span>
 					<a href="{% url 'training:program list' 0 %}">训练方案</a>
 					<span>&gt;</span>
-					<a href="#">{{ program.ptype }}</a>
+					<a href="{% url 'training:program list' program.ptype.pk %}">{{ program.ptype }}</a>
 				</div>
 			</div>
 			<div class="row">
 				<div class="program">
 					<div class="name"><a name="name">{{ program.name }}</a></div>
-					<div class="info">周期: {{ program.cycle }}天&nbsp;&nbsp;类型: {{ program.ptype }}&nbsp;&nbsp;创建者: <a href="#">{{ program.creator }}</a></div>
+					<div class="info">
+						周期: {{ program.cycle }}天&nbsp;&nbsp;
+						类型: <a href="{% url 'training:program list' program.ptype.pk %}">{{ program.ptype }}</a>&nbsp;&nbsp;
+						创建者: <a href="#">{{ program.creator }}</a>
+					</div>
 					<div class="description">{{ program.description }}</div>
 				    {% for training_day in program.trainingday_set.all %}
 				    <div class="training-day">
