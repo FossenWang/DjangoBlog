@@ -182,9 +182,11 @@ header .cat-title{border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;paddi
 #b {height: 600px; width: 100%;}
 
 .category-bar {border-bottom: 1px solid #e5e9ef; margin: 0 20px; padding-top: 20px; font-size: 15px;}
-.category-bar li {padding: 5px 10px;display: inline-block;}
+.category-bar li {display: inline-block;}
+.category-bar a {padding: 3px 10px;}
 .category-bar span {font-size: 10px; color: gray;}
-.category-bar .on {padding: 5px 10px; border-bottom: 1px solid #A161BF;}
+.category-bar .on {border-bottom: 1px solid #A161BF;}
+
 .category {margin: 5px 10px;}
 .category p {border-top: 1px solid #e5e9ef; margin: 0 15px; padding-top: 10px; font-size: 17px;}
 .category a {transition: all 0.2s ease-in-out;}

@@ -6,34 +6,34 @@
 	<div class="wrap-content">
 		<div class="row">
 			{% get_program_types as ptypes %}
-		  {% get_program_count as all %}
+			{% get_program_count as all %}
 			<ul class="category-bar">
 				{% if pk == 0 %}
-				<li class="on">
-					<a href="{% url 'training:program list' 0 %}">所有方案<span>&nbsp;{{ all }}</span></a>
-				</li>
-				{% else %}
 				<li>
-					<a href="{% url 'training:program list' 0 %}">所有方案<span>&nbsp;{{ all }}</span></a>
+					<a class="on" href="{% url 'training:program list' 0 %}">所有方案<span>&nbsp;{{ all }}</span></a>
+					{% else %}
+						<a href="{% url 'training:program list' 0 %}">所有方案<span>&nbsp;{{ all }}</span></a>
+					{% endif %}
 				</li>
-				{% endif %}
 				{% for ptype in ptypes %}
 				{% if pk == ptype.pk %}
-				<li class="on">
-					<a href="{% url 'training:program list' ptype.id %}">{{ ptype.name }}<span>&nbsp;{{ ptype.counts }}</span></a>
-				</li>
-				{% else %}
 				<li>
-					<a href="{% url 'training:program list' ptype.id %}">{{ ptype.name }}<span>&nbsp;{{ ptype.counts }}</span></a>
+					<a class="on" href="{% url 'training:program list' ptype.id %}">{{ ptype.name }}<span>&nbsp;{{ ptype.counts }}</span></a>
+					{% else %}
+						<a href="{% url 'training:program list' ptype.id %}">{{ ptype.name }}<span>&nbsp;{{ ptype.counts }}</span></a>
+					{% endif %}
 				</li>
-				{% endif %}
 				{% endfor %}
+				<div class="new"><a href="#">＋新建方案</a></div>
 			</ul>
 			<div class="category">
 				<ul>
 					{% for program in program_list %}
 					<li>
 						<a href="{% url 'training:program' program.pk %}">{{ program.name }}</a>
+						<br/><br/>&nbsp;&nbsp;周期: {{ program.cycle }}天&nbsp;&nbsp;
+						类型: <a href="{% url 'training:program list' program.ptype.pk %}">{{ program.ptype }}</a>&nbsp;&nbsp;
+						创建者: <a href="#">{{ program.creator }}</a>
 					</li>
 					{% empty %}
 					<li>暂时没有训练方案！</li>

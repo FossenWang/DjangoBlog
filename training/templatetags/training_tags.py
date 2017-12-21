@@ -24,7 +24,7 @@ def get_exercise_types():
         if sort.etype not in etypes.keys():
             etype_sorts = sorts.filter(etype=sort.etype)
             ecounts = sum([s.counts for s in etype_sorts])
-            etypes[sort.etype] = [etype_sorts, str(sort.number)[0], ecounts]
+            etypes[sort.etype] = [etype_sorts, sort.number//10, ecounts]
     return etypes
 
 @register.simple_tag

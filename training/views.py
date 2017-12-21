@@ -1,8 +1,9 @@
 '训练相关视图'
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, FormView, UpdateView
 from django.shortcuts import get_object_or_404
 
 from .models import Program, ProgramType, Exercise, ExerciseType
+from .forms import ProgramForm
 
 class ProgramListView(ListView):
     '训练方案列表'
@@ -109,7 +110,7 @@ class ExerciseListView(ListView):
         pagination_data = self.pagination_data(paginator, page, is_paginated)
         context.update(pagination_data)
 
-        context['number'] = self.kwargs.get('number')
+        context['number'] = int(self.kwargs.get('number'))
 
         return context
 
@@ -162,3 +163,10 @@ class ExerciseListView(ListView):
         }
 
         return data
+
+class EditProgramView(UpdateView):
+    '编辑方案视图'
+    model = Program
+    context_object_name = 'program'
+    template_name = 'training/program_edit.html'
+    form_class = ProgramForm

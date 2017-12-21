@@ -7,26 +7,33 @@
 		<div class="row">
 			{% get_exercise_types as etypes %}
 		  {% get_exercise_count as all %}
-			<ul class="category-bar">
-				{% if number == '0' %}
-				<li class="on">
+			<ul class="etype">
+				<li class="b">
+				  {% if number == 0 %}
+					<a class="on" href="{% url 'training:exercise list' 0 %}">所有动作<span>&nbsp;{{ all }}</span></a>
+					{% else %}
 					<a href="{% url 'training:exercise list' 0 %}">所有动作<span>&nbsp;{{ all }}</span></a>
+					{% endif %}
 				</li>
-				{% else %}
-				<li>
-					<a href="{% url 'training:exercise list' 0 %}">所有动作<span>&nbsp;{{ all }}</span></a>
-				</li>
-				{% endif %}
 				{% for etype, v in etypes.items %}
-				{% if number == v.1 %}
-				<li class="on">
+				<li class="b">
+					{% if number == v.1 %}
+					<a class="on" href="{% url 'training:exercise list' v.1 %}">{{ etype }}<span>&nbsp;{{ v.2 }}</span></a>
+					{% else %}
 					<a href="{% url 'training:exercise list' v.1 %}">{{ etype }}<span>&nbsp;{{ v.2 }}</span></a>
+					{% endif %}
+					<ul class="sort">
+						{% for sort in v.0 %}
+						<li>
+							{% if number == sort.number %}
+							<a class="on" href="{% url 'training:exercise list' sort.number %}">{{ sort.sort }}<span>&nbsp;{{ sort.counts }}</span></a>
+							{% else %}
+							<a href="{% url 'training:exercise list' sort.number %}">{{ sort.sort }}<span>&nbsp;{{ sort.counts }}</span></a>
+							{% endif %}
+						</li>
+						{% endfor %}
+					</ul>
 				</li>
-				{% else %}
-				<li>
-					<a href="{% url 'training:exercise list' v.1 %}">{{ etype }}<span>&nbsp;{{ v.2 }}</span></a>
-				</li>
-				{% endif %}
 				{% endfor %}
 			</ul>
 			<div class="category">

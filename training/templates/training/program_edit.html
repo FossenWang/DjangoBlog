@@ -9,7 +9,7 @@
 					<span>&gt;</span>
 					<a href="{% url 'training:program list' 0 %}">训练方案</a>
 					<span>&gt;</span>
-					<a href="{% url 'training:program list' program.ptype.pk %}">{{ program.ptype }}</a>
+					<a href="{% url 'training:program list' 0 %}">{{ program.ptype }}</a>
 				</div>
 			</div>
 			<div class="row">
@@ -17,11 +17,15 @@
 					<div class="name"><a name="name">{{ program.name }}</a></div>
 					<div class="info">
 						周期: {{ program.cycle }}天&nbsp;&nbsp;
-						类型: <a href="{% url 'training:program list' program.ptype.pk %}">{{ program.ptype }}</a>&nbsp;&nbsp;
+						类型: <a href="{% url 'training:program list' 0 %}">{{ program.ptype }}</a>&nbsp;&nbsp;
 						创建者: <a href="#">{{ program.creator }}</a>
-						<div class="edit"><a href="{% url 'training:edit program' program.pk %}">修改方案</a></div>
 					</div>
 					<div class="description">{{ program.description }}</div>
+					<form action="" method="post">
+						{% csrf_token %}
+						{{ form.as_ul }}
+						<input type="submit" value="Submit" />
+					</form>
 				    {% for training_day in program.trainingday_set.all %}
 				    <div class="training-day">
 						<p><a name="{{ training_day.day }}">Day {{ training_day.day }} {{ training_day.name }}</a></p>

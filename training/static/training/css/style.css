@@ -152,13 +152,7 @@ header .cat-title{border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;paddi
 /* ---------------------------------------------------------------------------- */
 /* -------------------------------------Container------------------------------ */
 /* ---------------------------------------------------------------------------- */
-#container {
-  background-color:#f4f5f7; 
-}
-#container.index-page{}
-#container .wrap-container{}
-
-#container .most-viewed{}
+#container { background-color:#f4f5f7; }
 #container .most-viewed .zoom-container .zoom-caption i.icon-play{max-width: 60px;font-size: 24px;margin: 25% auto 0;}
 
 /* ---MainContent-Article--- */
@@ -170,6 +164,7 @@ header .cat-title{border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;paddi
 .program { margin: 20px 30px; }
 .program .name { padding: 20px 10px;  font-size: 24px; }
 .program .info { padding: 0 10px 10px; font-size: 14px; }
+.program .edit { float: right;  }
 .program .description { padding: 10px 10px; white-space: pre-wrap; font-size: 13px; border-top: 1px solid #ccc;}
 .program .training-day { padding: 20px 0; text-align: center; font-size: 17px;}
 .program .training-day table { margin: auto; width: 80%; border-collapse: collapse; font-size: 15px;}
@@ -179,13 +174,33 @@ header .cat-title{border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;paddi
 .program .training-day table td { text-align: center; padding: 7px 0;}
 .program .training-day table .col1 { width: 50%; }
 .program .training-day table .col2 { width: 16.66%; }
+.program form { margin: 10px 10px;}
+.program form #id_name { display: block; }
+.program form #id_cycle { display: inline-block; width: 30px; margin: 10px 20px; border: 1px solid #ccc; border-radius: 5px; padding: 2px; }
+.program form #id_ptype, #id_creator { display: inline-block; margin: 10px 20px;}
+.program form #id_description { display: block; width: 95%; border: 1px solid #ccc; border-radius: 5px; padding: 10px;}
+
+.program form label[for=id_cycle], label[for=id_ptype], label[for=id_creator] { line-height: 40px; }
+.program form label[for=id_description] { display: block; }
 
 .category { margin: 20px 30px; }
 .category li { font-size: 17px; }
-.category-bar { border-bottom: 1px solid #e5e9ef; margin: 0 20px; padding-top: 20px; font-size: 15px; }
-.category-bar li {padding: 5px 10px;display: inline-block;}
+
+.category-bar { border-bottom: 1px solid #e5e9ef; margin: 0 20px; padding-top: 20px; font-size: 15px;}
+.category-bar li {display: inline-block;}
+.category-bar a {padding: 3px 10px;}
 .category-bar span {font-size: 10px; color: gray;}
-.category-bar .on {padding: 5px 10px; border-bottom: 1px solid #A161BF;}
+.category-bar .on {border-bottom: 1px solid #A161BF;}
+.new {float: right; margin: 0 10px;}
+
+.etype { margin: 0 20px; padding-top: 20px; font-size: 15px; }
+.etype .b { border-bottom: 1px solid #e5e9ef; padding: 10px 0;}
+.etype a { margin: 5px 5px; padding: 2px 7px;}
+.etype span {font-size: 10px; color: gray;}
+.etype .on { border: 1px solid #A161BF; border-radius: 5px; color: white; background-color: #A161BF;}
+.etype .on span { color: white;}
+.etype .sort { padding: 10px 30px 0; }
+.etype .sort li {display: inline-block; }
 
 .pagination {margin-top: 25px; text-align: center;}
 .pagination a {
@@ -246,7 +261,7 @@ header .cat-title{border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;paddi
 .directory .name {margin: 20px 0 15px; font-size: 17px;}
 .directory .name a:hover {color: #A161BF;}
 .directory .day {font-size: 15px;}
-.directory .day li { padding: 5px 0; }
+.directory .day li { padding: 5px 20px; }
 
 /* ---------------------------------------------------------------------------- */
 /* --------------------------------------Footer-------------------------------- */

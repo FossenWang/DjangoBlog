@@ -9,24 +9,20 @@
 			{% get_video_count as all %}
 			<ul class="category-bar">
 				{% if number == 0 %}
-				<li class="on">
-					<a href="{% url 'video:video list' 0 %}">所有视频<span>&nbsp;{{ all }}</span></a>
-				</li>
-				{% else %}
 				<li>
+					<a class="on" href="{% url 'video:video list' 0 %}">所有视频<span>&nbsp;{{ all }}</span></a>
+					{% else %}
 					<a href="{% url 'video:video list' 0 %}">所有视频<span>&nbsp;{{ all }}</span></a>
+					{% endif %}
 				</li>
-				{% endif %}
 				{% for cate in cates %}
 				{% if number == cate.number %}
-				<li class="on">
-					<a href="{% url 'video:video list' cate.number %}">{{ cate.name }}<span>&nbsp;{{ cate.counts }}</span></a>
-				</li>
-				{% else %}
 				<li>
+					<a class="on" href="{% url 'video:video list' cate.number %}">{{ cate.name }}<span>&nbsp;{{ cate.counts }}</span></a>
+					{% else %}
 					<a href="{% url 'video:video list' cate.number %}">{{ cate.name }}<span>&nbsp;{{ cate.counts }}</span></a>
+					{% endif %}
 				</li>
-				{% endif %}
 				{% endfor %}
 			</ul>
 			<div class="category">

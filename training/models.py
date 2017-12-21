@@ -4,6 +4,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core import urlresolvers
+from django.urls import reverse
 
 class ExerciseType(models.Model):
     etype = models.CharField('动作类型', max_length=16)
@@ -48,6 +49,9 @@ class Program(models.Model):
     cycle = models.PositiveIntegerField('周期', default=7)
     ptype = models.ForeignKey(ProgramType, default=1, on_delete=models.SET_DEFAULT, verbose_name='方案类型')
     creator = models.ForeignKey(User, default=2, on_delete=models.SET_DEFAULT, verbose_name='创建者')
+
+    def get_absolute_url(self):
+        return reverse('training:program', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.name
