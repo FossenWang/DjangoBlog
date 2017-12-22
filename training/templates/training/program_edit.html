@@ -23,8 +23,12 @@
 					<div class="description">{{ program.description }}</div>
 					<form action="" method="post">
 						{% csrf_token %}
-						{{ form.as_ul }}
-						<input type="submit" value="Submit" />
+						{{ form.as_p }}
+						{{ tdformset.as_p }}
+						{% for ws in wsformset_list %}
+						{{ ws.as_p }}
+						{% endfor %}
+						<input type="submit" value="提交" class="ok" />
 					</form>
 				    {% for training_day in program.trainingday_set.all %}
 				    <div class="training-day">

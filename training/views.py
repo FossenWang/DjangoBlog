@@ -2,8 +2,9 @@
 from django.views.generic import ListView, DetailView, FormView, UpdateView
 from django.shortcuts import get_object_or_404
 
-from .models import Program, ProgramType, Exercise, ExerciseType
-from .forms import ProgramForm
+from .models import Program, ProgramType, Exercise, ExerciseType, TrainingDay, WeightSets
+from .forms import ProgramForm, TrainingDayForm, WeightSetsForm
+from django.forms import modelformset_factory
 
 class ProgramListView(ListView):
     '训练方案列表'
@@ -170,3 +171,32 @@ class EditProgramView(UpdateView):
     context_object_name = 'program'
     template_name = 'training/program_edit.html'
     form_class = ProgramForm
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        TDFormSet = modelformset_factory(TrainingDay, fields=('day', 'name'), extra=0)
+        WSFormSet = modelformset_factory(WeightSets, fields=('exercises', 'minreps', 'maxreps', 'sets', 'rest'), extra=0)
+        program = context['program']
+        td_set = program.trainingday_set.all()
+        wsformset_list = []
+        if self.request.method == 'POST':
+            tdformset = TDFormSet(self.request.POST, queryset=td_set, prefix='day')
+            for td in td_set:
+                ws_set = td.weightsets_set.all()
+                wsformset = WSFormSet(self.request.POST, queryset=ws_set, prefix='day-'+str(td.day)+'-set')
+                wsformset_list.append(wsformset)
+        else:
+            tdformset = TDFormSet(queryset=td_set, prefix='day')
+            for td in td_set:
+                ws_set = td.weightsets_set.all()
+                wsformset = WSFormSet(queryset=ws_set, prefix='day-'+str(td.day)+'-set')
+                wsformset_list.append(wsformset)
+        context['tdformset'] = tdformset
+        context['wsformset_list'] = wsformset_list
+        return context
+'''
+    def form_valid(self, form):
+        program = form.save(commit=False)
+'''
+
+
