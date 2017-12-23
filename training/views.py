@@ -1,10 +1,10 @@
 '训练相关视图'
-from django.views.generic import ListView, DetailView, FormView, UpdateView
+from django.views.generic import ListView, DetailView, UpdateView
 from django.shortcuts import get_object_or_404
+from django.forms import modelformset_factory, inlineformset_factory
 
-from .models import Program, ProgramType, Exercise, ExerciseType, TrainingDay, WeightSets
-from .forms import ProgramForm, TrainingDayForm, WeightSetsForm
-from django.forms import modelformset_factory
+from .models import Program, ProgramType, Exercise, ExerciseType, TrainingDay, WeightSets, ExercisesInSets
+from .forms import ProgramForm, TrainingDayForm, WeightSetsForm, ExercisesInSetsForm
 
 class ProgramListView(ListView):
     '训练方案列表'
@@ -171,14 +171,16 @@ class EditProgramView(UpdateView):
     context_object_name = 'program'
     template_name = 'training/program_edit.html'
     form_class = ProgramForm
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        TDFormSet = modelformset_factory(TrainingDay, fields=('day', 'name'), extra=0)
-        WSFormSet = modelformset_factory(WeightSets, fields=('exercises', 'minreps', 'maxreps', 'sets', 'rest'), extra=0)
+        TDFormSet = modelformset_factory(TrainingDay, form=TrainingDayForm, extra=0)
+        WSFormSet = modelformset_factory(WeightSets, form=WeightSetsForm, extra=0)
+        EISFormSet = inlineformset_factory(WeightSets, ExercisesInSets, form=ExercisesInSetsForm, fk_name='sets', extra=0)
         program = context['program']
         td_set = program.trainingday_set.all()
         wsformset_list = []
+        exercises_list = []
         if self.request.method == 'POST':
             tdformset = TDFormSet(self.request.POST, queryset=td_set, prefix='day')
             for td in td_set:
@@ -191,12 +193,23 @@ class EditProgramView(UpdateView):
                 ws_set = td.weightsets_set.all()
                 wsformset = WSFormSet(queryset=ws_set, prefix='day-'+str(td.day)+'-set')
                 wsformset_list.append(wsformset)
+                for ws in ws_set:
+                    exercises = EISFormSet(instance=ws)
+                    exercises_list.append(exercises)
         context['tdformset'] = tdformset
         context['wsformset_list'] = wsformset_list
+        context['exercises_list'] = exercises_list
         return context
-'''
+
     def form_valid(self, form):
-        program = form.save(commit=False)
-'''
+        context = self.get_context_data()
+        tdformset = context['tdformset']
+        wsformset_list = context['wsformset_list']
+        if tdformset.is_valid():
+            td = tdformset.save()
+        for wsformset in wsformset_list:
+            if wsformset.is_valid():
+                ws_list = wsformset.save()
+        return super().form_valid(form)
 
 

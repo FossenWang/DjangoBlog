@@ -9,7 +9,6 @@ class WeightSetsInline(admin.TabularInline):
     model = WeightSets
     extra = 0
     readonly_fields = ('admin_link', )
-    #fields = ('number', 'sets', 'rest', 'exercises')
 
 class PowerliftingSetsInline(admin.TabularInline):
     model = PowerliftingSets

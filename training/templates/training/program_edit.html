@@ -28,6 +28,9 @@
 						{% for ws in wsformset_list %}
 						{{ ws.as_p }}
 						{% endfor %}
+						{% for ex in exercises_list %}
+						{{ ex.as_p }}
+						{% endfor %}
 						<input type="submit" value="提交" class="ok" />
 					</form>
 				    {% for training_day in program.trainingday_set.all %}

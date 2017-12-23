@@ -119,6 +119,9 @@ class ExercisesInSets(models.Model):
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, verbose_name='动作')
     number = models.PositiveIntegerField('次序', default=0)
 
+    def __str__(self):
+        return 'Exercise:' + str(self.number) + ' ' + self.exercise.name
+
     class Meta:
         ordering = ['number']
         verbose_name = '动作'
