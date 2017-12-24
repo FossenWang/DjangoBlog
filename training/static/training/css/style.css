@@ -184,6 +184,11 @@ header .cat-title{border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;paddi
 .program form label[for=id_description] { display: block; margin: 10px 0;}
 .program form .ok { background: white; color: #A161BF; width: 60px; height: 30px; border: 1px solid #A161BF; border-radius: 5px; transition: all .2s ease-in-out }
 .program form .ok:hover { background: #A161BF; color: white; }
+.program form .training-day { border: 1px solid #ccc; border-radius: 5px; }
+.program form .training-day .training-sets { border: 1px solid #ccc; border-radius: 5px; }
+.program form .training-day .training-sets .exercises { display: inline-block; }
+.program form .training-day .training-sets .detail { display: inline-block; }
+
 
 .category { margin: 20px 30px; }
 .category li { font-size: 17px; }

@@ -24,6 +24,23 @@
 					<form action="" method="post">
 						{% csrf_token %}
 						{{ form.as_p }}
+						{{ td_management }}
+						{% for td in td_list %}
+						<div class="training-day">
+							{{ td.0 }}
+							{{ td.1 }}
+							{% for ws in td.2 %}
+							<div class="training-sets">
+								<div class="exercises">
+								    {{ ws.1.as_p }}
+								</div>
+								<div class="detail">
+								    {{ ws.0.as_p }}
+							    </div>
+							</div>
+							{% endfor %}
+						</div>
+						{% endfor %}
 						{{ tdformset.as_p }}
 						{% for ws in wsformset_list %}
 						{{ ws.as_p }}
