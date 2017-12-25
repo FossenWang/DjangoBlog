@@ -14,65 +14,47 @@
 			</div>
 			<div class="row">
 				<div class="program">
-					<div class="name"><a name="name">{{ program.name }}</a></div>
-					<div class="info">
-						周期: {{ program.cycle }}天&nbsp;&nbsp;
-						类型: <a href="{% url 'training:program list' 0 %}">{{ program.ptype }}</a>&nbsp;&nbsp;
-						创建者: <a href="#">{{ program.creator }}</a>
-					</div>
-					<div class="description">{{ program.description }}</div>
 					<form action="" method="post">
 						{% csrf_token %}
 						{{ form.as_p }}
 						{{ td_management }}
 						{% for td in td_list %}
 						<div class="training-day">
-							{{ td.0 }}
 							{{ td.1 }}
-							{% for ws in td.2 %}
-							<div class="training-sets">
-								<div class="exercises">
-								    {{ ws.1.as_p }}
-								</div>
-								<div class="detail">
-								    {{ ws.0.as_p }}
-							    </div>
+							<div class="title">
+								{{ td.0 }}
 							</div>
-							{% endfor %}
+							<table>
+								<tr>
+									<td class="col1">动作</td><td class="col1">RM</td>
+									<td class="col2">组数</td><td class="col2">休息/s</td>
+									<td class="col2">删除</td>
+								</tr>
+								{% for ws in td.2 %}
+								<tr>
+									<td class="col1" title="备选动作: {{ ws.1 }}">{{ ws.1 }}</td>
+									<td class="col1">
+										{{ ws.0.minreps.errors }}{{ ws.0.maxreps.errors }}
+										{{ ws.0.minreps }}~{{ ws.0.maxreps }}
+									</td>
+									<td class="col2">{{ ws.0.sets.errors }}{{ ws.0.sets }}</td>
+									<td class="col2">{{ ws.0.rest.errors }}{{ ws.0.rest }}</td>
+									<td class="col2">
+										{{ ws.0.DELETE.errors }}{{ ws.0.DELETE }}
+										{{ ws.0.id }}{{ ws.0.trainingday }}
+									</td>
+								</tr>
+								{{ ws.0.id }}{{ ws.0.trainingday }}
+								{% endfor %}
+								<tr>
+									<td colspan="5">＋新增一组动作</td>
+								</tr>
+							</table>
 						</div>
 						{% endfor %}
-						{{ tdformset.as_p }}
-						{% for ws in wsformset_list %}
-						{{ ws.as_p }}
-						{% endfor %}
-						{% for ex in exercises_list %}
-						{{ ex.as_p }}
-						{% endfor %}
 						<input type="submit" value="提交" class="ok" />
+						<span><a href="{% url 'training:program' program.pk %}">返回</a></span>
 					</form>
-				    {% for training_day in program.trainingday_set.all %}
-				    <div class="training-day">
-						<p><a name="{{ training_day.day }}">Day {{ training_day.day }} {{ training_day.name }}</a></p>
-						<table>
-							<tr>
-								<td class="col1">动作</td><td class="col2">RM</td>
-								<td class="col2">组数</td><td class="col2">休息/s</td>
-							</tr>
-							{% for weight_sets in training_day.weightsets_set.all %}
-						    <tr>
-						        <td class="col1">{{ weight_sets.exercises.all.0 }}</td>
-						        <td class="col2">{{ weight_sets.minreps }}~{{ weight_sets.maxreps }}</td>
-								<td class="col2">{{ weight_sets.sets }}</td>
-						        <td class="col2">{{ weight_sets.rest }}</td>
-					        </tr>
-							{% empty %}
-							<tr>
-								<td class="col1">/</td><td class="col2">/</td><td class="col2">/</td><td class="col2">/</td>
-							</tr>
-							{% endfor %}
-					    </table>
-					</div>
-				    {% endfor %}
 				</div>
 			</div>
 		</div>

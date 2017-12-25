@@ -2,7 +2,7 @@
 /* ---------------------------------------------------------------------------- */
 /* ------------------------------------Reset----------------------------------- */
 /* ---------------------------------------------------------------------------- */
-a,abbr,acronym,address,applet,article,aside,audio,b,blockquote,big,body,center,canvas,caption,cite,code,command,datalist,dd,del,details,dfn,dl,div,dt,em,embed,fieldset,figcaption,figure,font,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,kbd,keygen,label,legend,li,meter,nav,object,ol,output,p,pre,progress,q,s,samp,section,small,span,source,strike,strong,sub,sup,tbody,tfoot,thead,th,tdvideo,tt,u,ul,var{background:transparent;border:0 none;font-size:100%;margin:0;padding:0;border:0;outline:0;vertical-align:top;}ol, ul {list-style:none;}blockquote, q {quotes:none;} img {vertical-align:top;}embed {vertical-align:top;}
+a,abbr,acronym,address,applet,article,aside,audio,b,blockquote,big,body,center,canvas,caption,cite,code,command,datalist,dd,del,details,dfn,dl,div,dt,em,embed,fieldset,figcaption,figure,font,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,kbd,keygen,label,legend,li,meter,nav,object,ol,output,p,pre,progress,q,s,samp,section,small,span,source,strike,strong,sub,sup,tbody,tfoot,thead,th,tdvideo,tt,u,ul,var{background:transparent;border:0 none;font-size:100%;margin:0;padding:0;border:0;outline:0;}ol, ul {list-style:none;}blockquote, q {quotes:none;} img {vertical-align:top;}embed {vertical-align:top;}
 article, aside, audio, canvas, command, datalist, details, embed, figcaption, figure, footer, header, hgroup, keygen, meter, nav, output, progress, section, source, video {display:block;}
 mark, rp, rt, ruby, summary, time {display:inline;}
 input, textarea {border:0; padding:0; margin:0; outline: 0;}
@@ -47,9 +47,9 @@ input[type="text"]{
 	padding: 10px;
 	margin-top: 10px;
 	-webkit-transition: all 0.7s ease 0s;
-    -moz-transition: all 0.7s ease 0s;
-    -o-transition: all 0.7s ease 0s;
-    transition: all 0.7s ease 0s;
+  -moz-transition: all 0.7s ease 0s;
+  -o-transition: all 0.7s ease 0s;
+  transition: all 0.7s ease 0s;
 }
 
 /* ---------------------------------------------------------------------------- */
@@ -167,7 +167,7 @@ header .cat-title{border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;paddi
 .program .edit { float: right;  }
 .program .description { padding: 10px 10px; white-space: pre-wrap; font-size: 13px; border-top: 1px solid #ccc;}
 .program .training-day { padding: 20px 0; text-align: center; font-size: 17px;}
-.program .training-day table { margin: auto; width: 80%; border-collapse: collapse; font-size: 15px;}
+.program .training-day table { margin: auto; width: 90%; border-collapse: collapse; font-size: 15px;}
 .program .training-day table tr { border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; transition: all 0.1s ease-in;}
 .program .training-day table tr:nth-child(odd) { background-color: #f9f9f9;}
 .program .training-day table tr:hover { background-color: rgb(174, 138, 196); color: white;}
@@ -175,19 +175,22 @@ header .cat-title{border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;paddi
 .program .training-day table .col1 { width: 50%; }
 .program .training-day table .col2 { width: 16.66%; }
 
-.program form { margin: 10px 10px;}
+.program form { margin: 10px 10px; }
 .program form #id_cycle { display: inline-block; width: 30px; margin: 10px 20px; border: 1px solid #ccc; border-radius: 5px; padding: 2px 5px; }
 .program form #id_name, #id_ptype, #id_creator { display: inline-block; margin: 10px 20px;}
-.program form #id_description { display: block; width: 95%; border: 1px solid #ccc; border-radius: 5px; padding: 10px;}
+.program form #id_description { display: block; width: 97%; border: 1px solid #ccc; border-radius: 5px; padding: 10px;}
 .program form label[for=id_name] { display: inline-block; padding: 15px 0; }
 .program form label[for=id_cycle], label[for=id_ptype], label[for=id_creator] { display: inline-block; margin: 7px 0; }
 .program form label[for=id_description] { display: block; margin: 10px 0;}
-.program form .ok { background: white; color: #A161BF; width: 60px; height: 30px; border: 1px solid #A161BF; border-radius: 5px; transition: all .2s ease-in-out }
+.program form .ok { margin: 30px 40px 0; background: white; color: #A161BF; width: 60px; height: 30px; border: 1px solid #A161BF; border-radius: 5px; transition: all .2s ease-in-out }
 .program form .ok:hover { background: #A161BF; color: white; }
-.program form .training-day { border: 1px solid #ccc; border-radius: 5px; }
-.program form .training-day .training-sets { border: 1px solid #ccc; border-radius: 5px; }
-.program form .training-day .training-sets .exercises { display: inline-block; }
-.program form .training-day .training-sets .detail { display: inline-block; }
+.program form .training-day { padding: 20px 0; text-align: center;}
+.program form .training-day .title { margin: 10px 0;  font-size: 17px;}
+.program form .training-day .title input[type=number] { width: 40px; margin: 0 10px; text-align: center; border: 1px solid #ccc; border-radius: 5px; }
+.program form .training-day .title input[type=text] { border: 1px solid #ccc; padding: 7px; margin: 0 10px; border-radius: 5px;}
+.program form .training-day table .col1 { width: 28%; }
+.program form .training-day table .col2 { width: 14%; }
+.program form .training-day table input { width: 40px; text-align: center; border: 1px solid #ccc; border-radius: 5px; }
 
 
 .category { margin: 20px 30px; }

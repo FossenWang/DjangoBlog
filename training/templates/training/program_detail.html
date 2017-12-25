@@ -32,7 +32,7 @@
 							</tr>
 							{% for weight_sets in training_day.weightsets_set.all %}
 						    <tr>
-						        <td class="col1">{{ weight_sets.exercises.all.0 }}</td>
+						        <td class="col1" title="备选动作: {{ weight_sets.exercises.all }}">{{ weight_sets.exercises.all.0 }}</td>
 						        <td class="col2">{{ weight_sets.minreps }}~{{ weight_sets.maxreps }}</td>
 								<td class="col2">{{ weight_sets.sets }}</td>
 						        <td class="col2">{{ weight_sets.rest }}</td>

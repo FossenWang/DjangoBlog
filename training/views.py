@@ -176,26 +176,18 @@ class EditProgramView(UpdateView):
         context = super().get_context_data(**kwargs)
         TDFormSet = inlineformset_factory(Program, TrainingDay, form=TrainingDayForm, extra=0)
         WSFormSet = inlineformset_factory(TrainingDay, WeightSets, form=WeightSetsForm, fk_name='trainingday', extra=0)
-        EISFormSet = inlineformset_factory(WeightSets, ExercisesInSets, form=ExercisesInSetsForm, fk_name='sets', extra=0)
+        #EISFormSet = inlineformset_factory(WeightSets, ExercisesInSets, form=ExercisesInSetsForm, fk_name='sets', extra=0, can_delete=False)
         program = context['program']
         td_set = program.trainingday_set.all()
         if self.request.method == 'POST':
             wsformset_list = []
-            eisformset_list = []
             tdformset = TDFormSet(self.request.POST, instance=program, prefix='day')
             for td in td_set:
                 ws_set = td.weightsets_set.all()
                 wsformset = WSFormSet(self.request.POST, instance=td, prefix='day-'+str(td.day)+'-set')
                 wsformset_list.append(wsformset)
-                for ws in ws_set:
-                    eisformset_list.append(
-                        EISFormSet(
-                            self.request.POST,
-                            instance=ws,
-                            prefix='day-'+str(td.day)+'-set-'+str(ws.number)+'-exercises'))
             context['tdformset'] = tdformset
             context['wsformset_list'] = wsformset_list
-            context['eisformset_list'] = eisformset_list
         else:
             td_list = []
             tdformset = TDFormSet(instance=program, prefix='day')
@@ -204,11 +196,7 @@ class EditProgramView(UpdateView):
                 ws_set = td.weightsets_set.all()
                 wsformset = WSFormSet(instance=td, prefix='day-'+str(td.day)+'-set')
                 for ws, wsform in zip(ws_set, wsformset):
-                    ws_list.append(
-                        [wsform,
-                        EISFormSet(
-                            instance=ws,
-                            prefix='day-'+str(td.day)+'-set-'+str(ws.number)+'-exercises')])
+                    ws_list.append([wsform, ws.exercises.all()[0]])
                 td_list.append([tdform, wsformset.management_form, ws_list])
             context['td_list'] = td_list
             context['td_management'] = tdformset.management_form
@@ -218,15 +206,11 @@ class EditProgramView(UpdateView):
         context = self.get_context_data()
         tdformset = context['tdformset']
         wsformset_list = context['wsformset_list']
-        eisformset_list = context['eisformset_list']
         if tdformset.is_valid():
             tdformset.save()
         for wsformset in wsformset_list:
             if wsformset.is_valid():
                 wsformset.save()
-        for eisformset in eisformset_list:
-            if eisformset.is_valid():
-                eisformset.save()
         return super().form_valid(form)
 
 
