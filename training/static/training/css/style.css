@@ -166,14 +166,16 @@ header .cat-title{border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;paddi
 .program .info { padding: 0 10px 10px; font-size: 14px; }
 .program .edit { float: right;  }
 .program .description { padding: 10px 10px; white-space: pre-wrap; font-size: 13px; border-top: 1px solid #ccc;}
-.program .training-day { padding: 20px 0; text-align: center; font-size: 17px;}
-.program .training-day table { margin: auto; width: 90%; border-collapse: collapse; font-size: 15px;}
+.program .training-day { padding: 20px 0; text-align: left; }
+.program .training-day p { padding: 0 36px; font-size: 17px;}
+.program .training-day table { margin: auto; width: 96%; border-collapse: collapse; font-size: 15px;}
 .program .training-day table tr { border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; transition: all 0.1s ease-in;}
 .program .training-day table tr:nth-child(odd) { background-color: #f9f9f9;}
 .program .training-day table tr:hover { background-color: rgb(174, 138, 196); color: white;}
-.program .training-day table td { text-align: center; padding: 7px 0;}
-.program .training-day table .col1 { width: 50%; }
-.program .training-day table .col2 { width: 16.66%; }
+.program .training-day table th { font-size: 17px; color: black; background-color:white; padding: 10px 20px; }
+.program .training-day table td { padding: 7px 0; }
+.program .training-day table .col1 { width: 40%; padding: 7px 20px;}
+.program .training-day table .col2 { width: 20%; }
 
 .program form { margin: 10px 10px; }
 .program form #id_cycle { display: inline-block; width: 30px; margin: 10px 20px; border: 1px solid #ccc; border-radius: 5px; padding: 2px 5px; }
@@ -191,10 +193,15 @@ header .cat-title{border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;paddi
 .program form .training-day table .col1 { width: 28%; }
 .program form .training-day table .col2 { width: 14%; }
 .program form .training-day table input { width: 40px; text-align: center; border: 1px solid #ccc; border-radius: 5px; }
-
+.program form .add-training-day { text-align: center; font-size: 17px; margin: 30px auto; background: white; color: #A161BF; width: 180px; height: 36px; border: 1px solid #A161BF; border-radius: 5px; transition: all .2s ease-in-out}
+.program form .add-training-day:hover { background: #A161BF; color: white; }
+.program form .delete-program { float: right; margin: 30px 40px 0; background: white; color: #A161BF; width: 90px; height: 30px; border: 1px solid #A161BF; border-radius: 5px; transition: all .2s ease-in-out }
+.program form .delete-program:hover { background: #A161BF; color: white; }
+.program form .delete-sets { line-height: 0; text-align: center; background: white; color: #A161BF; width: 25px; height: 25px; font-size: 20px; border: 0; border-radius: 5px; transition: all .2s ease-in-out }
+.program form .delete-sets:hover { background: #A161BF; color: white; }
 
 .category { margin: 20px 30px; }
-.category li { font-size: 17px; }
+.category li { font-size: 17px; margin: 20px 0;}
 
 .category-bar { border-bottom: 1px solid #e5e9ef; margin: 0 20px; padding-top: 20px; font-size: 15px;}
 .category-bar li {display: inline-block;}

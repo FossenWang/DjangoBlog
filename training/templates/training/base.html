@@ -28,6 +28,8 @@
 	<link rel="stylesheet" href="{% static 'training/css/style.css' %}">
 	<link rel="stylesheet" href="{% static 'training/css/menu.css' %}">
 
+	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+
 </head>
 
 <body>
@@ -52,30 +54,30 @@
 					</li>
 					<li><a href="#">动态</a></li>
 					<li>
-						<a href="{% url 'training:program list' 0 %}">训练</a>
+						<a href="{% url 'training:program_list' 0 %}">训练</a>
 						<ul>
 							<li>
-								<a href="{% url 'training:program list' 0 %}">训练方案</a>
+								<a href="{% url 'training:program_list' 0 %}">训练方案</a>
 								{% get_program_types as ptypes %}
 								<ul>
 									{% for ptype in ptypes %}
 									<li>
-										<a href="{% url 'training:program list' ptype.pk %}">{{ ptype.name }}</a>
+										<a href="{% url 'training:program_list' ptype.pk %}">{{ ptype.name }}</a>
 									</li>
 									{% endfor %}
 								</ul>
 							</li>
 							<li>
-								<a href="{% url 'training:exercise list' 0 %}">动作库</a>
+								<a href="{% url 'training:exercise_list' 0 %}">动作库</a>
 								{% get_exercise_types as etypes %}
 								<ul>
 									{% for etype, v in etypes.items %}
 									<li>
-										<a href="{% url 'training:exercise list' v.1 %}">{{ etype }}</a>
+										<a href="{% url 'training:exercise_list' v.1 %}">{{ etype }}</a>
 										<ul>
 											{% for sort in v.0 %}
 											<li>
-												<a href="{% url 'training:exercise list' sort.number %}">{{ sort.sort }}</a>
+												<a href="{% url 'training:exercise_list' sort.number %}">{{ sort.sort }}</a>
 											</li>
 											{% endfor %}
 										</ul>
@@ -140,6 +142,48 @@
 		var isiPad = navigator.userAgent.match(/iPad/i) != null;
 		if (isiPad) $('#menu ul').addClass('no-transition');      
     });
+
+    $(function() {
+		$(":checkbox").before('<button type="button" class="delete-sets" onclick="deleteSets()">×</button>');
+		$(":checkbox").hide();
+	});
+
+    $(".addsets").click(addSets);
+    function addSets(){
+		var id_addsets = $(this).attr("id");
+		var id_total_forms = id_addsets.replace("addsets", "sets-TOTAL_FORMS");
+		var vtf = parseInt($("#"+id_total_forms).val());
+		var id_prefix = id_addsets.replace("addsets", "sets-"+vtf);
+		var name_prefix = id_prefix.replace("id_","");
+		var id_minreps = id_prefix+"-minreps"; var name_minreps = name_prefix+"-minreps";
+		var id_maxreps = id_prefix+"-maxreps"; var name_maxreps = name_prefix+"-maxreps";
+		var id_sets = id_prefix+"-sets"; var name_sets = name_prefix+"-sets";
+		var id_rest = id_prefix+"-rest"; var name_rest = name_prefix+"-rest";
+		var id_DELETE = id_prefix+"-DELETE"; var name_DELETE = name_prefix+"-DELETE";
+		var id_trainingday = id_prefix+"-trainingday"; var name_trainingday = name_prefix+"-trainingday";
+        var newSets = '<tr>'+
+			'<td class="col1" title="备选动作: 哑铃卧推">哑铃卧推</td>'+
+			'<td class="col1">'+
+			    '<input type="number" name='+name_minreps+' value="8" min="0" id='+id_minreps+'>'+
+				'~<input type="number" name='+name_maxreps+' value="12" min="0" id='+id_maxreps+'>'+
+			'</td>'+
+			'<td class="col2"><input type="number" name='+name_sets+' value="5" min="0" id='+id_sets+'></td>'+
+			'<td class="col2"><input type="number" name='+name_rest+' value="120" min="0" id='+id_rest+'></td>'+
+			'<td class="col2">'+
+			    '<button type="button" class="delete-sets" onclick="deleteSets()">×</button>'+
+				'<input type="hidden" name='+name_DELETE+' value="on" id='+id_DELETE+'>'+
+				'<input type="hidden" name='+name_trainingday+' value="1" id='+id_trainingday+'>'+
+			'</td>'+
+			'</tr>';
+		$("#"+id_total_forms).val(vtf+1);
+		$("#"+id_addsets).before(newSets);
+	}
+
+	$($(".delete-sets").click(deleteSets));
+	function deleteSets(){
+		alert($(this).attr("type"))
+	}
+
 </script>
 
 </div>

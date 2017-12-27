@@ -1,6 +1,7 @@
 '训练相关视图'
-from django.views.generic import ListView, DetailView, UpdateView
+from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
 from django.shortcuts import get_object_or_404
+from django.urls import reverse_lazy
 from django.forms import modelformset_factory, inlineformset_factory
 
 from .models import Program, ProgramType, Exercise, ExerciseType, TrainingDay, WeightSets, ExercisesInSets
@@ -184,7 +185,7 @@ class EditProgramView(UpdateView):
             tdformset = TDFormSet(self.request.POST, instance=program, prefix='day')
             for td in td_set:
                 ws_set = td.weightsets_set.all()
-                wsformset = WSFormSet(self.request.POST, instance=td, prefix='day-'+str(td.day)+'-set')
+                wsformset = WSFormSet(self.request.POST, instance=td, prefix='day-'+str(td.day)+'-sets')
                 wsformset_list.append(wsformset)
             context['tdformset'] = tdformset
             context['wsformset_list'] = wsformset_list
@@ -194,7 +195,7 @@ class EditProgramView(UpdateView):
             for td, tdform in zip(td_set, tdformset):
                 ws_list = []
                 ws_set = td.weightsets_set.all()
-                wsformset = WSFormSet(instance=td, prefix='day-'+str(td.day)+'-set')
+                wsformset = WSFormSet(instance=td, prefix='day-'+str(td.day)+'-sets')
                 for ws, wsform in zip(ws_set, wsformset):
                     ws_list.append([wsform, ws.exercises.all()[0]])
                 td_list.append([tdform, wsformset.management_form, ws_list])
@@ -202,7 +203,7 @@ class EditProgramView(UpdateView):
             context['td_management'] = tdformset.management_form
         return context
 
-    def form_valid(self, form):
+    '''def form_valid(self, form):
         context = self.get_context_data()
         tdformset = context['tdformset']
         wsformset_list = context['wsformset_list']
@@ -211,6 +212,16 @@ class EditProgramView(UpdateView):
         for wsformset in wsformset_list:
             if wsformset.is_valid():
                 wsformset.save()
-        return super().form_valid(form)
+        return super().form_valid(form)'''
 
+class AddProgramView(CreateView):
+    '添加方案视图'
+    model = Program
+    context_object_name = 'program'
+    template_name = 'training/program_add.html'
+    form_class = ProgramForm
 
+class DeleteProgramView(DeleteView):
+    '删除方案视图'
+    model = Program
+    success_url = reverse_lazy('training:program_list', args=[0])

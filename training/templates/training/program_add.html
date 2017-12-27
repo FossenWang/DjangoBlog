@@ -9,7 +9,7 @@
 					<span>&gt;</span>
 					<a href="{% url 'training:program_list' 0 %}">训练方案</a>
 					<span>&gt;</span>
-					<a href="{% url 'training:program_list' 0 %}">{{ program.ptype }}</a>
+					<a href="#">新建方案</a>
 				</div>
 			</div>
 			<div class="row">
@@ -20,10 +20,10 @@
 						{{ td_management }}
 						{% for td in td_list %}
 						<div class="training-day">
+							{{ td.1 }}
 							<div class="title">
 								{{ td.0 }}
 							</div>
-							{{ td.1 }}
 							<table>
 								<tr>
 									<td class="col1">动作</td><td class="col1">RM</td>
@@ -41,25 +41,18 @@
 									<td class="col2">{{ ws.0.rest.errors }}{{ ws.0.rest }}</td>
 									<td class="col2">
 										{{ ws.0.DELETE.errors }}{{ ws.0.DELETE }}
-										{{ ws.0.id }}{{ ws.0.trainingday }}{{ ws.0.number }}
+										{{ ws.0.id }}{{ ws.0.trainingday }}
 									</td>
 								</tr>
 								{% endfor %}
-								<tr class="addsets" id="id_day-{{ td.0.day.value }}-addsets">
+								<tr id='addrow'>
 									<td colspan="5">＋新增一组动作</td>
 								</tr>
 							</table>
 						</div>
 						{% endfor %}
-						<div class="training-day">
-							<button type="button" class="add-training-day">＋新增一个训练日</button>
-						</div>
 						<input type="submit" value="提交" class="ok" />
-						<span><a href="{% url 'training:program' program.pk %}">返回</a></span>
-					</form>
-					<form action="{% url 'training:delete_program' program.pk%}" method="post">
-						{% csrf_token %}
-						<input type="submit" value="删除方案" class="delete-program" />
+						<span><a href="{% url 'training:program_list' 0 %}">返回</a></span>
 					</form>
 				</div>
 			</div>
@@ -71,20 +64,6 @@
 		<div class="widget wid-directory">
 			<div class="wid-header">
 				<h5>目录</h5>
-			</div>
-			<div class="wid-content">
-				<div class="directory">
-					<h5 class="name"><a href="#name">{{ program.name }}</a></h5>
-					<ul class="day">
-						{% for training_day in program.trainingday_set.all %}
-						<li>
-							<a href="#{{ training_day.day }}">
-								Day {{ training_day.day }} {{ training_day.name }}
-							</a>
-						</li>
-						{% endfor %}
-					</ul>
-				</div>
 			</div>
 		</div>
 	</div>

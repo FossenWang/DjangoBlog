@@ -7,9 +7,9 @@
 				<div class="current-nav">
 					<a href="/">首页</a>
 					<span>&gt;</span>
-					<a href="{% url 'training:program list' 0 %}">训练方案</a>
+					<a href="{% url 'training:program_list' 0 %}">训练方案</a>
 					<span>&gt;</span>
-					<a href="{% url 'training:program list' program.ptype.pk %}">{{ program.ptype }}</a>
+					<a href="{% url 'training:program_list' program.ptype.pk %}">{{ program.ptype }}</a>
 				</div>
 			</div>
 			<div class="row">
@@ -17,9 +17,9 @@
 					<div class="name"><a name="name">{{ program.name }}</a></div>
 					<div class="info">
 						周期: {{ program.cycle }}天&nbsp;&nbsp;
-						类型: <a href="{% url 'training:program list' program.ptype.pk %}">{{ program.ptype }}</a>&nbsp;&nbsp;
+						类型: <a href="{% url 'training:program_list' program.ptype.pk %}">{{ program.ptype }}</a>&nbsp;&nbsp;
 						创建者: <a href="#">{{ program.creator }}</a>
-						<div class="edit"><a href="{% url 'training:edit program' program.pk %}">修改方案</a></div>
+						<div class="edit"><a href="{% url 'training:edit_program' program.pk %}">修改方案</a></div>
 					</div>
 					<div class="description">{{ program.description }}</div>
 				    {% for training_day in program.trainingday_set.all %}

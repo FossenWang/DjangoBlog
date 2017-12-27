@@ -53,30 +53,30 @@
 					</li>
 					<li><a href="#">动态</a></li>
 					<li>
-						<a href="{% url 'training:program list' 0 %}">训练</a>
+						<a href="{% url 'training:program_list' 0 %}">训练</a>
 						<ul>
 							<li>
-								<a href="{% url 'training:program list' 0 %}">训练方案</a>
+								<a href="{% url 'training:program_list' 0 %}">训练方案</a>
 								{% get_program_types as ptypes %}
 								<ul>
 									{% for ptype in ptypes %}
 									<li>
-										<a href="{% url 'training:program list' ptype.pk %}">{{ ptype.name }}</a>
+										<a href="{% url 'training:program_list' ptype.pk %}">{{ ptype.name }}</a>
 									</li>
 									{% endfor %}
 								</ul>
 							</li>
 							<li>
-								<a href="#">动作库</a>
+								<a href="{% url 'training:exercise_list' 0 %}">动作库</a>
 								{% get_exercise_types as etypes %}
 								<ul>
-									{% for etype, sorts in etypes.items %}
+									{% for etype, v in etypes.items %}
 									<li>
-										<a href="#">{{ etype.0 }}</a>
+										<a href="{% url 'training:exercise_list' v.1 %}">{{ etype }}</a>
 										<ul>
-											{% for sort in sorts %}
+											{% for sort in v.0 %}
 											<li>
-												<a href="#">{{ sort.sort }}</a>
+												<a href="{% url 'training:exercise_list' sort.number %}">{{ sort.sort }}</a>
 											</li>
 											{% endfor %}
 										</ul>

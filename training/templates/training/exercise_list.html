@@ -10,25 +10,25 @@
 			<ul class="etype">
 				<li class="b">
 				  {% if number == 0 %}
-					<a class="on" href="{% url 'training:exercise list' 0 %}">所有动作<span>&nbsp;{{ all }}</span></a>
+					<a class="on" href="{% url 'training:exercise_list' 0 %}">所有动作<span>&nbsp;{{ all }}</span></a>
 					{% else %}
-					<a href="{% url 'training:exercise list' 0 %}">所有动作<span>&nbsp;{{ all }}</span></a>
+					<a href="{% url 'training:exercise_list' 0 %}">所有动作<span>&nbsp;{{ all }}</span></a>
 					{% endif %}
 				</li>
 				{% for etype, v in etypes.items %}
 				<li class="b">
 					{% if number == v.1 %}
-					<a class="on" href="{% url 'training:exercise list' v.1 %}">{{ etype }}<span>&nbsp;{{ v.2 }}</span></a>
+					<a class="on" href="{% url 'training:exercise_list' v.1 %}">{{ etype }}<span>&nbsp;{{ v.2 }}</span></a>
 					{% else %}
-					<a href="{% url 'training:exercise list' v.1 %}">{{ etype }}<span>&nbsp;{{ v.2 }}</span></a>
+					<a href="{% url 'training:exercise_list' v.1 %}">{{ etype }}<span>&nbsp;{{ v.2 }}</span></a>
 					{% endif %}
 					<ul class="sort">
 						{% for sort in v.0 %}
 						<li>
 							{% if number == sort.number %}
-							<a class="on" href="{% url 'training:exercise list' sort.number %}">{{ sort.sort }}<span>&nbsp;{{ sort.counts }}</span></a>
+							<a class="on" href="{% url 'training:exercise_list' sort.number %}">{{ sort.sort }}<span>&nbsp;{{ sort.counts }}</span></a>
 							{% else %}
-							<a href="{% url 'training:exercise list' sort.number %}">{{ sort.sort }}<span>&nbsp;{{ sort.counts }}</span></a>
+							<a href="{% url 'training:exercise_list' sort.number %}">{{ sort.sort }}<span>&nbsp;{{ sort.counts }}</span></a>
 							{% endif %}
 						</li>
 						{% endfor %}
