@@ -197,13 +197,16 @@ class EditProgramView(UpdateView):
                 ws_set = td.weightsets_set.all()
                 wsformset = WSFormSet(instance=td, prefix='day-'+str(td.day)+'-sets')
                 for ws, wsform in zip(ws_set, wsformset):
-                    ws_list.append([wsform, ws.exercises.all()[0]])
+                    if len(ws.exercises.all())>0:
+                        ws_list.append([wsform, ws.exercises.all()[0]])
+                    else:
+                        ws_list.append([wsform, '暂未选择动作'])
                 td_list.append([tdform, wsformset.management_form, ws_list])
             context['td_list'] = td_list
             context['td_management'] = tdformset.management_form
         return context
 
-    '''def form_valid(self, form):
+    def form_valid(self, form):
         context = self.get_context_data()
         tdformset = context['tdformset']
         wsformset_list = context['wsformset_list']
@@ -212,7 +215,9 @@ class EditProgramView(UpdateView):
         for wsformset in wsformset_list:
             if wsformset.is_valid():
                 wsformset.save()
-        return super().form_valid(form)'''
+            else:
+                print(wsformset)
+        return super().form_valid(form)
 
 class AddProgramView(CreateView):
     '添加方案视图'
