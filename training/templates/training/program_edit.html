@@ -16,15 +16,20 @@
 				<div class="program">
 					<form action="" method="post">
 						{% csrf_token %}
+						<div id="program_pk" style="display:none;">{{ program.pk }}</div>
 						{{ form.as_p }}
 						{{ td_management }}
 						{% for td in td_list %}
 						<div class="training-day">
 							<div class="title">
-								{{ td.0 }}
+								<span>天数: </span>{{ td.0.day }}
+								<span>名称: </span>{{ td.0.name }}
+								<span>删除: </span>{{ td.0.DELETE }}
+								{{ td.0.program }}
+								{{ td.0.id }}
 							</div>
-							{{ td.1 }}
 							<table><tbody>
+								{{ td.1 }}
 								<tr>
 									<td class="col1">动作</td><td class="col1">RM</td>
 									<td class="col2">组数</td><td class="col2">休息/s</td>
@@ -45,7 +50,7 @@
 									</td>
 								</tr>
 								{% endfor %}
-								<tr class="addsets" id="id_day-{{ td.0.day.value }}-addsets">
+								<tr class="addsets" id="id_day-{{ td.3 }}-addsets">
 									<td colspan="5">＋新增一组动作</td>
 								</tr>
 							</tbody></table>
@@ -54,7 +59,7 @@
 						<div class="training-day">
 							<button type="button" class="add-training-day">＋新增一个训练日</button>
 						</div>
-						<input type="submit" value="提交" class="ok" />
+						<input type="submit" value="保存" class="ok" />
 						<span><a href="{% url 'training:program' program.pk %}">返回</a></span>
 					</form>
 					<form action="{% url 'training:delete_program' program.pk%}" method="post">

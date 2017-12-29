@@ -184,37 +184,43 @@ class EditProgramView(UpdateView):
             wsformset_list = []
             tdformset = TDFormSet(self.request.POST, instance=program, prefix='day')
             for td in td_set:
-                ws_set = td.weightsets_set.all()
-                wsformset = WSFormSet(self.request.POST, instance=td, prefix='day-'+str(td.day)+'-sets')
+                wsformset = WSFormSet(self.request.POST, instance=td, prefix='day-'+str(td.day-1)+'-sets')
+                print(wsformset)
                 wsformset_list.append(wsformset)
             context['tdformset'] = tdformset
             context['wsformset_list'] = wsformset_list
         else:
             td_list = []
             tdformset = TDFormSet(instance=program, prefix='day')
+            i = 0
             for td, tdform in zip(td_set, tdformset):
                 ws_list = []
                 ws_set = td.weightsets_set.all()
-                wsformset = WSFormSet(instance=td, prefix='day-'+str(td.day)+'-sets')
+                wsformset = WSFormSet(instance=td, prefix='day-'+str(i)+'-sets')
+                i+=1
                 for ws, wsform in zip(ws_set, wsformset):
                     if len(ws.exercises.all())>0:
                         ws_list.append([wsform, ws.exercises.all()[0]])
                     else:
                         ws_list.append([wsform, '暂未选择动作'])
-                td_list.append([tdform, wsformset.management_form, ws_list])
+                td_list.append([tdform, wsformset.management_form, ws_list, td.day-1])
             context['td_list'] = td_list
             context['td_management'] = tdformset.management_form
         return context
 
     def form_valid(self, form):
         context = self.get_context_data()
+        print(context)
         tdformset = context['tdformset']
         wsformset_list = context['wsformset_list']
         if tdformset.is_valid():
             tdformset.save()
+        else:
+            print(tdformset)
         for wsformset in wsformset_list:
             if wsformset.is_valid():
-                wsformset.save()
+                ws=wsformset.save()
+                print(ws)
             else:
                 print(wsformset)
         return super().form_valid(form)
@@ -225,6 +231,19 @@ class AddProgramView(CreateView):
     context_object_name = 'program'
     template_name = 'training/program_add.html'
     form_class = ProgramForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        program = context['program']
+        TDFormSet = inlineformset_factory(Program, TrainingDay, form=TrainingDayForm, extra=0)
+        td_set = program.trainingday_set.all()
+        if self.request.method == 'POST':
+            tdformset = TDFormSet(self.request.POST, instance=program, prefix='day')
+            context['tdformset'] = tdformset
+        else:
+            tdformset = TDFormSet(instance=program, prefix='day')
+            context['td_management'] = tdformset.management_form
+        return context
 
 class DeleteProgramView(DeleteView):
     '删除方案视图'

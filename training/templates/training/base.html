@@ -28,8 +28,6 @@
 	<link rel="stylesheet" href="{% static 'training/css/style.css' %}">
 	<link rel="stylesheet" href="{% static 'training/css/menu.css' %}">
 
-	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
-
 </head>
 
 <body>
@@ -122,6 +120,8 @@
 	</div>
 </footer>
 
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+<script type="text/javascript" src="/static/training/js/program_edit.js"></script>
 <script type="text/javascript">
     $(function() {
 		if ($.browser.msie && $.browser.version.substr(0,1)<7)
@@ -145,60 +145,11 @@
 
     $(function() {
 		$(":checkbox").before('<button type="button" class="delete-sets">×</button>');
-		//$(":checkbox").hide();
+		$(":checkbox").hide();
         $(".addsets").click(addSets);
-		$(".delete-sets").click(deleteOldSets);
+		$(".delete-sets").click(deleteOldForm);
+		$(".add-training-day").click(addTrainingDay);
 	});
-
-    function addSets(){
-		var number = parseInt($(this).prev().find("input[name$='number']").val());
-		if (number){
-			number++;
-		}else{
-			number=1
-		}
-		var id_addsets = $(this).attr("id");
-		var day = parseInt(id_addsets.replace("id_day-","").replace("-addsets",""));
-		var id_total_forms = id_addsets.replace("addsets", "sets-TOTAL_FORMS");
-		var id_prefix = id_addsets.replace("addsets", "sets-"+(number-1));
-		var name_prefix = id_prefix.replace("id_","");
-		var id_minreps = id_prefix+"-minreps"; var name_minreps = name_prefix+"-minreps";
-		var id_maxreps = id_prefix+"-maxreps"; var name_maxreps = name_prefix+"-maxreps";
-		var id_sets = id_prefix+"-sets"; var name_sets = name_prefix+"-sets";
-		var id_rest = id_prefix+"-rest"; var name_rest = name_prefix+"-rest";
-		var id_DELETE = id_prefix+"-DELETE"; var name_DELETE = name_prefix+"-DELETE";
-		var id_trainingday = id_prefix+"-trainingday"; var name_trainingday = name_prefix+"-trainingday";
-		var id_number = id_prefix+"-number"; var name_number = name_prefix+"-number";
-        var newSets = '<tr>'+
-			'<td class="col1" title="备选动作: 哑铃卧推">哑铃卧推</td>'+
-			'<td class="col1">'+
-			    '<input type="number" name='+name_minreps+' value="8" min="0" id='+id_minreps+'>'+
-				'~<input type="number" name='+name_maxreps+' value="12" min="0" id='+id_maxreps+'>'+
-			'</td>'+
-			'<td class="col2"><input type="number" name='+name_sets+' value="5" min="0" id='+id_sets+'></td>'+
-			'<td class="col2"><input type="number" name='+name_rest+' value="120" min="0" id='+id_rest+'></td>'+
-			'<td class="col2">'+
-			    '<button type="button" class="delete-sets">×</button>'+
-				'<input type="hidden" name='+name_trainingday+' value='+day+' id='+id_trainingday+'>'+
-				'<input type="hidden" name='+name_number+' value='+number+' id='+id_number+'>'
-			'</td>'+
-			'</tr>';
-		var vtf = parseInt($("#"+id_total_forms).val());
-		$("#"+id_total_forms).val(vtf+1);
-		$("#"+id_addsets).before(newSets);
-		$("#"+id_number).parent().children(".delete-sets").click(deleteNewSets);
-	}
-
-	function deleteOldSets(){
-		$(this).siblings("input[name$='DELETE']").attr("checked", true);
-		$(this).parent().parent().hide();
-	}
-	function deleteNewSets(){
-		var id_total_forms = $(this).next().attr("id").split("sets")[0] + "sets-TOTAL_FORMS";
-		var vtf = parseInt($("#"+id_total_forms).val());
-		$("#"+id_total_forms).val(vtf-1);
-		$(this).parent().parent().remove();
-	}
 
 </script>
 

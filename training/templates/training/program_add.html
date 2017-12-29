@@ -18,39 +18,9 @@
 						{% csrf_token %}
 						{{ form.as_p }}
 						{{ td_management }}
-						{% for td in td_list %}
 						<div class="training-day">
-							{{ td.1 }}
-							<div class="title">
-								{{ td.0 }}
-							</div>
-							<table>
-								<tr>
-									<td class="col1">动作</td><td class="col1">RM</td>
-									<td class="col2">组数</td><td class="col2">休息/s</td>
-									<td class="col2">删除</td>
-								</tr>
-								{% for ws in td.2 %}
-								<tr>
-									<td class="col1" title="备选动作: {{ ws.1 }}">{{ ws.1 }}</td>
-									<td class="col1">
-										{{ ws.0.minreps.errors }}{{ ws.0.maxreps.errors }}
-										{{ ws.0.minreps }}~{{ ws.0.maxreps }}
-									</td>
-									<td class="col2">{{ ws.0.sets.errors }}{{ ws.0.sets }}</td>
-									<td class="col2">{{ ws.0.rest.errors }}{{ ws.0.rest }}</td>
-									<td class="col2">
-										{{ ws.0.DELETE.errors }}{{ ws.0.DELETE }}
-										{{ ws.0.id }}{{ ws.0.trainingday }}
-									</td>
-								</tr>
-								{% endfor %}
-								<tr id='addrow'>
-									<td colspan="5">＋新增一组动作</td>
-								</tr>
-							</table>
+							<button type="button" class="add-training-day">＋新增一个训练日</button>
 						</div>
-						{% endfor %}
 						<input type="submit" value="提交" class="ok" />
 						<span><a href="{% url 'training:program_list' 0 %}">返回</a></span>
 					</form>
