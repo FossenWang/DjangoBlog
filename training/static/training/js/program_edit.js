@@ -2,7 +2,7 @@
 function addTrainingDay(){
     var program_pk = parseInt($("#program_pk").text());
     var vtf = parseInt($("#id_day-TOTAL_FORMS").val());
-    if (!vtf){ vtf=0 }
+    if (!vtf){ vtf=0; }
     var newTD = '<div class="training-day">'+
         '<div class="title">'+
         '<span>天数: </span>'+
@@ -28,10 +28,12 @@ function addTrainingDay(){
 function addSets(){
 	var id_addsets = $(this).attr("id");
 	var day_id = parseInt($("#"+id_addsets.replace("addsets","id")).val());
+    if (!day_id){ day_id=-1; }
 	var id_total_forms = id_addsets.replace("addsets", "sets-TOTAL_FORMS");
 	var vtf = parseInt($("#"+id_total_forms).val());
 	var id_prefix = id_addsets.replace("addsets", "sets-"+vtf);
-	var name_prefix = id_prefix.replace("id_","");
+    var name_prefix = id_prefix.replace("id_","");
+    var number = parseInt($(this).prev().find("input[name$='number']").val())+1
     var newSets = '<tr>'+
     	'<td class="col1" title="备选动作: 哑铃卧推">哑铃卧推</td>'+
 		'<td class="col1">'+
@@ -42,13 +44,43 @@ function addSets(){
 		'<td class="col2">'+
 	    '<button type="button" class="delete-sets">×</button>'+
 		'<input type="hidden" name="'+name_prefix+'-trainingday" value='+day_id+' id="'+id_prefix+'-trainingday" >'+
-		'<input type="hidden" name="'+name_prefix+'-number" value='+(vtf+1)+' id="'+id_prefix+'-number" ></td></tr>';
+		'<input type="hidden" name="'+name_prefix+'-number" value='+number+' id="'+id_prefix+'-number" ></td></tr>';
 	$("#"+id_total_forms).val(vtf+1);
 	$("#"+id_addsets).before(newSets);
 	$("#"+id_prefix+"-number").parent().children(".delete-sets").click(deleteNewSets);
 }
 
-function deleteOldForm(){
+function deleteOldDay(){
+	$(this).siblings("input[name$='DELETE']").attr("checked", true);
+	$(this).parent().parent().hide();
+}
+
+function deleteNewDay(){
+	var id_total_forms = $(this).next().attr("id").split("sets")[0] + "sets-TOTAL_FORMS";
+	var vtf = parseInt($("#"+id_total_forms).val());
+	$("#"+id_total_forms).val(vtf-1);
+	var this_sets = $(this).parent().parent();
+	var next_sets = this_sets.nextUntil(".addsets");
+	if (next_sets.length>0){
+		copySetsValue(this_sets, next_sets.eq(0));
+		for (var i=1; i<next_sets.length; i++ ){
+			copySetsValue(next_sets.eq(i-1), next_sets.eq(i));
+		}
+		next_sets.last().remove();
+	}else{
+		this_sets.remove();
+	}
+}
+
+function deleteOldSets(){
+	var this_sets = $(this).parent().parent();
+	var next_sets = this_sets.nextUntil(".addsets");
+	if (next_sets.length>0){
+		for (var i=next_sets.length-1; i>0; i-- ){
+            next_sets.eq(i).find("input[name$='number']").val(next_sets.eq(i-1).find("input[name$='number']").val())
+        }
+		next_sets.eq(0).find("input[name$='number']").val($(this).siblings("input[name$='number']").val())
+    }
 	$(this).siblings("input[name$='DELETE']").attr("checked", true);
 	$(this).parent().parent().hide();
 }
@@ -71,8 +103,8 @@ function deleteNewSets(){
 }
 
 function copySetsValue(sets1, sets2){
-	var inputs1 = sets1.find("input");
-	var inputs2 = sets2.find("input");
+	var inputs1 = sets1.find("input").not("input[name$='number']");
+	var inputs2 = sets2.find("input").not("input[name$='number']");
 	for (var i=0; i<inputs1.length; i++){
 		inputs1.eq(i).val(inputs2.eq(i).val());
 	}

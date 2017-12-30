@@ -17,11 +17,7 @@
 					<form action="" method="post">
 						{% csrf_token %}
 						{{ form.as_p }}
-						{{ td_management }}
-						<div class="training-day">
-							<button type="button" class="add-training-day">＋新增一个训练日</button>
-						</div>
-						<input type="submit" value="提交" class="ok" />
+						<input type="submit" value="下一步" class="ok" />
 						<span><a href="{% url 'training:program_list' 0 %}">返回</a></span>
 					</form>
 				</div>

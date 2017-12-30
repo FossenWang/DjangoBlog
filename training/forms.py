@@ -11,6 +11,10 @@ class TrainingDayForm(ModelForm):
     class Meta:
         model = TrainingDay
         fields = ['day', 'name']
+        widgets = {
+            'day':HiddenInput,
+        }
+        
 
 class WeightSetsForm(ModelForm):
     class Meta:

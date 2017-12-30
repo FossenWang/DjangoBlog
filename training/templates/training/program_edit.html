@@ -22,9 +22,11 @@
 						{% for td in td_list %}
 						<div class="training-day">
 							<div class="title">
-								<span>天数: </span>{{ td.0.day }}
-								<span>名称: </span>{{ td.0.name }}
-								<span>删除: </span>{{ td.0.DELETE }}
+								<span>第<span id="id_day-{{ td.3 }}-day-value">{{ td.0.day.value }}</span>天</span>
+								{{ td.0.day }}{{ td.0.name }}
+								<span>删除: </span>
+								<button type="button" class="delete-day">×</button>
+								{{ td.0.DELETE }}
 								{{ td.0.program }}
 								{{ td.0.id }}
 							</div>
@@ -39,13 +41,13 @@
 								<tr>
 									<td class="col1" title="备选动作: {{ ws.1 }}">{{ ws.1 }}</td>
 									<td class="col1">
-										{{ ws.0.minreps.errors }}{{ ws.0.maxreps.errors }}
 										{{ ws.0.minreps }}~{{ ws.0.maxreps }}
 									</td>
-									<td class="col2">{{ ws.0.sets.errors }}{{ ws.0.sets }}</td>
-									<td class="col2">{{ ws.0.rest.errors }}{{ ws.0.rest }}</td>
+									<td class="col2">{{ ws.0.sets }}</td>
+									<td class="col2">{{ ws.0.rest }}</td>
 									<td class="col2">
-										{{ ws.0.DELETE.errors }}{{ ws.0.DELETE }}
+										<button type="button" class="delete-sets">×</button>
+										{{ ws.0.DELETE }}
 										{{ ws.0.id }}{{ ws.0.trainingday }}{{ ws.0.number }}
 									</td>
 								</tr>
