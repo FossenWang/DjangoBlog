@@ -22,7 +22,7 @@
 						{% for td in td_list %}
 						<div class="training-day">
 							<div class="title">
-								<span>第<span id="id_day-{{ td.3 }}-day-value">{{ td.0.day.value }}</span>天</span>
+								<span>第</span><span id="id_day-{{ td.3 }}-day-value">{{ td.0.day.value }}</span><span>天</span>
 								{{ td.0.day }}{{ td.0.name }}
 								<span>删除: </span>
 								<button type="button" class="delete-day">×</button>
@@ -52,7 +52,7 @@
 									</td>
 								</tr>
 								{% endfor %}
-								<tr class="addsets" id="id_day-{{ td.3 }}-addsets">
+								<tr class="addsets">
 									<td colspan="5">＋新增一组动作</td>
 								</tr>
 							</tbody></table>

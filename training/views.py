@@ -213,8 +213,9 @@ class EditProgramView(UpdateView):
             for key in post_dict.keys():
                 if re.match('^day-([0-9]+)-sets-([0-9]+)-trainingday$', key):
                     if post_dict[key] == '-1':
-                        post_dict[key] = td_set[int(key.split('-')[1])].pk
-            for i, td in enumerate(td_set):
+                        day_key = re.sub('sets-([0-9]+)-trainingday$', 'day', key)
+                        post_dict[key] = td_set[int(post_dict[day_key])-1].pk
+            for i in range(len(tdformset)):
                 wsformset = WSFormSet(post_dict, prefix='day-'+str(i)+'-sets')
                 if wsformset.is_valid():
                     wsformset.save()
