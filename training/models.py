@@ -3,7 +3,7 @@
 '''
 from django.db import models
 from django.contrib.auth.models import User
-from django.core import urlresolvers
+from django.core import urlresolvers, validators
 from django.urls import reverse
 
 class ExerciseType(models.Model):
@@ -98,21 +98,13 @@ class WeightSets(TrainingSets):
     maxreps = models.PositiveIntegerField('最大次数', default=1)
     #动作数用于区别常规组与超级组，多余的动作当作备选动作
     enumber = models.PositiveIntegerField('动作数', default=1)
-    exercises = models.ManyToManyField(Exercise, through='ExercisesInSets')
-
-    def admin_link(self):
-        if self.pk:
-            day_url = urlresolvers.reverse('admin:training_weightsets_change', args=(self.pk,))
-            return u'<a href="%s" target="_blank">详情</a>' % day_url
-        return u''
-    admin_link.allow_tags = True
-    admin_link.short_description = '详情'
+    exercises = models.CharField('动作', max_length=48, default='1', validators=[validators.validate_comma_separated_integer_list])
 
     class Meta:
         ordering = ['number']
         verbose_name = '重量训练组'
         verbose_name_plural = '重量训练组'
-
+'''
 class ExercisesInSets(models.Model):
     '重量训练组与动作的中间表'
     sets = models.ForeignKey(WeightSets, on_delete=models.CASCADE)
@@ -126,7 +118,7 @@ class ExercisesInSets(models.Model):
         ordering = ['number']
         verbose_name = '动作'
         verbose_name_plural = '动作列表'
-
+'''
 class PowerliftingSets(TrainingSets):
     reps = models.PositiveIntegerField('次数', default=1)
     load = models.FloatField('负重(%1RM)', default=1.0)
@@ -136,13 +128,3 @@ class PowerliftingSets(TrainingSets):
         ordering = ['number']
         verbose_name = '力量训练组'
         verbose_name_plural = '力量训练组'
-
-
-
-
-
-
-
-
-
-

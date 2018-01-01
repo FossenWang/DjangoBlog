@@ -22,20 +22,20 @@
 						<div class="edit"><a href="{% url 'training:edit_program' program.pk %}">修改方案</a></div>
 					</div>
 					<div class="description">{{ program.description }}</div>
-				    {% for training_day in program.trainingday_set.all %}
+				    {% for td in td_list %}
 				    <div class="training-day">
-						<p><a name="{{ training_day.day }}">Day {{ training_day.day }} {{ training_day.name }}</a></p>
+						<p><a name="{{ td.0.day }}">Day {{ td.0.day }} {{ td.0.name }}</a></p>
 						<table>
 							<tr>
 								<td class="col1">动作</td><td class="col2">RM</td>
 								<td class="col2">组数</td><td class="col2">休息/s</td>
 							</tr>
-							{% for weight_sets in training_day.weightsets_set.all %}
+							{% for ws in td.1 %}
 						    <tr>
-						        <td class="col1" title="备选动作: {{ weight_sets.exercises.all }}">{{ weight_sets.exercises.all.0 }}</td>
-						        <td class="col2">{{ weight_sets.minreps }}~{{ weight_sets.maxreps }}</td>
-								<td class="col2">{{ weight_sets.sets }}</td>
-						        <td class="col2">{{ weight_sets.rest }}</td>
+						        <td class="col1" title="备选动作: {{ ws.2 }}">{{ ws.1 }}</td>
+						        <td class="col2">{{ ws.0.minreps }}~{{ ws.0.maxreps }}</td>
+								<td class="col2">{{ ws.0.sets }}</td>
+						        <td class="col2">{{ ws.0.rest }}</td>
 					        </tr>
 							{% empty %}
 							<tr>

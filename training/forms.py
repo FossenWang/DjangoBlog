@@ -1,6 +1,6 @@
 from django.forms import ModelForm, HiddenInput
 
-from .models import Program, TrainingDay, WeightSets, ExercisesInSets
+from .models import Program, TrainingDay, WeightSets
 
 class ProgramForm(ModelForm):
     class Meta:
@@ -19,12 +19,9 @@ class TrainingDayForm(ModelForm):
 class WeightSetsForm(ModelForm):
     class Meta:
         model = WeightSets
-        fields = ['number', 'minreps', 'maxreps', 'sets', 'rest']
+        fields = ['number', 'exercises', 'minreps', 'maxreps', 'sets', 'rest']
         widgets = {
             'number':HiddenInput,
+            'exercises':HiddenInput,
         }
 
-class ExercisesInSetsForm(ModelForm):
-    class Meta:
-        model = ExercisesInSets
-        fields = ['number', 'exercise']

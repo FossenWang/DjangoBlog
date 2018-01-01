@@ -39,7 +39,10 @@
 								</tr>
 								{% for ws in td.2 %}
 								<tr>
-									<td class="col1" title="备选动作: {{ ws.1 }}">{{ ws.1 }}</td>
+									<td class="col1" title="备选动作: {{ ws.2 }}">
+									<span>{{ ws.1 }}</span>
+									{{ ws.0.exercises }}
+								    </td>
 									<td class="col1">
 										{{ ws.0.minreps }}~{{ ws.0.maxreps }}
 									</td>

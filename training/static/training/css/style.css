@@ -188,7 +188,6 @@ header .cat-title{border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;paddi
 .program form .ok:hover { background: #A161BF; color: white; }
 .program form .training-day { padding: 20px 0; text-align: center;}
 .program form .training-day .title { margin: 10px 0;  font-size: 17px;}
-.program form .training-day .title input[type=number] { width: 40px; margin: 0 10px; text-align: center; border: 1px solid #ccc; border-radius: 5px; }
 .program form .training-day .title input[type=text] { border: 1px solid #ccc; padding: 7px; margin: 0 10px; border-radius: 5px;}
 .program form .training-day table .col1 { width: 28%; }
 .program form .training-day table .col2 { width: 14%; }
