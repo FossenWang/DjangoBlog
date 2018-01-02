@@ -184,10 +184,8 @@ class ProgramDetailView(DetailView):
                 else:
                     ws_list.append([ws, '暂无', '暂无'])
             td_list.append([td, ws_list])
-        #td_list = [ [td, [ws, [Exercise.objects.get(pk=pk) for pk in ws.exercises.split(',')] ] for ws in td.weightsets_set.all() ] for td in program.trainingday_set.all() ]
         context['td_list'] = td_list
         return context
-        
 
 class EditProgramView(UpdateView):
     '编辑方案视图'

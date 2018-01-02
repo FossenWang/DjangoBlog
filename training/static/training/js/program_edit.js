@@ -139,3 +139,14 @@ function copySetsValue(sets1, sets2){
 		inputs1.eq(i).val(inputs2.eq(i).val());
 	}
 }
+
+function openExercisesDialog(){
+    var exercises = $(this).siblings("input");
+    $("#sets-id").text(exercises.val());
+    $("#chosen-exercises").text(exercises.attr("id"));
+    $("#exercises-dialog").dialog("open");
+}
+
+function chooseExercises(){
+    $("#exercises-dialog").dialog("close");
+}

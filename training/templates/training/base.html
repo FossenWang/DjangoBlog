@@ -22,7 +22,7 @@
   ================================================== -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <!-- CSS
+    <!-- CSS & JS
   ================================================== -->
   	<link rel="stylesheet" href="{% static 'training/css/zerogrid.css' %}">
 	<link rel="stylesheet" href="{% static 'training/css/style.css' %}">
@@ -120,18 +120,8 @@
 	</div>
 </footer>
 
-<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
-<script type="text/javascript" src="/static/training/js/program_edit.js"></script>
 <script type="text/javascript">
     $(function() {
-		if ($.browser.msie && $.browser.version.substr(0,1)<7)
-		{
-		$('li').has('ul').mouseover(function(){
-			$(this).children('ul').css('visibility','visible');
-			}).mouseout(function(){
-			$(this).children('ul').css('visibility','hidden');
-			})
-		}
 
 		/* Mobile */
 		$("#menu-trigger").on("click", function(){
@@ -142,15 +132,6 @@
 		var isiPad = navigator.userAgent.match(/iPad/i) != null;
 		if (isiPad) $('#menu ul').addClass('no-transition');      
     });
-
-    $(function() {
-		$(":checkbox").hide();
-        $(".addsets").click(addSets);
-		$(".delete-sets").click(deleteOldSets);
-		$(".add-training-day").click(addTrainingDay);
-		$(".delete-day").click(deleteOldDay);
-	});
-
 </script>
 
 </div>

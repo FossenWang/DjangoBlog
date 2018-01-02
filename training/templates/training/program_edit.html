@@ -1,6 +1,9 @@
 {% extends 'training/base.html' %}
+{% load staticfiles %}
+{% load training_tags %}
 
 {% block main %}
+
 	<div id="main-content" class="col-2-3">
 		<div class="wrap-content">
 			<div class="row">
@@ -40,7 +43,7 @@
 								{% for ws in td.2 %}
 								<tr>
 									<td class="col1" title="备选动作: {{ ws.2 }}">
-									<span>{{ ws.1 }}</span>
+									<span class="exercise">{{ ws.1 }}</span>
 									{{ ws.0.exercises }}
 								    </td>
 									<td class="col1">
@@ -98,4 +101,53 @@
 			</div>
 		</div>
 	</div>
+	
+	<div id="exercises-dialog" title="选择动作">
+		<p>选择动作</p>
+		<div class="exercise-list">
+			{% get_exercise_types as etypes %}
+			<ul>
+				{% for etype, v in etypes.items %}
+				<li>
+					{{ etype }}
+					<ul>
+						{% for sort in v.0 %}
+						<li>
+							{{ sort.sort }}
+							{% for e in sort.exercise_set.all %}
+							<span>{{ e.pk }}: {{ e.name }}</span>
+							{% endfor %}
+						</li>
+						{% endfor %}
+					</ul>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+		<div id="sets-id"></div>
+		<div id="chosen-exercises"></div>
+	</div>
+
+	<link rel="Stylesheet" href="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.css"/>
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+	<script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
+	<script type="text/javascript" src="/static/training/js/program_edit.js"></script>
+	<script>
+		$(function() {
+			$(":checkbox").hide();
+			$(".addsets").click(addSets);
+			$(".delete-sets").click(deleteOldSets);
+			$(".add-training-day").click(addTrainingDay);
+			$(".delete-day").click(deleteOldDay);
+			$("#exercises-dialog").dialog({
+				autoOpen: false, my: 'center', width: '800', height: '400',
+				buttons: {
+					"确认": chooseExercises,
+					"取消": function(){$( this ).dialog( "close" );}
+				}
+			});
+			$(".exercise").click(openExercisesDialog);
+		});	
+	</script>
+
 {% endblock main %}

@@ -18,6 +18,17 @@ def get_program_count():
 @register.simple_tag
 def get_exercise_types():
     '动作分类'
+    sorts = ExerciseType.objects.all()
+    etypes = {}
+    for sort in sorts:
+        if sort.etype not in etypes.keys():
+            etype_sorts = sorts.filter(etype=sort.etype)
+            etypes[sort.etype] = [etype_sorts, sort.number//10]
+    return etypes
+
+@register.simple_tag
+def get_exercise_types_with_counts():
+    '动作分类-带计数'
     sorts = ExerciseType.objects.annotate(counts=Count('exercise')).filter(counts__gt=0)
     etypes = {}
     for sort in sorts:
