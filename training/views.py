@@ -248,6 +248,8 @@ class EditProgramView(UpdateView):
                 wsformset = WSFormSet(post_dict, prefix='day-'+str(i)+'-sets')
                 if wsformset.is_valid():
                     wsformset.save()
+                else:
+                    print(wsformset.errors)
         return super().form_valid(form)
 
 class AddProgramView(CreateView):

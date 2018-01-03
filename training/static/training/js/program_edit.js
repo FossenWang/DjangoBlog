@@ -142,11 +142,17 @@ function copySetsValue(sets1, sets2){
 
 function openExercisesDialog(){
     var exercises = $(this).siblings("input");
-    $("#sets-id").text(exercises.val());
-    $("#chosen-exercises").text(exercises.attr("id"));
+    $("#sets-id").text(exercises.attr("id"));
+    $("#chosen-exercises-id").text(exercises.val());
     $("#exercises-dialog").dialog("open");
 }
 
 function chooseExercises(){
+    var ids = $("#chosen-exercises-id").text();
+    var names = $("#chosen-exercises").text();
+    var target = $("#"+$("#sets-id").text());
+    target.val(ids);
+    target.siblings("span").text(names.split(",")[0])
+    target.parent().attr("title", names.split(","))
     $("#exercises-dialog").dialog("close");
 }

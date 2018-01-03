@@ -103,33 +103,33 @@
 	</div>
 	
 	<div id="exercises-dialog" title="选择动作">
-		<p>选择动作</p>
-		<div class="exercise-list">
-			{% get_exercise_types as etypes %}
-			<ul>
-				{% for etype, v in etypes.items %}
-				<li>
-					{{ etype }}
-					<ul>
-						{% for sort in v.0 %}
-						<li>
-							{{ sort.sort }}
-							{% for e in sort.exercise_set.all %}
-							<span>{{ e.pk }}: {{ e.name }}</span>
-							{% endfor %}
-						</li>
-						{% endfor %}
-					</ul>
-				</li>
-				{% endfor %}
-			</ul>
-		</div>
+		{% get_exercise_types as etypes %}
+		{% for etype, v in etypes.items %}
+		<div>{{ etype }}</div>
+			{% for sort in v.0 %}
+			<div class="exercise-list">
+				<h3>{{ sort.sort }}</h3>
+				<div class="select-exercise">
+					{% for e in sort.exercise_set.all %}
+					<div class="exercise-name" data-id="{{ e.pk }}">{{ e.name }}</div>
+					{% endfor %}
+			    </div>
+			</div>
+			{% endfor %}
+		{% endfor %}
 		<div id="sets-id"></div>
 		<div id="chosen-exercises"></div>
+		<div id="chosen-exercises-id"></div>
 	</div>
 
+	<style>
+		#feedback { font-size: 1.4em; }
+		.select-exercise .ui-selecting { background: #FECA40; }
+		.select-exercise .ui-selected { background: #F39814; color: white; }
+		.select-exercise { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+		.select-exercise li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+	</style>
 	<link rel="Stylesheet" href="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.css"/>
-	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
 	<script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
 	<script type="text/javascript" src="/static/training/js/program_edit.js"></script>
 	<script>
@@ -146,6 +146,18 @@
 					"取消": function(){$( this ).dialog( "close" );}
 				}
 			});
+			$(".exercise-list").accordion({active:false, collapsible: true, heightStyle: "content"});
+			$(".select-exercise").selectable({
+				stop: function(){
+					var ids = "";
+					var names = "";
+					$(".select-exercise .ui-selected").each(function(){
+						ids+=$(this).attr("data-id")+",";
+						names+=$(this).text()+",";
+					});
+					$("#chosen-exercises-id").text(ids.substr(0,ids.length-1));
+					$("#chosen-exercises").text(names);
+				}});
 			$(".exercise").click(openExercisesDialog);
 		});	
 	</script>
