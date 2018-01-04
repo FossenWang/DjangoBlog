@@ -14,7 +14,7 @@ class ExerciseListView(ListView):
     model = Exercise
     template_name = 'training/exercise_list.html'
     context_object_name = 'exercise_list'
-    paginate_by = 10
+    paginate_by = 30
 
     def get_queryset(self):
         if self.kwargs.get('number') == '0':
@@ -177,7 +177,7 @@ class ProgramDetailView(DetailView):
             for ws in td.weightsets_set.all():
                 exercises = [Exercise.objects.get(pk=pk) for pk in ws.exercises.split(',')]
                 if exercises:
-                    alter = [ e.name for e in exercises[1:]]
+                    alter = ",".join([ e.name for e in exercises[1:]])
                     if not alter:
                         alter='暂无'
                     ws_list.append([ws, exercises[0].name, alter])
@@ -212,7 +212,7 @@ class EditProgramView(UpdateView):
                 for wsform in wsformset:
                     exercises = [Exercise.objects.get(pk=pk) for pk in wsform.instance.exercises.split(',')]
                     if exercises:
-                        alter = [ e.name for e in exercises[1:]]
+                        alter = ",".join([ e.name for e in exercises[1:]])
                         if not alter:
                             alter='暂无'
                         ws_list.append([wsform, exercises[0].name, alter])

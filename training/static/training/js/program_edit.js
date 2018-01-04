@@ -141,9 +141,17 @@ function copySetsValue(sets1, sets2){
 }
 
 function openExercisesDialog(){
-    var exercises = $(this).siblings("input");
-    $("#sets-id").text(exercises.attr("id"));
-    $("#chosen-exercises-id").text(exercises.val());
+    var input = $(this).siblings("input");
+    $("#sets-id").text(input.attr("id"));
+    $("#chosen-exercises-id").text(input.val());
+    var names = $(this).text();
+    var alter = $(this).parent().attr("title").replace("备选动作: ", "");
+    if (alter!="暂无"){
+        names+=","+alter;
+    }
+    $("#chosen-exercises").text(names);
+    $(".selected").removeClass("selected");
+    input.val().split(",").forEach(function(item){ $(".exercise-name[data-id='"+item+"']").addClass("selected"); });
     $("#exercises-dialog").dialog("open");
 }
 
@@ -155,4 +163,25 @@ function chooseExercises(){
     target.siblings("span").text(names.split(",")[0])
     target.parent().attr("title", names.split(","))
     $("#exercises-dialog").dialog("close");
+}
+
+
+function checkItem(){
+    var ids = $("#chosen-exercises-id").text();
+    if(ids==""){ ids=[]; }else{ ids=ids.split(","); }
+    var names = $("#chosen-exercises").text();
+    if(names==""){ names=[]; }else{ names=names.split(","); }
+    var this_id = $(this).attr("data-id");
+    var this_name = $(this).text();
+    index = ids.indexOf(this_id);
+    if (index==-1){
+        ids.push(this_id);
+        names.push(this_name);
+    }else{
+        ids.splice(index,1)
+        names.splice(index,1)
+    }
+    $(this).toggleClass("selected");
+    $("#chosen-exercises-id").text(ids.join());
+    $("#chosen-exercises").text(names.join());
 }

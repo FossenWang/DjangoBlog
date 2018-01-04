@@ -191,10 +191,10 @@ header .cat-title{border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;paddi
 .category p {border-top: 1px solid #e5e9ef; margin: 0 15px; padding-top: 10px; font-size: 17px;}
 .category a {transition: all 0.2s ease-in-out;}
 
-article{padding: 0 0; margin: 0 5px;}
+article{ padding: 0 0; margin: 0 5px; height: 220px; }
 article .art-header {text-align: center;color: #4c4c4c;font-size: 11px;}
 article .entry-title {font-size: 15px; height: 52px; overflow: hidden;}
-article .art-content {text-align: center;}
+article .art-content {text-align: center;height: 115px;}
 
 .pagination {margin-top: 25px; text-align: center;}
 .pagination a {

@@ -123,41 +123,29 @@
 	</div>
 
 	<style>
-		#feedback { font-size: 1.4em; }
-		.select-exercise .ui-selecting { background: #FECA40; }
-		.select-exercise .ui-selected { background: #F39814; color: white; }
-		.select-exercise { list-style-type: none; margin: 0; padding: 0; width: 60%; }
-		.select-exercise li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+		input[type="checkbox"] { display: none; }
+		.select-exercise { margin: 0; padding: 0; }
+		.select-exercise .selected { background: #A161BF; color: white; }
+		.select-exercise .exercise-name { float: left; width:16.66%; text-align: center; }
 	</style>
 	<link rel="Stylesheet" href="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.css"/>
 	<script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
 	<script type="text/javascript" src="/static/training/js/program_edit.js"></script>
 	<script>
 		$(function() {
-			$(":checkbox").hide();
 			$(".addsets").click(addSets);
 			$(".delete-sets").click(deleteOldSets);
 			$(".add-training-day").click(addTrainingDay);
 			$(".delete-day").click(deleteOldDay);
 			$("#exercises-dialog").dialog({
-				autoOpen: false, my: 'center', width: '800', height: '400',
+				autoOpen: false, my: 'center', width: '800', height: '400', modal: true,
 				buttons: {
 					"确认": chooseExercises,
 					"取消": function(){$( this ).dialog( "close" );}
 				}
 			});
 			$(".exercise-list").accordion({active:false, collapsible: true, heightStyle: "content"});
-			$(".select-exercise").selectable({
-				stop: function(){
-					var ids = "";
-					var names = "";
-					$(".select-exercise .ui-selected").each(function(){
-						ids+=$(this).attr("data-id")+",";
-						names+=$(this).text()+",";
-					});
-					$("#chosen-exercises-id").text(ids.substr(0,ids.length-1));
-					$("#chosen-exercises").text(names);
-				}});
+			$(".exercise-name").click(checkItem)
 			$(".exercise").click(openExercisesDialog);
 		});	
 	</script>

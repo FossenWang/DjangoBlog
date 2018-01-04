@@ -46,21 +46,12 @@ class VideoListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        video_list = context['video_list']
         paginator = context.get('paginator')
         page = context.get('page_obj')
         is_paginated = context.get('is_paginated')
         pagination_data = self.pagination_data(paginator, page, is_paginated)
         context.update(pagination_data)
-
         context['number'] = int(self.kwargs.get('number'))
-
-        i = 0
-        list_slice = []
-        while i<len(video_list):
-            list_slice.append(video_list[i:i+6])
-            i += 6
-        context['video_list'] = list_slice
         return context
 
     def pagination_data(self, paginator, page, is_paginated):

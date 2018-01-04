@@ -26,9 +26,7 @@
 				{% endfor %}
 			</ul>
 			<div class="category">
-				{% for video_list_raw in video_list %}
-				<div class="row">
-					{% for video in video_list_raw %}
+				{% for video in video_list %}
 					<div class="col-1-6">
 						<div class="wrap-col">
 							<article>
@@ -47,9 +45,7 @@
 								</div>
 							</article>
 						</div>
-			    	</div>
-					{% endfor %}
-				</div>
+					</div>
 				{% empty %}
 				<div class="no-video">暂时没有视频！</div>
 				{% endfor %}
