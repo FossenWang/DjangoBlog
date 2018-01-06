@@ -87,7 +87,9 @@ function addSets(){
     var number = parseInt($(this).prev().find("input[name$='-number']").val())+1;
     if (!number){ number = 1; }
     var newSets = '<tr>'+
-    	'<td class="col1" title="备选动作: 哑铃卧推">哑铃卧推</td>'+
+        '<td class="col1" title="备选动作: 暂无">'+
+        '<span class="exercise"></span>'+
+        '<input type="hidden" name="'+name_prefix+'-exercises" value="" id="'+id_prefix+'-exercises"></td>'+
 		'<td class="col1">'+
 	    '<input type="number" name="'+name_prefix+'-minreps" value="8" min="0" id="'+id_prefix+'-minreps" >'+
 		'~<input type="number" name="'+name_prefix+'-maxreps" value="12" min="0" id="'+id_prefix+'-maxreps" >'+
@@ -99,7 +101,9 @@ function addSets(){
 		'<input type="hidden" name="'+name_prefix+'-number" value='+number+' id="'+id_prefix+'-number" ></td></tr>';
 	$("#"+id_total_forms).val(vtf+1);
 	$(this).before(newSets);
-	$("#"+id_prefix+"-number").parent().children(".delete-sets").click(deleteNewSets);
+    $("#"+id_prefix+"-number").siblings(".delete-sets").click(deleteNewSets);
+    $("#"+id_prefix+"-exercises").siblings(".exercise").click(openExercisesDialog);
+    $("#"+id_prefix+"-exercises").siblings(".exercise").click();
 }
 
 function deleteOldSets(){
@@ -142,34 +146,59 @@ function copySetsValue(sets1, sets2){
 
 function openExercisesDialog(){
     var input = $(this).siblings("input");
-    $("#sets-id").text(input.attr("id"));
+    $("#sets-exercises-id").text(input.attr("id"));
     $("#chosen-exercises-id").text(input.val());
     var names = $(this).text();
     var alter = $(this).parent().attr("title").replace("备选动作: ", "");
     if (alter!="暂无"){
         names+=","+alter;
     }
-    $("#chosen-exercises").text(names);
+    $(".ui-dialog-buttonset").children().first().text("已选动作: "+names);
     $(".selected").removeClass("selected");
-    input.val().split(",").forEach(function(item){ $(".exercise-name[data-id='"+item+"']").addClass("selected"); });
+    $(".exercise-list").accordion( "option", "active", false );
+    input.val().split(",").forEach(function(item){ 
+        var item_div = $(".exercise-name[data-id='"+item+"']");
+        item_div.addClass("selected");
+        item_div.parent().parent().accordion( "option", "active", 0 );
+    });
     $("#exercises-dialog").dialog("open");
 }
 
-function chooseExercises(){
+function dialogConfirm(){
     var ids = $("#chosen-exercises-id").text();
-    var names = $("#chosen-exercises").text();
-    var target = $("#"+$("#sets-id").text());
-    target.val(ids);
-    target.siblings("span").text(names.split(",")[0])
-    target.parent().attr("title", names.split(","))
-    $("#exercises-dialog").dialog("close");
+    var names = $(".ui-dialog-buttonset").children().first().text().replace("已选动作: ", "");
+    var target = $("#"+$("#sets-exercises-id").text());
+    if ( !ids ){
+        alert("请选择至少一个动作！")
+    }else{
+        target.val(ids);
+        target.siblings("span").text(names.split(",")[0]);
+        var alter = names.split(",").slice(1);
+        if (alter.length==0){
+            alter="暂无";
+        }else{
+            alter.join();
+        }
+        target.parent().attr("title", "备选动作: "+alter);
+        $("#exercises-dialog").dialog("close");
+    }
 }
 
+function dialogClose(){
+    var ids = $("#chosen-exercises-id").text();
+    var names = $(".ui-dialog-buttonset").children().first().text().replace("已选动作: ", "");
+    var target = $("#"+$("#sets-exercises-id").text());
+    if (!target.val()){
+        alert("请选择至少一个动作！")
+    }else{
+        $("#exercises-dialog").dialog( "close" );
+    }
+}
 
 function checkItem(){
     var ids = $("#chosen-exercises-id").text();
     if(ids==""){ ids=[]; }else{ ids=ids.split(","); }
-    var names = $("#chosen-exercises").text();
+    var names = $(".ui-dialog-buttonset").children().first().text().replace("已选动作: ", "");
     if(names==""){ names=[]; }else{ names=names.split(","); }
     var this_id = $(this).attr("data-id");
     var this_name = $(this).text();
@@ -183,5 +212,5 @@ function checkItem(){
     }
     $(this).toggleClass("selected");
     $("#chosen-exercises-id").text(ids.join());
-    $("#chosen-exercises").text(names.join());
+    $(".ui-dialog-buttonset").children().first().text("已选动作: "+names.join());
 }

@@ -117,18 +117,17 @@
 			</div>
 			{% endfor %}
 		{% endfor %}
-		<div id="sets-id"></div>
-		<div id="chosen-exercises"></div>
-		<div id="chosen-exercises-id"></div>
+		<div id="sets-exercises-id" style="display: None"></div>
+		<div id="chosen-exercises-id" style="display: None"></div>
 	</div>
 
+	<link rel="Stylesheet" href="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.css"/>
 	<style>
-		input[type="checkbox"] { display: none; }
 		.select-exercise { margin: 0; padding: 0; }
 		.select-exercise .selected { background: #A161BF; color: white; }
 		.select-exercise .exercise-name { float: left; width:16.66%; text-align: center; }
+		.ui-dialog-titlebar-close { display: none; }
 	</style>
-	<link rel="Stylesheet" href="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.css"/>
 	<script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
 	<script type="text/javascript" src="/static/training/js/program_edit.js"></script>
 	<script>
@@ -140,8 +139,9 @@
 			$("#exercises-dialog").dialog({
 				autoOpen: false, my: 'center', width: '800', height: '400', modal: true,
 				buttons: {
-					"确认": chooseExercises,
-					"取消": function(){$( this ).dialog( "close" );}
+					"已选动作:": function(){},
+					"确认": dialogConfirm,
+					"取消": dialogClose
 				}
 			});
 			$(".exercise-list").accordion({active:false, collapsible: true, heightStyle: "content"});
