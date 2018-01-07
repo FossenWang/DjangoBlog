@@ -23,3 +23,5 @@ training/migrations/0004_auto_20171215_1539.py
 training/migrations/0005_auto_20171216_1618.py
 training/migrations/0006_auto_20180101_1517.py
 training/migrations/0007_weightsets_exercises.py
+training/migrations/0008_exercise_picture.py
+video/migrations/0008_auto_20180107_1847.py

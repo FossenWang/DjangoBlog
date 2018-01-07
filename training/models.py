@@ -22,6 +22,7 @@ class ExerciseType(models.Model):
 class Exercise(models.Model):
     name = models.CharField('动作名', max_length=16)
     description = models.TextField('动作描述', blank=True)
+    picture = models.ImageField(upload_to='training/exercise_pic', default='public/images/nonpic.jpg', verbose_name='示意图')
     number = models.PositiveIntegerField('次序', default=0)
     sort = models.ForeignKey(ExerciseType, default=1, on_delete=models.SET_DEFAULT, verbose_name='分类')
 
@@ -104,21 +105,7 @@ class WeightSets(TrainingSets):
         ordering = ['number']
         verbose_name = '重量训练组'
         verbose_name_plural = '重量训练组'
-'''
-class ExercisesInSets(models.Model):
-    '重量训练组与动作的中间表'
-    sets = models.ForeignKey(WeightSets, on_delete=models.CASCADE)
-    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, verbose_name='动作')
-    number = models.PositiveIntegerField('次序', default=0)
 
-    def __str__(self):
-        return 'Exercise:' + str(self.number) + ' ' + self.exercise.name
-
-    class Meta:
-        ordering = ['number']
-        verbose_name = '动作'
-        verbose_name_plural = '动作列表'
-'''
 class PowerliftingSets(TrainingSets):
     reps = models.PositiveIntegerField('次数', default=1)
     load = models.FloatField('负重(%1RM)', default=1.0)

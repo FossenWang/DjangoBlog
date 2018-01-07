@@ -180,7 +180,7 @@ class ProgramDetailView(DetailView):
                     alter = ",".join([ e.name for e in exercises[1:]])
                     if not alter:
                         alter='暂无'
-                    ws_list.append([ws, exercises[0].name, alter])
+                    ws_list.append([ws, exercises[0], alter])
                 else:
                     ws_list.append([ws, '暂无', '暂无'])
             td_list.append([td, ws_list])

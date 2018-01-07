@@ -2,7 +2,11 @@
 /* ---------------------------------------------------------------------------- */
 /* ------------------------------------Reset----------------------------------- */
 /* ---------------------------------------------------------------------------- */
-a,abbr,acronym,address,applet,article,aside,audio,b,blockquote,big,body,center,canvas,caption,cite,code,command,datalist,dd,del,details,dfn,dl,div,dt,em,embed,fieldset,figcaption,figure,font,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,kbd,keygen,label,legend,li,meter,nav,object,ol,output,p,pre,progress,q,s,samp,section,small,span,source,strike,strong,sub,sup,tbody,tfoot,thead,th,tdvideo,tt,u,ul,var{background:transparent;border:0 none;font-size:100%;margin:0;padding:0;border:0;outline:0;}ol, ul {list-style:none;}blockquote, q {quotes:none;} img {vertical-align:top;}embed {vertical-align:top;}
+/*a,abbr,acronym,address,applet,article,aside,audio,b,blockquote,big,body,center,canvas,caption,cite,code,command,datalist,dd,del,details,dfn,dl,div,dt,em,embed,fieldset,figcaption,figure,font,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,kbd,keygen,label,legend,li,meter,nav,object,ol,output,p,pre,progress,q,s,samp,section,small,span,source,strike,strong,sub,sup,tbody,tfoot,thead,th,tdvideo,tt,u,ul,var{background:transparent;border:0 none;font-size:100%;margin:0;padding:0;border:0;outline:0;}ol, ul {list-style:none;}blockquote, q {quotes:none;} img {vertical-align:top;}embed {vertical-align:top;}*/
+body,h1,h2,h3,h4,h5,h6,a,span,p,pre,ul,article,footer,form,header,footer,section,table,tbody,tfoot,thead,th,td,tdvideo,iframe,nav {
+  background:transparent;border:0 none;font-size:100%;margin:0;padding:0;border:0;outline:0;
+}
+ol, ul {list-style:none;}
 article, aside, audio, canvas, command, datalist, details, embed, figcaption, figure, footer, header, hgroup, keygen, meter, nav, output, progress, section, source, video {display:block;}
 mark, rp, rt, ruby, summary, time {display:inline;}
 input, textarea {border:0; padding:0; margin:0; outline: 0;}
@@ -29,8 +33,8 @@ html { -webkit-text-size-adjust: none;}
 .video embed,.video object,.video iframe { width: 100%;  height: auto;}
 img{max-width:100%;	height: auto;width: auto\9; /* ie8 */}
 
-a{color: #222;text-decoration: none;}
-a:hover {color: #A161BF; text-decoration: none;}
+a{color: black;}
+a:hover {color: #A161BF;}
 
 h1, h2 , h3	{font-size: 25px;line-height: 25px;margin: 25px 0;}
 h4, h5, h6	{font-size: 16px;line-height: 16px;}
@@ -168,7 +172,7 @@ header .cat-title{border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;paddi
 .program .edit { float: right;  }
 .program .description { padding: 10px 10px; white-space: pre-wrap; font-size: 13px; border-top: 1px solid #ccc;}
 .program .training-day { padding: 20px 0; text-align: left; }
-.program .training-day p { padding: 0 36px; font-size: 17px;}
+.program .training-day p { margin: 20px 10px; padding: 20px; font-size: 17px;  background: #f4f5f7; }
 .program .training-day table { margin: auto; width: 96%; border-collapse: collapse; font-size: 15px;}
 .program .training-day table tr { border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; transition: all 0.1s ease-in;}
 .program .training-day table tr:nth-child(odd) { background-color: #f9f9f9;}
@@ -177,6 +181,11 @@ header .cat-title{border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;paddi
 .program .training-day table td { padding: 7px 0; }
 .program .training-day table .col1 { width: 40%; padding: 7px 20px;}
 .program .training-day table .col2 { width: 20%; }
+.program .training-day .training-sets { background: #f4f5f7; display: flex; margin: 10px 10px; align-items:center;}
+.program .training-day .training-sets .exercise { display: inline-block; margin: 0 40px;}
+.program .training-day .training-sets .exercise-pic { width: 176px; height: 108px; overflow: hidden;}
+.program .training-day .training-sets .exercise-name { font-size: 20px; margin-bottom: 20px;}
+
 
 .program form { margin: 10px 10px; }
 .program form #id_cycle { display: inline-block; width: 30px; margin: 10px 20px; border: 1px solid #ccc; border-radius: 5px; padding: 2px 5px; }
@@ -252,10 +261,7 @@ header .cat-title{border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;paddi
 }
 
 /* ---Sidebar-Widget--- */
-#sidebar{
-  margin-top: 10px;
-}
-#sidebar .wrap-sidebar{margin: 0px 10px ;}
+#sidebar { margin-top: 10px; }
 
 .widget {
   background-color: white;
@@ -265,7 +271,6 @@ header .cat-title{border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;paddi
   border: 1px solid #eee;
   border-radius: 4px;
 }
-.widget:after, .widget:before{clear: both; content: '\0020'; display: block; visibility: hidden; width: 0; height: 0;}
 
 .widget .wid-header  {padding-top: 10px; padding-bottom: 10px; text-transform: uppercase;}
 .widget .wid-header h5 {font-weight: 500; font-size: 17px;}

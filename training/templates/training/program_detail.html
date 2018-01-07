@@ -22,7 +22,26 @@
 						<div class="edit"><a href="{% url 'training:edit_program' program.pk %}">修改方案</a></div>
 					</div>
 					<div class="description">{{ program.description }}</div>
+					
 				    {% for td in td_list %}
+				    <div class="training-day">
+						<p><a name="{{ td.0.day }}">Day {{ td.0.day }} {{ td.0.name }}</a></p>
+							{% for ws in td.1 %}
+						    <div class="training-sets">
+								<div class="exercise-pic"><img src="{{ ws.1.picture.url }}" /></div>
+								<div class="exercise">
+									<div class="exercise-name" title="备选动作: {{ ws.2 }}">{{ ws.1.name }}</div>
+									<div class="detail">
+										<span>{{ ws.0.minreps }}~{{ ws.0.maxreps }}RM × {{ ws.0.sets }}组</span>
+										<span>休息:{{ ws.0.rest }}s</span>
+									</div>
+								</div>
+					        </div>
+							{% empty %}
+							{% endfor %}
+					</div>
+				    {% endfor %}
+				    <!--{% for td in td_list %}
 				    <div class="training-day">
 						<p><a name="{{ td.0.day }}">Day {{ td.0.day }} {{ td.0.name }}</a></p>
 						<table>
@@ -32,7 +51,10 @@
 							</tr>
 							{% for ws in td.1 %}
 						    <tr>
-						        <td class="col1" title="备选动作: {{ ws.2 }}">{{ ws.1 }}</td>
+						        <td class="col1" title="备选动作: {{ ws.2 }}">
+									<img src="{{ ws.1.picture.url }}" />
+									{{ ws.1.name }}
+								</td>
 						        <td class="col2">{{ ws.0.minreps }}~{{ ws.0.maxreps }}</td>
 								<td class="col2">{{ ws.0.sets }}</td>
 						        <td class="col2">{{ ws.0.rest }}</td>
@@ -44,7 +66,7 @@
 							{% endfor %}
 					    </table>
 					</div>
-				    {% endfor %}
+				    {% endfor %}-->
 				</div>
 			</div>
 		</div>
@@ -52,7 +74,7 @@
 
 	<div id="sidebar" class="col-1-3">
 		<!-- Start Widget -->
-		<div class="widget wid-directory">
+		<div class="widget wid-directory float-widget">
 			<div class="wid-header">
 				<h5>目录</h5>
 			</div>

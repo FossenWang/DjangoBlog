@@ -38,7 +38,7 @@ class Video(models.Model):
     title = models.CharField('标题', max_length=100)
     video = models.URLField('视频链接')
     video_length = models.CharField('视频时长', max_length=50, default='0:00')
-    cover = models.ImageField(upload_to='video/cover', verbose_name='封面图')
+    cover = models.ImageField(upload_to='video/cover', default='public/images/nonpic.jpg', verbose_name='封面图')
     note = models.TextField('视频简介')
     pub_date = models.DateTimeField('发布日期')
     author = models.ForeignKey(User, default=2, on_delete=models.SET_DEFAULT, verbose_name='作者')
