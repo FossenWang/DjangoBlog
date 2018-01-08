@@ -1,97 +1,96 @@
-{% extends 'training/base.html' %}
-
-{% block main %}
-	<div id="main-content" class="col-2-3">
-		<div class="wrap-content">
-			<div class="row">
-				<div class="current-nav">
-					<a href="/">首页</a>
-					<span>&gt;</span>
-					<a href="{% url 'training:program_list' 0 %}">训练方案</a>
-					<span>&gt;</span>
-					<a href="{% url 'training:program_list' program.ptype.pk %}">{{ program.ptype }}</a>
-				</div>
+{% extends 'training/base.html' %} {% block main %}
+<div id="main-content" class="col-2-3">
+	<div class="wrap-content">
+		<div class="row">
+			<div class="current-nav">
+				<a href="/">首页</a>
+				<span>&gt;</span>
+				<a href="{% url 'training:program_list' 0 %}">训练方案</a>
+				<span>&gt;</span>
+				<a href="{% url 'training:program_list' program.ptype.pk %}">{{ program.ptype }}</a>
 			</div>
-			<div class="row">
-				<div class="program">
-					<div class="name"><a name="name">{{ program.name }}</a></div>
-					<div class="info">
-						周期: {{ program.cycle }}天&nbsp;&nbsp;
-						类型: <a href="{% url 'training:program_list' program.ptype.pk %}">{{ program.ptype }}</a>&nbsp;&nbsp;
-						创建者: <a href="#">{{ program.creator }}</a>
-						<div class="edit"><a href="{% url 'training:edit_program' program.pk %}">修改方案</a></div>
-					</div>
-					<div class="description">{{ program.description }}</div>
-					
-				    {% for td in td_list %}
-				    <div class="training-day">
-						<p><a name="{{ td.0.day }}">Day {{ td.0.day }} {{ td.0.name }}</a></p>
-							{% for ws in td.1 %}
-						    <div class="training-sets">
-								<div class="exercise-pic"><img src="{{ ws.1.picture.url }}" /></div>
-								<div class="exercise">
-									<div class="exercise-name" title="备选动作: {{ ws.2 }}">{{ ws.1.name }}</div>
-									<div class="detail">
-										<span>{{ ws.0.minreps }}~{{ ws.0.maxreps }}RM × {{ ws.0.sets }}组</span>
-										<span>休息:{{ ws.0.rest }}s</span>
-									</div>
-								</div>
-					        </div>
-							{% empty %}
-							{% endfor %}
-					</div>
-				    {% endfor %}
-				    <!--{% for td in td_list %}
-				    <div class="training-day">
-						<p><a name="{{ td.0.day }}">Day {{ td.0.day }} {{ td.0.name }}</a></p>
-						<table>
-							<tr>
-								<td class="col1">动作</td><td class="col2">RM</td>
-								<td class="col2">组数</td><td class="col2">休息/s</td>
-							</tr>
-							{% for ws in td.1 %}
-						    <tr>
-						        <td class="col1" title="备选动作: {{ ws.2 }}">
-									<img src="{{ ws.1.picture.url }}" />
-									{{ ws.1.name }}
-								</td>
-						        <td class="col2">{{ ws.0.minreps }}~{{ ws.0.maxreps }}</td>
-								<td class="col2">{{ ws.0.sets }}</td>
-						        <td class="col2">{{ ws.0.rest }}</td>
-					        </tr>
-							{% empty %}
-							<tr>
-								<td class="col1">/</td><td class="col2">/</td><td class="col2">/</td><td class="col2">/</td>
-							</tr>
-							{% endfor %}
-					    </table>
-					</div>
-				    {% endfor %}-->
+		</div>
+		<div class="row">
+			<div class="program">
+				<div class="name">
+					<a name="name">{{ program.name }}</a>
 				</div>
+				<div class="info">
+					周期: {{ program.cycle }}天&nbsp;&nbsp; 类型:
+					<a href="{% url 'training:program_list' program.ptype.pk %}">{{ program.ptype }}</a>&nbsp;&nbsp; 创建者:
+					<a href="#">{{ program.creator }}</a>
+					<div class="edit">
+						<a href="{% url 'training:edit_program' program.pk %}">修改方案</a>
+					</div>
+				</div>
+				<div class="description">{{ program.description }}</div>
+
+				{% for td in td_list %}
+				<div class="training-day">
+					<p>
+						<a name="{{ td.0.day }}">第{{ td.0.day }}天 {{ td.0.name }}</a>
+					</p>
+					{% for ws in td.1 %}
+					<div class="training-sets">
+						<div class="exercise-pic">
+							<img src="{{ ws.1.0.picture.url }}" />
+						</div>
+						<div class="exercise">
+							<div class="exercise-name">
+								<a>{{ ws.1.0.name }}</a>
+							    <ul>
+									<h6>备选动作</h6>
+									{% for e in ws.1 %}
+									<li data-url="{{ e.picture.url }}"><a>{{ e.name }}</a></li>
+									{% endfor %}
+								</ul>
+							</div>
+							<div class="sets-detail">
+								{{ ws.0.minreps }}~{{ ws.0.maxreps }}RM × {{ ws.0.sets }}组&nbsp;&nbsp;休息:{{ ws.0.rest }}s
+							</div>
+						</div>
+					</div>
+					{% empty %} {% endfor %}
+				</div>
+				{% endfor %}
 			</div>
 		</div>
 	</div>
+</div>
 
-	<div id="sidebar" class="col-1-3">
-		<!-- Start Widget -->
-		<div class="widget wid-directory float-widget">
-			<div class="wid-header">
-				<h5>目录</h5>
-			</div>
-			<div class="wid-content">
-				<div class="directory">
-					<h5 class="name"><a href="#name">{{ program.name }}</a></h5>
-					<ul class="day">
-						{% for training_day in program.trainingday_set.all %}
-						<li>
-							<a href="#{{ training_day.day }}">
-								Day {{ training_day.day }} {{ training_day.name }}
-							</a>
-						</li>
-						{% endfor %}
-					</ul>
-				</div>
+<div id="sidebar" class="col-1-3">
+	<!-- Start Widget -->
+	<div class="widget wid-directory float-widget">
+		<div class="wid-header">
+			<h5>目录</h5>
+		</div>
+		<div class="wid-content">
+			<div class="directory">
+				<h5 class="name">
+					<a href="#name">{{ program.name }}</a>
+				</h5>
+				<ul class="day">
+					{% for training_day in program.trainingday_set.all %}
+					<li>
+						<a href="#{{ training_day.day }}">
+							Day {{ training_day.day }} {{ training_day.name }}
+						</a>
+					</li>
+					{% endfor %}
+				</ul>
 			</div>
 		</div>
 	</div>
+</div>
+
+<script>
+	$(function () {
+		$(".exercise-name li").each(function(){
+			$(this).click(function(){
+				$(this).parent().siblings("a").text($(this).text());
+				$(this).parent().parent().parent().siblings(".exercise-pic").children("img").attr("src", $(this).attr("data-url"));
+			});
+		});
+	});
+</script> 
 {% endblock main %}

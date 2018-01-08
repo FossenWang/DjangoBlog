@@ -48,11 +48,11 @@
 	}
 	
 	#menu li:hover > a {
-		color: #A161BF;
+		color: #17375E;
 	}
 	
 	*html #menu li a:hover { /* IE6 only */
-		color: #A161BF;
+		color: #17375E;
 	}
 	
 	#menu ul {
@@ -113,7 +113,7 @@
 	}
 	
 	#menu ul a:hover {
-		background-color: #A161BF;
+		background-color: #17375E;
 		color: #fff;
 	}
 	
@@ -144,11 +144,11 @@
 	}
 	
 	#menu ul li:first-child a:hover:after {
-		border-bottom-color: #A161BF; 
+		border-bottom-color: #17375E; 
 	}
 	
 	#menu ul ul li:first-child a:hover:after {
-		border-right-color: #A161BF; 
+		border-right-color: #17375E; 
 		border-bottom-color: transparent; 	
 	}
 	

@@ -1,153 +1,143 @@
-{% extends 'training/base.html' %}
-{% load staticfiles %}
-{% load training_tags %}
-
-{% block main %}
-
-	<div id="main-content" class="col-2-3">
-		<div class="wrap-content">
-			<div class="row">
-				<div class="current-nav">
-					<a href="/">首页</a>
-					<span>&gt;</span>
-					<a href="{% url 'training:program_list' 0 %}">训练方案</a>
-					<span>&gt;</span>
-					<a href="{% url 'training:program_list' 0 %}">{{ program.ptype }}</a>
-				</div>
+{% extends 'training/base.html' %} {% load staticfiles %} {% load training_tags %} {% block main %}
+<div id="main-content" class="col-2-3">
+	<div class="wrap-content">
+		<div class="row">
+			<div class="current-nav">
+				<a href="/">首页</a>
+				<span>&gt;</span>
+				<a href="{% url 'training:program_list' 0 %}">训练方案</a>
+				<span>&gt;</span>
+				<a href="{% url 'training:program_list' 0 %}">{{ program.ptype }}</a>
 			</div>
-			<div class="row">
-				<div class="program">
-					<form action="" method="post">
-						{% csrf_token %}
-						<div id="program_pk" style="display:none;">{{ program.pk }}</div>
-						{{ form.as_p }}
-						{{ td_management }}
-						{% for td in td_list %}
-						<div class="training-day">
-							<div class="title">
-								<span>第</span><span id="id_day-{{ td.3 }}-day-value">{{ td.0.day.value }}</span><span>天</span>
-								{{ td.0.day }}{{ td.0.name }}
-								<span>删除: </span>
-								<button type="button" class="delete-day">×</button>
-								{{ td.0.DELETE }}
-								{{ td.0.program }}
-								{{ td.0.id }}
+		</div>
+		<div class="row">
+			<div class="program">
+				<form action="" method="post">
+					{% csrf_token %}
+					<div id="program_pk" style="display:none;">{{ program.pk }}</div>
+					{{ form.as_p }} {{ td_management }} {% for td in td_list %}
+					<div class="training-day">
+						<div class="title">
+							<span>第</span>
+							<span id="id_day-{{ td.3 }}-day-value">{{ td.0.day.value }}</span>
+							<span>天</span>
+							{{ td.0.day }}{{ td.0.name }}
+							<button type="button" class="delete-day">×</button>
+							{{ td.0.DELETE }} {{ td.0.program }} {{ td.0.id }}
+						</div>
+						{{ td.1 }}
+						{% for ws in td.2 %}
+						<div class="training-sets">
+							<div class="exercise-pic">
+								<img src="{{ ws.1.0.picture.url }}" />
 							</div>
-							<table><tbody>
-								{{ td.1 }}
-								<tr>
-									<td class="col1">动作</td><td class="col1">RM</td>
-									<td class="col2">组数</td><td class="col2">休息/s</td>
-									<td class="col2">删除</td>
-								</tr>
-								{% for ws in td.2 %}
-								<tr>
-									<td class="col1" title="备选动作: {{ ws.2 }}">
-									<span class="exercise">{{ ws.1 }}</span>
+							<div class="exercise">
+								<div class="exercise-name">
 									{{ ws.0.exercises }}
-								    </td>
-									<td class="col1">
-										{{ ws.0.minreps }}~{{ ws.0.maxreps }}
-									</td>
-									<td class="col2">{{ ws.0.sets }}</td>
-									<td class="col2">{{ ws.0.rest }}</td>
-									<td class="col2">
-										<button type="button" class="delete-sets">×</button>
-										{{ ws.0.DELETE }}
-										{{ ws.0.id }}{{ ws.0.trainingday }}{{ ws.0.number }}
-									</td>
-								</tr>
-								{% endfor %}
-								<tr class="addsets">
-									<td colspan="5">＋新增一组动作</td>
-								</tr>
-							</tbody></table>
+									<a>{{ ws.1.0.name }}</a>
+									<ul>
+										<h6>备选动作</h6>
+										{% for e in ws.1 %}
+										<li data-url="{{ e.picture.url }}">
+											<a>{{ e.name }}</a>
+										</li>
+										{% endfor %}
+									</ul>
+								</div>
+								<div class="sets-detail">
+									{{ ws.0.minreps }}~{{ ws.0.maxreps }}RM × {{ ws.0.sets }}组&nbsp;&nbsp;休息:{{ ws.0.rest }}s
+								</div>
+							</div>
+							<button type="button" class="delete-sets">×</button>
+							{{ ws.0.DELETE }} {{ ws.0.id }}{{ ws.0.trainingday }}{{ ws.0.number }}
 						</div>
 						{% endfor %}
-						<div class="training-day">
-							<button type="button" class="add-training-day">＋新增一个训练日</button>
-						</div>
-						<input type="submit" value="保存" class="ok" />
-						<span><a href="{% url 'training:program' program.pk %}">返回</a></span>
-					</form>
-					<form action="{% url 'training:delete_program' program.pk%}" method="post">
-						{% csrf_token %}
-						<input type="submit" value="删除方案" class="delete-program" />
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div id="sidebar" class="col-1-3">
-		<!-- Start Widget -->
-		<div class="widget wid-directory float-widget">
-			<div class="wid-header">
-				<h5>目录</h5>
-			</div>
-			<div class="wid-content">
-				<div class="directory">
-					<h5 class="name"><a href="#name">{{ program.name }}</a></h5>
-					<ul class="day">
-						{% for training_day in program.trainingday_set.all %}
-						<li>
-							<a href="#{{ training_day.day }}">
-								Day {{ training_day.day }} {{ training_day.name }}
-							</a>
-						</li>
-						{% endfor %}
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div id="exercises-dialog" title="选择动作">
-		{% get_exercise_types as etypes %}
-		{% for etype, v in etypes.items %}
-		<div>{{ etype }}</div>
-			{% for sort in v.0 %}
-			<div class="exercise-list">
-				<h3>{{ sort.sort }}</h3>
-				<div class="select-exercise">
-					{% for e in sort.exercise_set.all %}
-					<div class="exercise-name" data-id="{{ e.pk }}">{{ e.name }}</div>
+						<button type="button" class="add-training-sets">＋新增一组动作</button>
+					</div>
 					{% endfor %}
-			    </div>
+					<div class="training-day">
+						<button type="button" class="add-training-day">＋新增一个训练日</button>
+					</div>
+					<input type="submit" value="保存" class="ok" />
+					<span>
+						<a href="{% url 'training:program' program.pk %}">返回</a>
+					</span>
+				</form>
+				<form action="{% url 'training:delete_program' program.pk%}" method="post">
+					{% csrf_token %}
+					<input type="submit" value="删除方案" class="delete-program" />
+				</form>
 			</div>
-			{% endfor %}
-		{% endfor %}
-		<div id="sets-exercises-id" style="display: None"></div>
-		<div id="chosen-exercises-id" style="display: None"></div>
+		</div>
 	</div>
+</div>
 
-	<link rel="Stylesheet" href="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.css"/>
-	<style>
-		.select-exercise { margin: 0; padding: 0; }
-		.select-exercise .selected { background: #A161BF; color: white; }
-		.select-exercise .exercise-name { float: left; width:16.66%; text-align: center; }
-		.ui-dialog-titlebar-close { display: none; }
-	</style>
-	<script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
-	<script type="text/javascript" src="/static/training/js/program_edit.js"></script>
-	<script>
-		$(function() {
-			$(".addsets").click(addSets);
-			$(".delete-sets").click(deleteOldSets);
-			$(".add-training-day").click(addTrainingDay);
-			$(".delete-day").click(deleteOldDay);
-			$("#exercises-dialog").dialog({
-				autoOpen: false, my: 'center', width: '800', height: '400', modal: true,
-				buttons: {
-					"已选动作:": function(){},
-					"确认": dialogConfirm,
-					"取消": dialogClose
-				}
+<div id="sidebar" class="col-1-3">
+	<!-- Start Widget -->
+	<div class="widget wid-directory float-widget">
+		<div class="wid-header">
+			<h5>目录</h5>
+		</div>
+		<div class="wid-content">
+			<div class="directory">
+				<h5 class="name">
+					<a href="#name">{{ program.name }}</a>
+				</h5>
+				<ul class="day">
+					{% for training_day in program.trainingday_set.all %}
+					<li>
+						<a href="#{{ training_day.day }}">
+							Day {{ training_day.day }} {{ training_day.name }}
+						</a>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="exercises-dialog" title="选择动作">
+	{% get_exercise_types as etypes %} {% for etype, v in etypes.items %}
+	<div>{{ etype }}</div>
+	{% for sort in v.0 %}
+	<div class="exercise-list">
+		<h3>{{ sort.sort }}</h3>
+		<div class="exercise-sort">
+			{% for e in sort.exercise_set.all %}
+			<div class="select-exercise" data-id="{{ e.pk }}" data-url="{{ e.picture.url }}">{{ e.name }}</div>
+			{% endfor %}
+		</div>
+	</div>
+	{% endfor %} {% endfor %}
+	<div id="sets-exercises-id" style="display: None"></div>
+	<div id="chosen-exercises-id" style="display: None"></div>
+	<div id="chosen-exercises-pic" style="display: None"></div>
+</div>
+
+<script type="text/javascript" src="/static/training/js/program_edit.js"></script>
+<script>
+	$(function () {
+		$(".add-training-sets").click(addTrainingSets);
+		$(".delete-sets").click(deleteOldSets);
+		$(".add-training-day").click(addTrainingDay);
+		$(".delete-day").click(deleteOldDay);
+		$("#exercises-dialog").dialog({
+			autoOpen: false, my: 'center', width: '800', height: '400', modal: true,
+			buttons: {
+				"已选动作:": function () { },
+				"确认": dialogConfirm,
+				"取消": dialogClose
+			}
+		});
+		$(".exercise-list").accordion({ active: false, collapsible: true, heightStyle: "content" });
+		$(".select-exercise").click(checkItem)
+		$(".exercise-name a").click(openExercisesDialog);
+		$(".exercise-name li").each(function(){
+			$(this).click(function(){
+				$(this).parent().siblings("a").text($(this).text());
+				$(this).parent().parent().parent().siblings(".exercise-pic").children("img").attr("src", $(this).attr("data-url"));
 			});
-			$(".exercise-list").accordion({active:false, collapsible: true, heightStyle: "content"});
-			$(".exercise-name").click(checkItem)
-			$(".exercise").click(openExercisesDialog);
-		});	
-	</script>
-
-{% endblock main %}
+		});
+	});	
+</script> {% endblock main %}

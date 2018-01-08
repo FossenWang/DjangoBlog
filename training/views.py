@@ -177,12 +177,9 @@ class ProgramDetailView(DetailView):
             for ws in td.weightsets_set.all():
                 exercises = [Exercise.objects.get(pk=pk) for pk in ws.exercises.split(',')]
                 if exercises:
-                    alter = ",".join([ e.name for e in exercises[1:]])
-                    if not alter:
-                        alter='暂无'
-                    ws_list.append([ws, exercises[0], alter])
+                    ws_list.append([ws, exercises])
                 else:
-                    ws_list.append([ws, '暂无', '暂无'])
+                    ws_list.append([ws, {'name':'暂无'}])
             td_list.append([td, ws_list])
         context['td_list'] = td_list
         return context
@@ -212,12 +209,9 @@ class EditProgramView(UpdateView):
                 for wsform in wsformset:
                     exercises = [Exercise.objects.get(pk=pk) for pk in wsform.instance.exercises.split(',')]
                     if exercises:
-                        alter = ",".join([ e.name for e in exercises[1:]])
-                        if not alter:
-                            alter='暂无'
-                        ws_list.append([wsform, exercises[0].name, alter])
+                        ws_list.append([wsform, exercises])
                     else:
-                        ws_list.append([wsform, '暂无', '暂无'])
+                        ws_list.append([wsform, {'name':'暂无'}])
                 td_list.append([tdform, wsformset.management_form, ws_list, i])
             context['td_list'] = td_list
             context['td_management'] = tdformset.management_form

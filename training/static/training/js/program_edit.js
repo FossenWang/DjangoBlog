@@ -48,7 +48,7 @@ function deleteNewDay(){
 	var this_day = $(this).parent().parent();
     var next_day = this_day.nextUntil(".ok");
     var index = parseInt($(this).siblings("input[name$='-day']").attr("name").split("-")[1]);
-    var number = $(this).siblings("input[name$='-day']").val();
+    var number = parseInt($(this).siblings("input[name$='-day']").val());
 	if (next_day.length>1){
 		for (var i=0; i<next_day.length; i++ ){
             changeDay(index, number, next_day.eq(i));
@@ -59,24 +59,24 @@ function deleteNewDay(){
 }
 
 function changeDay(index, number, training_day){
-    input = training_day.find("input");
+    inputs = training_day.find("input");
     day_value = training_day.find('[id$="-day-value"]');
-    for (var i=0; i<input.length;i++){
-        input.eq(i).attr("name", function(i, origValue){
+    for (var i=0; i<inputs.length;i++){
+        inputs.eq(i).attr("name", function(i, origValue){
             return origValue.replace(/^day-[0-9]+/i,"day-"+index)
         });
-        input.eq(i).attr("id", function(i, origValue){
+        inputs.eq(i).attr("id", function(i, origValue){
             return origValue.replace(/^id_day-[0-9]+/i,"id_day-"+index)
         });
     }
-    input.filter('[id$="-day"]').val(number);
+    inputs.filter('[id$="-day"]').val(number);
     day_value.text(number);
     day_value.attr("id", function(i, origValue){
         return origValue.replace(/^id_day-[0-9]+/i,"id_day-"+index)
     });
 }
 
-function addSets(){
+function addTrainingSets(){
     var total_forms = $(this).siblings('[name$="-sets-TOTAL_FORMS"]');
 	var id_total_forms = total_forms.attr("id");
 	var day_id = parseInt($("#"+id_total_forms.replace("sets-TOTAL_FORMS","id")).val());
@@ -86,29 +86,38 @@ function addSets(){
     var name_prefix = id_prefix.replace("id_","");
     var number = parseInt($(this).prev().find("input[name$='-number']").val())+1;
     if (!number){ number = 1; }
-    var newSets = '<tr>'+
-        '<td class="col1" title="备选动作: 暂无">'+
-        '<span class="exercise"></span>'+
-        '<input type="hidden" name="'+name_prefix+'-exercises" value="" id="'+id_prefix+'-exercises"></td>'+
-		'<td class="col1">'+
-	    '<input type="number" name="'+name_prefix+'-minreps" value="8" min="0" id="'+id_prefix+'-minreps" >'+
-		'~<input type="number" name="'+name_prefix+'-maxreps" value="12" min="0" id="'+id_prefix+'-maxreps" >'+
-		'</td><td class="col2"><input type="number" name="'+name_prefix+'-sets" value="5" min="0" id="'+id_prefix+'-sets" ></td>'+
-		'<td class="col2"><input type="number" name="'+name_prefix+'-rest" value="120" min="0" id="'+id_prefix+'-rest" ></td>'+
-		'<td class="col2">'+
-	    '<button type="button" class="delete-sets">×</button>'+
-		'<input type="hidden" name="'+name_prefix+'-trainingday" value='+day_id+' id="'+id_prefix+'-trainingday" >'+
-		'<input type="hidden" name="'+name_prefix+'-number" value='+number+' id="'+id_prefix+'-number" ></td></tr>';
+    var newSets = '<div class="training-sets">'+
+    '<div class="exercise-pic">'+
+        '<img src="">'+
+    '</div>'+
+    '<div class="exercise">'+
+        '<div class="exercise-name">'+
+            '<input type="hidden" name="'+name_prefix+'-exercises" value="" id="'+id_prefix+'-exercises">'+
+            '<a></a>'+
+            '<ul><h6>备选动作</h6>'+
+                '<li data-url="">'+
+                    '<a></a>'+
+                '</li>'+
+            '</ul>'+
+        '</div>'+
+        '<div class="sets-detail">'+
+            '<input type="number" name="'+name_prefix+'-minreps" value="8" min="0" id="'+id_prefix+'-minreps">~<input type="number" name="'+name_prefix+'-maxreps" value="12" min="0" id="'+id_prefix+'-maxreps">RM × <input type="number" name="'+name_prefix+'-sets" value="5" min="0" id="'+id_prefix+'-sets">组&nbsp;&nbsp;休息:<input type="number" name="'+name_prefix+'-rest" value="120" min="0" id="'+id_prefix+'-rest">s</span>'+
+        '</div>'+
+    '</div>'+
+    '<button type="button" class="delete-sets">×</button>'+
+    '<input type="hidden" name="'+name_prefix+'-trainingday" value='+day_id+' id="'+id_prefix+'-trainingday">'+
+    '<input type="hidden" name="'+name_prefix+'-number" value='+number+' id="'+id_prefix+'-number">'+
+    '</div>';
 	$("#"+id_total_forms).val(vtf+1);
 	$(this).before(newSets);
     $("#"+id_prefix+"-number").siblings(".delete-sets").click(deleteNewSets);
-    $("#"+id_prefix+"-exercises").siblings(".exercise").click(openExercisesDialog);
-    $("#"+id_prefix+"-exercises").siblings(".exercise").click();
+    $("#"+id_prefix+"-exercises").siblings("a").click(openExercisesDialog);
+    $("#"+id_prefix+"-exercises").siblings("a").click();
 }
 
 function deleteOldSets(){
-	var this_sets = $(this).parent().parent();
-	var next_sets = this_sets.nextUntil(".addsets");
+	var this_sets = $(this).parent();
+	var next_sets = this_sets.nextUntil(".add-training-sets");
 	if (next_sets.length>0){
 		for (var i=next_sets.length-1; i>0; i-- ){
             next_sets.eq(i).find("input[name$='-number']").val(next_sets.eq(i-1).find("input[name$='-number']").val());
@@ -123,41 +132,46 @@ function deleteNewSets(){
 	var id_total_forms = $(this).next().attr("id").split("sets")[0] + "sets-TOTAL_FORMS";
 	var vtf = parseInt($("#"+id_total_forms).val());
 	$("#"+id_total_forms).val(vtf-1);
-	var this_sets = $(this).parent().parent();
-	var next_sets = this_sets.nextUntil(".addsets");
-	if (next_sets.length>0){
-		copySetsValue(this_sets, next_sets.eq(0));
-		for (var i=1; i<next_sets.length; i++ ){
-			copySetsValue(next_sets.eq(i-1), next_sets.eq(i));
-		}
-		next_sets.last().remove();
-	}else{
-		this_sets.remove();
+	var this_sets = $(this).parent();
+    var next_sets = this_sets.nextUntil(".add-training-sets");
+    var index = parseInt($(this).siblings("input[name$='-number']").attr("name").split("-")[3]);
+    var number = parseInt($(this).siblings("input[name$='-number']").val());
+	for (var i=0; i<next_sets.length; i++ ){
+        changeSets(index, number, next_sets.eq(i));
+        index++;number++;
 	}
+    this_sets.remove();
 }
 
-function copySetsValue(sets1, sets2){
-	var inputs1 = sets1.find("input").not("input[name$='-number']");
-	var inputs2 = sets2.find("input").not("input[name$='-number']");
-	for (var i=0; i<inputs1.length; i++){
-		inputs1.eq(i).val(inputs2.eq(i).val());
-	}
+function changeSets(index, number, sets){
+    inputs = sets.find("input");
+    for (var i=0; i<inputs.length;i++){
+        inputs.eq(i).attr("name", function(i, origValue){
+            return origValue.replace(/-sets-[0-9]+/i,"-sets-"+index)
+        });
+        inputs.eq(i).attr("id", function(i, origValue){
+            return origValue.replace(/-sets-[0-9]+/i,"-sets-"+index)
+        });
+    }
+    inputs.filter('[id$="-number"]').val(number);
 }
 
 function openExercisesDialog(){
     var input = $(this).siblings("input");
     $("#sets-exercises-id").text(input.attr("id"));
     $("#chosen-exercises-id").text(input.val());
-    var names = $(this).text();
-    var alter = $(this).parent().attr("title").replace("备选动作: ", "");
-    if (alter!="暂无"){
-        names+=","+alter;
-    }
-    $(".ui-dialog-buttonset").children().first().text("已选动作: "+names);
+    var names = [];
+    var pic_url = [];
+    $(this).siblings("ul").find("li").each(function(){
+        names.push($(this).text());
+        pic_url.push($(this).attr("data-url"));
+    });
+    $(".ui-dialog-buttonset").children().first().text("已选动作: "+names.join());
+    $("#chosen-exercises-pic").text(pic_url.join());
     $(".selected").removeClass("selected");
     $(".exercise-list").accordion( "option", "active", false );
     input.val().split(",").forEach(function(item){ 
-        var item_div = $(".exercise-name[data-id='"+item+"']");
+        var item_div = $(".select-exercise[data-id='"+item+"']");
         item_div.addClass("selected");
         item_div.parent().parent().accordion( "option", "active", 0 );
     });
@@ -166,27 +180,30 @@ function openExercisesDialog(){
 
 function dialogConfirm(){
     var ids = $("#chosen-exercises-id").text();
-    var names = $(".ui-dialog-buttonset").children().first().text().replace("已选动作: ", "");
-    var target = $("#"+$("#sets-exercises-id").text());
     if ( !ids ){
         alert("请选择至少一个动作！")
     }else{
+        var names = $(".ui-dialog-buttonset").children().first().text().replace("已选动作: ", "");
+        var target = $("#"+$("#sets-exercises-id").text());
+        var pic_url = $("#chosen-exercises-pic").text().split(",");
         target.val(ids);
-        target.siblings("span").text(names.split(",")[0]);
-        var alter = names.split(",").slice(1);
-        if (alter.length==0){
-            alter="暂无";
-        }else{
-            alter.join();
-        }
-        target.parent().attr("title", "备选动作: "+alter);
+        target.siblings("a").text(names.split(",")[0]);
+        target.siblings("ul").children("li").remove();
+        names.split(",").forEach(function(item, index){
+            target.siblings("ul").append('<li data-url="'+pic_url[index]+'"><a>'+item+'</a></li>');
+        });
+		target.siblings("ul").children("li").each(function(){
+			$(this).click(function(){
+				$(this).parent().siblings("a").text($(this).text());
+				$(this).parent().parent().parent().siblings(".exercise-pic").children("img").attr("src", $(this).attr("data-url"));
+			});
+        });
+        target.siblings("ul").children("li").first().click();
         $("#exercises-dialog").dialog("close");
     }
 }
 
 function dialogClose(){
-    var ids = $("#chosen-exercises-id").text();
-    var names = $(".ui-dialog-buttonset").children().first().text().replace("已选动作: ", "");
     var target = $("#"+$("#sets-exercises-id").text());
     if (!target.val()){
         alert("请选择至少一个动作！")
@@ -198,19 +215,25 @@ function dialogClose(){
 function checkItem(){
     var ids = $("#chosen-exercises-id").text();
     if(ids==""){ ids=[]; }else{ ids=ids.split(","); }
+    var pic_url = $("#chosen-exercises-pic").text();
+    if(pic_url==""){ pic_url=[]; }else{ pic_url=pic_url.split(","); }
     var names = $(".ui-dialog-buttonset").children().first().text().replace("已选动作: ", "");
     if(names==""){ names=[]; }else{ names=names.split(","); }
     var this_id = $(this).attr("data-id");
+    var this_pic = $(this).attr("data-url");
     var this_name = $(this).text();
     index = ids.indexOf(this_id);
     if (index==-1){
         ids.push(this_id);
         names.push(this_name);
+        pic_url.push(this_pic);
     }else{
         ids.splice(index,1)
         names.splice(index,1)
+        pic_url.splice(index,1)
     }
     $(this).toggleClass("selected");
     $("#chosen-exercises-id").text(ids.join());
+    $("#chosen-exercises-pic").text(pic_url.join());
     $(".ui-dialog-buttonset").children().first().text("已选动作: "+names.join());
 }
