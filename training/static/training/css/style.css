@@ -34,7 +34,7 @@ html { -webkit-text-size-adjust: none;}
 img{max-width:100%;	height: auto;width: auto\9; /* ie8 */}
 
 a{color: black;text-decoration: none;}
-a:hover {color: #17375E;text-decoration: none;}
+a:hover {color: #0070C0;text-decoration: none;}
 
 h1, h2 , h3	{font-size: 25px;line-height: 25px;margin: 25px 0;}
 h4, h5, h6	{font-size: 16px;line-height: 16px;}

@@ -19,9 +19,11 @@
 					周期: {{ program.cycle }}天&nbsp;&nbsp; 类型:
 					<a href="{% url 'training:program_list' program.ptype.pk %}">{{ program.ptype }}</a>&nbsp;&nbsp; 创建者:
 					<a href="#">{{ program.creator }}</a>
+				    {% if user_is_creator %}
 					<div class="edit">
 						<a href="{% url 'training:edit_program' program.pk %}">修改方案</a>
 					</div>
+					{% endif %}
 				</div>
 				<div class="description">{{ program.description }}</div>
 

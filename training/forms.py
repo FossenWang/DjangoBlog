@@ -5,7 +5,10 @@ from .models import Program, TrainingDay, WeightSets
 class ProgramForm(ModelForm):
     class Meta:
         model = Program
-        fields = ['name', 'cycle', 'ptype', 'creator', 'description']
+        fields = ['name', 'cycle', 'ptype', 'description']
+        widgets = {
+            'creator':HiddenInput,
+        }
 
 class TrainingDayForm(ModelForm):
     class Meta:
@@ -14,7 +17,6 @@ class TrainingDayForm(ModelForm):
         widgets = {
             'day':HiddenInput,
         }
-        
 
 class WeightSetsForm(ModelForm):
     class Meta:

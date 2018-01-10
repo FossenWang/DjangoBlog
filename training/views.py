@@ -182,6 +182,7 @@ class ProgramDetailView(DetailView):
                     ws_list.append([ws, {'name':'暂无'}])
             td_list.append([td, ws_list])
         context['td_list'] = td_list
+        context['user_is_creator'] = self.request.user==program.creator
         return context
 
 class EditProgramView(UpdateView):
@@ -193,8 +194,13 @@ class EditProgramView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        TDFormSet = inlineformset_factory(Program, TrainingDay, form=TrainingDayForm, extra=0)
         program = context['program']
+        context['user_is_creator'] = self.request.user==program.creator
+        print(context['user_is_creator'], self.request.user, program.creator)
+        if not context['user_is_creator']:
+            return context
+        
+        TDFormSet = inlineformset_factory(Program, TrainingDay, form=TrainingDayForm, extra=0)
         if self.request.method == 'POST':
             tdformset = TDFormSet(self.request.POST, instance=program, prefix='day')
             context['tdformset'] = tdformset
@@ -254,7 +260,9 @@ class AddProgramView(CreateView):
     form_class = ProgramForm
 
     def form_valid(self, form):
-        self.object = form.save()
+        self.object = form.save(commit=False)
+        self.object.creator=self.request.user
+        self.object.save()
         return HttpResponseRedirect(reverse('training:edit_program', args=[self.object.pk]))
 
 class DeleteProgramView(DeleteView):

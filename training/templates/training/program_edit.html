@@ -12,10 +12,13 @@
 		</div>
 		<div class="row">
 			<div class="program">
+				{% if user_is_creator %}
+				<div>创建者: {{ program.creator }}</div>
 				<form action="" method="post">
 					{% csrf_token %}
 					<div id="program_pk" style="display:none;">{{ program.pk }}</div>
-					{{ form.as_p }} {{ td_management }} {% for td in td_list %}
+					{{ form.as_p }}{{ td_management }} 
+					{% for td in td_list %}
 					<div class="training-day">
 						<div class="title">
 							<span>第</span>
@@ -67,6 +70,9 @@
 					{% csrf_token %}
 					<input type="submit" value="删除方案" class="delete-program" />
 				</form>
+				{% else %}
+				<div>你无权修改此方案！</div>
+				{% endif %}
 			</div>
 		</div>
 	</div>

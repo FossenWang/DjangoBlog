@@ -25,6 +25,16 @@
 		zoom:1;
 	}
 
+
+	#menu span {
+		float: left;
+		margin-top: 5px;
+		padding: 0 30px;
+		font-size: 30px;
+		cursor: pointer;
+		font-family: Georgia, 'Times New Roman', Times, serif;
+	}
+
 	#menu img {
 		max-height: 36px;
 		width: auto;
