@@ -1,0 +1,44 @@
+{% extends 'training/base.html' %}
+{% load staticfiles %}
+{% load training_tags %}
+
+{% block main %}
+<div id="main-content" class="col-2-3">
+	<div class="wrap-content">
+		<div class="row">
+			<div class="current-nav">
+				<a href="/">首页</a>
+				<span>&gt;</span>
+				<a href="{% url 'training:program_list' 0 %}">训练方案</a>
+				<span>&gt;</span>
+				<a href="{% url 'training:program_list' 0 %}">{{ program.ptype }}</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="program">
+				<div class="name">
+					<a name="name">{{ program.name }}</a>
+				</div>
+				<div class="info">
+					周期: {{ program.cycle }}天&nbsp;&nbsp; 类型:
+					<a href="{% url 'training:program_list' program.ptype.pk %}">{{ program.ptype }}</a>&nbsp;&nbsp; 创建者:
+					<a href="#">{{ program.creator }}</a>
+				    {% if user_is_creator %}
+					<div class="edit">
+						<a href="{% url 'training:edit_program' program.pk %}">修改方案</a>
+					</div>
+					{% endif %}
+				</div>
+				<div class="description">{{ program.description }}</div>
+				<form action="{% url 'training:delete_program' program.pk%}" method="post">
+                    {% csrf_token %}
+                    <div class="delete-program-confirm">
+                        <p>确定要删除该训练方案吗？</p>
+					    <input type="submit" value="删除方案" class="delete-program" />
+                    </div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock main %}

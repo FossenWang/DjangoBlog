@@ -1,6 +1,7 @@
 '训练相关视图'
 import re
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
@@ -8,6 +9,17 @@ from django.forms import modelformset_factory, inlineformset_factory
 
 from .models import Program, ProgramType, Exercise, ExerciseType, TrainingDay, WeightSets
 from .forms import ProgramForm, TrainingDayForm, WeightSetsForm
+
+class ProgramCreatorTestMixin(UserPassesTestMixin):
+    '验证发送请求的用户是否是方案创建者'
+    def test_func(self):
+        if self.request.user.is_authenticated:
+            program = Program.objects.get(pk=self.kwargs.get('pk'))
+            is_creator = self.request.user == program.creator
+            self.raise_exception = not is_creator
+        else:
+            is_creator = False
+        return is_creator
 
 class ExerciseListView(ListView):
     '动作库'
@@ -185,7 +197,7 @@ class ProgramDetailView(DetailView):
         context['user_is_creator'] = self.request.user==program.creator
         return context
 
-class EditProgramView(UpdateView):
+class EditProgramView(ProgramCreatorTestMixin, UpdateView):
     '编辑方案视图'
     model = Program
     context_object_name = 'program'
@@ -195,11 +207,6 @@ class EditProgramView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         program = context['program']
-        context['user_is_creator'] = self.request.user==program.creator
-        print(context['user_is_creator'], self.request.user, program.creator)
-        if not context['user_is_creator']:
-            return context
-        
         TDFormSet = inlineformset_factory(Program, TrainingDay, form=TrainingDayForm, extra=0)
         if self.request.method == 'POST':
             tdformset = TDFormSet(self.request.POST, instance=program, prefix='day')
@@ -239,7 +246,6 @@ class EditProgramView(UpdateView):
                 for j in range(
                     int(post_dict['day-'+str(i)+'-sets-INITIAL_FORMS']), 
                     int(post_dict['day-'+str(i)+'-sets-TOTAL_FORMS']))]
-            print(new_sets_keys)
             for key in new_sets_keys:
                 if post_dict[key] == '-1':
                     day_key = re.sub('sets-([0-9]+)-trainingday$', 'day', key)
@@ -252,7 +258,7 @@ class EditProgramView(UpdateView):
                     print(wsformset.errors)
         return super().form_valid(form)
 
-class AddProgramView(CreateView):
+class AddProgramView(LoginRequiredMixin, CreateView):
     '添加方案视图'
     model = Program
     context_object_name = 'program'
@@ -265,7 +271,7 @@ class AddProgramView(CreateView):
         self.object.save()
         return HttpResponseRedirect(reverse('training:edit_program', args=[self.object.pk]))
 
-class DeleteProgramView(DeleteView):
+class DeleteProgramView(ProgramCreatorTestMixin, DeleteView):
     '删除方案视图'
     model = Program
     success_url = reverse_lazy('training:program_list', args=[0])

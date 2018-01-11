@@ -1,0 +1,179 @@
+{% load staticfiles %} {% load video_tags %} {% load training_tags %}
+
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="zh">
+<!--<![endif]-->
+
+<head>
+
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>NowFitness - 分享健身知识</title>
+	<link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+	<link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+	<meta name="description" content="Free Responsive Html5 Css3 Templates ">
+	<meta name="author" content="">
+
+	<!-- Mobile Specific Metas
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- CSS & JS
+  ================================================== -->
+	<!--link href="https://cdn.bootcss.com/bootstrap/4.0.0-beta.3/css/bootstrap.css" rel="stylesheet"-->
+	<link rel="Stylesheet" href="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.css"/>
+	<link rel="stylesheet" href="{% static 'training/css/zerogrid.css' %}">
+	<link rel="stylesheet" href="{% static 'training/css/style.css' %}">
+	<link rel="stylesheet" href="{% static 'training/css/menu.css' %}">
+
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+	<script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
+	<!--script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta.3/js/bootstrap.js"></script-->
+
+</head>
+
+<body>
+	<div class="wrap-body">
+		<header>
+			<div class="top-header">
+				<div class="zerogrid">
+					<nav id="menu-wrap">
+						<div id="menu-trigger">Menu</div>
+						<ul id="menu" style="display: none;">
+								<span>FOSSEN</span>
+								<!--img src="{% static 'training/images/nowfitness.png' %}" alt="NowFitness"-->
+							<li>
+								<a href="/">首页</a>
+							</li>
+							<li>
+								<a href="{% url 'video:video list' 0 %}">视频</a>
+								{% get_video_categories as cates %}
+								<ul>
+									{% for cate in cates %}
+									<li>
+										<a href="{% url 'video:video list' cate.number %}">{{ cate.name }}</a>
+									</li>
+									{% endfor %}
+								</ul>
+							</li>
+							<li>
+								<a href="#">动态</a>
+							</li>
+							<li>
+								<a href="{% url 'training:program_list' 0 %}">训练</a>
+								<ul>
+									<li>
+										<a href="{% url 'training:program_list' 0 %}">训练方案</a>
+										{% get_program_types as ptypes %}
+										<ul>
+											{% for ptype in ptypes %}
+											<li>
+												<a href="{% url 'training:program_list' ptype.pk %}">{{ ptype.name }}</a>
+											</li>
+											{% endfor %}
+										</ul>
+									</li>
+									<li>
+										<a href="{% url 'training:exercise_list' 0 %}">动作库</a>
+										{% get_exercise_types as etypes %}
+										<ul>
+											{% for etype, v in etypes.items %}
+											<li>
+												<a href="{% url 'training:exercise_list' v.1 %}">{{ etype }}</a>
+												<ul>
+													{% for sort in v.0 %}
+													<li>
+														<a href="{% url 'training:exercise_list' sort.number %}">{{ sort.sort }}</a>
+													</li>
+													{% endfor %}
+												</ul>
+											</li>
+											{% endfor %}
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<a href="#">关于我们</a>
+							</li>
+							<li style="float:right !important">
+								<form method="get" action="/search" id="search" class="f-right">
+									<input name="q" type="text" size="40" placeholder="Search..." />
+								</form>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</header>
+		<section id="container">
+			<div class="wrap-container">
+				<div class="zerogrid">
+					<div class="row">
+						{% block main %} {% endblock main %}
+					</div>
+				</div>
+			</div>
+		</section>
+		<footer>
+			<div class="zerogrid">
+				<div class="wrap-footer t-center">
+					<div class="row">
+						<div class="full">
+							<div class="copy-right">
+								<p>
+									<a href="#" />NowFitness</a>©2017</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<script type="text/javascript">
+			$(function () {
+				/* Mobile */
+				$("#menu-trigger").on("click", function () {
+					$("#menu").slideToggle();
+				});
+
+				// iPad
+				var isiPad = navigator.userAgent.match(/iPad/i) != null;
+				if (isiPad) $('#menu ul').addClass('no-transition');
+			});
+
+			/* 浮动内容 */
+			$(window).scroll(function () {
+				var bodyTop = 0,
+					sideTop = $('.top-header').eq(0).height() + 10;
+				if (typeof window.pageYOffset != 'undefined') {
+					bodyTop = window.pageYOffset;
+				} else if (typeof document.compatMode != 'undefined' && document.compatMode != 'BackCompat') {
+					bodyTop = document.documentElement.scrollTop;
+				} else if (typeof document.body != 'undefined') {
+					bodyTop = document.body.scrollTop;
+				}
+				if (bodyTop > sideTop) {
+					$('.float-widget').css({
+						'position': 'fixed',
+						'top': '10px',
+						'width': '374.6px'
+					});
+				} else {
+					$('.float-widget').css({
+						'position': 'relative',
+						'top': '0px',
+					});
+				}
+			});
+		</script>
+
+	</div>
+</body>
+
+</html>

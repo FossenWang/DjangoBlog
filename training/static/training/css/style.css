@@ -170,7 +170,7 @@ header .cat-title{border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;paddi
 .program .name { padding: 20px 10px;  font-size: 24px; }
 .program .info { padding: 0 10px 10px; font-size: 14px; }
 .program .edit { float: right;  }
-.program .description { padding: 10px 10px; white-space: pre-wrap; font-size: 13px; border-top: 1px solid #ccc;}
+.program .description { padding: 10px 10px; white-space: pre-wrap; font-size: 13px; border-top: 1px solid #17375E;}
 .program .training-day { padding: 20px 0; text-align: left; }
 .program .training-day p { margin: 20px 10px; padding: 20px; font-size: 17px; text-align: center;}
 .program .training-day p a { cursor: pointer; padding: 10px 20px; border: 1px solid #17375E; border-radius: 5px; }
@@ -202,10 +202,13 @@ header .cat-title{border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;paddi
 .program form .training-day table input { width: 40px; text-align: center; border: 1px solid #ccc; border-radius: 5px; }
 .program form .add-training-day,.add-training-sets { text-align: center; font-size: 17px; margin: 30px auto; background: white; color: #17375E; width: 180px; height: 36px; border: 1px solid #17375E; border-radius: 5px; transition: all .2s ease-in-out}
 .program form .add-training-day:hover,.add-training-sets:hover { background: #17375E; color: white; }
-.program form .delete-program { float: right; margin: 30px 40px 0; background: white; color: #17375E; width: 90px; height: 30px; border: 1px solid #17375E; border-radius: 5px; transition: all .2s ease-in-out }
-.program form .delete-program:hover { background: #17375E; color: white; }
 .program form .delete-sets,.delete-day { margin-left: 30px; line-height: 0; text-align: center; background: white; color: #17375E; width: 25px; height: 25px; font-size: 20px; border: 0; border-radius: 5px; transition: all .2s ease-in-out }
 .program form .delete-sets:hover,.delete-day:hover { background: #17375E; color: white; }
+.program a .delete-program { text-align: center; float: right; margin: 30px 40px 0; background: white; color: #17375E; width: 90px; height: 25px; border: 1px solid #17375E; border-radius: 5px; transition: all .2s ease-in-out }
+.program a .delete-program:hover { background: #17375E; color: white; }
+.program form .delete-program { margin: 30px auto; background: white; color: #17375E; width: 90px; height: 25px; border: 1px solid #17375E; border-radius: 5px; transition: all .2s ease-in-out }
+.program form .delete-program:hover { background: #17375E; color: white; }
+.program form .delete-program-confirm { margin: 0 -10px; padding: 50px; text-align: center; font-size: 20px; font-weight: bold; color: #17375E; border-top: 1px solid #17375E;}
 
 .exercise-sort { margin: 0; padding: 0; }
 .exercise-sort .selected { background: #17375E; color: white; }
