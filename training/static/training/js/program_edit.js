@@ -3,27 +3,23 @@ function addTrainingDay(){
     var program_pk = parseInt($("#program_pk").text());
     var vtf = parseInt($("#id_day-TOTAL_FORMS").val());
     if (!vtf){ vtf=0; }
-    var number = parseInt($(this).parent().prev().find("input[name$='day']").val())+1;
+    var number = parseInt($(this).parent().prev().find("input[name$='-day']").val())+1;
     if (!number){ number = 1; }
     var newTD = '<div class="training-day">'+
         '<div class="title">'+
         '<span>第</span><span id="id_day-'+vtf+'-day-value">'+ number +'</span><span>天</span>'+
         '<input type="hidden" name="day-'+vtf+'-day" value='+number+' id="id_day-'+vtf+'-day">'+
         '<input type="text" name="day-'+vtf+'-name" value="休息日" maxlength="16" id="id_day-'+vtf+'-name">'+
-        '<span>删除: </span>'+
         '<button type="button" class="delete-day">×</button>'+
         '<input type="hidden" name="day-'+vtf+'-program" value='+program_pk+' id="id_day-'+vtf+'-program"></div>'+
-        '<table><tbody>'+
         '<input type="hidden" name="day-'+vtf+'-sets-TOTAL_FORMS" value="0" id="id_day-'+vtf+'-sets-TOTAL_FORMS">'+
         '<input type="hidden" name="day-'+vtf+'-sets-INITIAL_FORMS" value="0" id="id_day-'+vtf+'-sets-INITIAL_FORMS">'+
         '<input type="hidden" name="day-'+vtf+'-sets-MIN_NUM_FORMS" value="0" id="id_day-'+vtf+'-sets-MIN_NUM_FORMS">'+
         '<input type="hidden" name="day-'+vtf+'-sets-MAX_NUM_FORMS" value="1000" id="id_day-'+vtf+'-sets-MAX_NUM_FORMS">'+
-        '<tr><td class="col1">动作</td><td class="col1">RM</td><td class="col2">组数</td><td class="col2">休息/s</td><td class="col2">删除</td></tr>'+
-        '<tr class="addsets">'+
-        '<td colspan="5">＋新增一组动作</td></tr></tbody></table>';
+        '<button type="button" class="add-training-sets">＋新增一组动作</button></div>';
     $("#id_day-TOTAL_FORMS").val(vtf+1);
     $(".add-training-day").parent().before(newTD);
-    $("#id_day-"+vtf+"-program").parent().parent().find(".addsets").click(addSets);
+    $("#id_day-"+vtf+"-program").parent().siblings(".add-training-sets").click(addTrainingSets);
     $("#id_day-"+vtf+"-program").siblings(".delete-day").click(deleteNewDay);
 }
 
