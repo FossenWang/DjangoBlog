@@ -25,3 +25,6 @@ training/migrations/0006_auto_20180101_1517.py
 training/migrations/0007_weightsets_exercises.py
 training/migrations/0008_exercise_picture.py
 video/migrations/0008_auto_20180107_1847.py
+account/__init__.py
+account/migrations/0001_initial.py
+account/migrations/__init__.py

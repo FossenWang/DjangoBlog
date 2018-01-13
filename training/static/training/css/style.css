@@ -47,16 +47,6 @@ p{margin: 10px 0;}
 .f-right{float: right;}
 .f-left{float: left;}
 
-input[type="text"]{
-	border: 1px solid #ccc;
-	padding: 10px;
-	margin-top: 10px;
-	-webkit-transition: all 0.7s ease 0s;
-  -moz-transition: all 0.7s ease 0s;
-  -o-transition: all 0.7s ease 0s;
-  transition: all 0.7s ease 0s;
-}
-
 /* ---------------------------------------------------------------------------- */
 /* ------------------------------------Html-Body------------------------------- */
 /* ---------------------------------------------------------------------------- */
@@ -70,26 +60,18 @@ body .wrap-body{}
 
 header{}
 header .top-header{border-bottom: 1px solid #eee;}
-header .tagline {color: #1C202A;font-family: 'Microsoft YaHei', '华文细黑', '宋体', Georgia, Sans-serif;}
 header #search {margin: auto;}
 header #search input[type="text"] {
-    background: url(../images/search-dark.png) no-repeat 10px 6px #fff;
-    border: 0 none;
-    font: bold 12px 'Microsoft YaHei', '华文细黑', '宋体', Georgia, Sans-serif;
-    color: #222;
-    width: 200px;
-    padding: 6px 15px 6px 35px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    border-radius: 20px;
-    -webkit-transition: all 0.7s ease 0s;
-    -moz-transition: all 0.7s ease 0s;
-    -o-transition: all 0.7s ease 0s;
-    transition: all 0.7s ease 0s;
+  background: url(../images/search-dark.png) no-repeat 10px 6px #fff;
+  width: 0px;
+  padding: 6px 15px 6px 35px;
+  margin-top: 4px;
+  border-radius: 20px;
+  transition: all 0.7s ease 0s;
 	border: 1px solid transparent;
 }
-header #search input:focus{border: 1px solid #333;}
-header .cat-title{border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;padding: 30px 0;font-size: 18px;}
+header #search input:focus{ width: 200px; border: 1px solid #333;}
+header #user-tools {display: flex; align-items: center;}
 	
 .zoom-container {
 	position: relative;
