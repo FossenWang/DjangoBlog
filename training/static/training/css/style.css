@@ -51,7 +51,7 @@ p{margin: 10px 0;}
 /* ------------------------------------Html-Body------------------------------- */
 /* ---------------------------------------------------------------------------- */
 html, body {width:100%; padding:0; margin:0;}
-body {color: #3F3F3F;font: 14px/25px Arial;font-family: 'Microsoft YaHei', '华文细黑', '宋体', Georgia, Sans-serif;letter-spacing: 1px;}
+body {color: #3F3F3F;font: 14px/25px Arial;font-family: '宋体', 'Microsoft YaHei', '华文细黑', Georgia, Sans-serif;letter-spacing: 1px;}
 body .wrap-body{}
 
 /* ---------------------------------------------------------------------------- */
@@ -169,7 +169,7 @@ header #user-tools {display: flex; align-items: center;}
 
 .program form { margin: 10px 10px; }
 .program form #id_cycle { display: inline-block; width: 30px; margin: 10px 20px; border: 1px solid #ccc; border-radius: 5px; padding: 2px 5px; }
-.program form #id_name, #id_ptype, #id_creator { display: inline-block; margin: 10px 20px;}
+.program form #id_name, #id_ptype, #id_creator { padding: 5px; border: 1px solid #ccc; border-radius: 5px; display: inline-block; margin: 10px 20px;}
 .program form #id_description { display: block; width: 97%; border: 1px solid #ccc; border-radius: 5px; padding: 10px;}
 .program form label[for=id_name] { display: inline-block; padding: 15px 0; }
 .program form label[for=id_cycle], label[for=id_ptype], label[for=id_creator] { display: inline-block; margin: 7px 0; }

@@ -1,11 +1,15 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post, Category, Tag, Comment
 from .forms import CommentForm
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 from django.utils.text import slugify
 from django.db.models import Q
 from markdown.extensions.toc import TocExtension
 import markdown
+
+class HomeView(TemplateView):
+    '首页视图'
+    template_name = 'blog/home.html'
 
 class IndexView(ListView):
     model = Post
@@ -14,13 +18,6 @@ class IndexView(ListView):
     paginate_by = 10
 
     def get_context_data(self, **kwargs):
-        '''
-        在视图函数中将模板变量传递给模板是通过给 render 函数的 context 参数传递一个字典实现的，
-        例如 render(request, 'blog/index.html', context={'post_list': post_list})，
-        这里传递了一个 {'post_list': post_list} 字典给模板。
-        在类视图中，这个需要传递的模板变量字典是通过 get_context_data 获得的，
-        所以我们复写该方法，以便我们能够自己再插入一些我们自定义的模板变量进去。
-        '''
         context = super().get_context_data(**kwargs)
         paginator = context.get('paginator')
         page = context.get('page_obj')
@@ -162,7 +159,6 @@ def post_comment(request, post_pk):
                        }
             return render(request, 'blog/detail.html', context=context)
     return redirect(post)
-
 
 def search(request):
     q = request.GET.get('q')

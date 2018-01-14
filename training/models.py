@@ -3,7 +3,7 @@
 '''
 from django.db import models
 from django.contrib.auth.models import User
-from django.core import urlresolvers, validators
+from django.core import validators
 from django.urls import reverse
 
 class ExerciseType(models.Model):
@@ -68,7 +68,7 @@ class TrainingDay(models.Model):
 
     def admin_link(self):
         if self.pk:
-            day_url = urlresolvers.reverse('admin:training_trainingday_change', args=(self.pk,))
+            day_url = reverse('admin:training_trainingday_change', args=(self.pk,))
             return u'<a href="%s" target="_blank">详情</a>' % day_url
         return u''
     admin_link.allow_tags = True
