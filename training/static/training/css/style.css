@@ -68,7 +68,8 @@ header #search input[type="text"] {
   margin-top: 4px;
   border-radius: 20px;
   transition: all 0.7s ease 0s;
-	border: 1px solid transparent;
+  border: 1px solid transparent;
+  outline: 0;
 }
 header #search input:focus{ width: 200px; border: 1px solid #333;}
 header #user-tools {display: flex; align-items: center;}
