@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Fossen的个人博客</title>
+    <title>Fossen的博客</title>
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
     <meta name="description" content="Fossen's blog">
     <meta name="author" content="Fossen">
@@ -23,15 +23,15 @@
     <header>
         <div class="container">
             <div class="row">
-                <div class="col-xl-12">
+                <div class="col-lg-12">
                     <nav class="navbar navbar-expand-lg">
                         <ul class="navbar-nav" id="menu">
-                            <a class="logo" href="#">FOSSEN</a>
+                            <a class="logo" href="/">FOSSEN</a>
                             <li>
                                 <a href="/">首页</a>
                             </li>
                             <li>
-                                <a href="#">文章</a>
+                                <a href="{% url 'blog:index' %}">文章</a>
                             </li>
                             <li>
                                 <a href="{% url 'video:video list' 0 %}">视频</a>
@@ -45,7 +45,7 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="{% url 'training:program_list' 0 %}">训练</a>
+                                <a href="{% url 'training:program_list' 0 %}">健身</a>
                                 <ul>
                                     <li>
                                         <a href="{% url 'training:program_list' 0 %}">训练方案</a>
@@ -99,21 +99,14 @@
         </div>
     </header>
     <section>
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12">
-                    {% block main %} {% endblock main %}
-                </div>
-            </div>
-        </div>
+        {% block main %} {% endblock main %}
     </section>
     <footer>
         <div class="container">
             <div class="row">
-                <div class="col-xl-12">
+                <div class="col-lg-12">
                     <div class="copy-right">
-                        <p>
-                            <a href="#">Fossen</a>©2018</p>
+                        <p><a href="#">Fossen</a>©2018</p>
                     </div>
                 </div>
             </div>

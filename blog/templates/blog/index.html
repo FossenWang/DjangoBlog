@@ -6,23 +6,23 @@
 <p>{{ error_msg }}</p>
 {% endif %}
 
-{% for post in post_list %}
-<article class="post post-{{ post.pk }}">
+{% for article in article_list %}
+<article class="post post-{{ article.pk }}">
     <h1 class="entry-title">
-        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+        <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
     </h1>
     <div class="entry-meta">
-        <span class="post-category"><a href="{% url 'blog:category' post.category.name %}">{{ post.category.name }}</a></span>
+        <span class="post-category"><a href="{% url 'blog:category' article.category.name %}">{{ article.category.name }}</a></span>
         <span class="post-date"><a href="#"><time class="entry-date"
-                                                  datetime="{{ post.pub_date }}">{{ post.pub_date }}</time></a></span>
-        <span class="post-author"><a href="#">{{ post.author }}</a></span>
-        <span class="comments-link"><a href="{{ post.get_absolute_url }}#comment">{{ post.comment_set.count }} 评论</a></span>
-        <span class="views-count">{{ post.views }} 阅读</span>
+                                                  datetime="{{ article.pub_date }}">{{ article.pub_date }}</time></a></span>
+        <span class="post-author"><a href="#">{{ article.author }}</a></span>
+        <span class="comments-link"><a href="{{ article.get_absolute_url }}#comment">{{ article.comment_set.count }} 评论</a></span>
+        <span class="views-count">{{ article.views }} 阅读</span>
     </div>
     <div class="entry-content clearfix">
-        <p>{{ post.excerpt }}</p>
+        <p>{{ article.excerpt }}</p>
         <div class="read-more cl-effect-14">
-            <a href="{{ post.get_absolute_url }}" class="more-link">继续阅读 <span class="meta-nav">→</span></a>
+            <a href="{{ article.get_absolute_url }}" class="more-link">继续阅读 <span class="meta-nav">→</span></a>
         </div>
     </div>
 </article>

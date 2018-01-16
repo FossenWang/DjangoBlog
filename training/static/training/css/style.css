@@ -51,7 +51,7 @@ p{margin: 10px 0;}
 /* ------------------------------------Html-Body------------------------------- */
 /* ---------------------------------------------------------------------------- */
 html, body {width:100%; padding:0; margin:0;}
-body {color: #3F3F3F;font: 14px/25px Arial;font-family: '宋体', 'Microsoft YaHei', '华文细黑', Georgia, Sans-serif;letter-spacing: 1px;}
+body {color: #3F3F3F;font: 14px/25px Arial;font-family: 'Microsoft YaHei', '华文细黑', '宋体', Georgia, Sans-serif;letter-spacing: 1px;}
 body .wrap-body{}
 
 /* ---------------------------------------------------------------------------- */
@@ -68,8 +68,7 @@ header #search input[type="text"] {
   margin-top: 4px;
   border-radius: 20px;
   transition: all 0.7s ease 0s;
-  border: 1px solid transparent;
-  outline: 0;
+	border: 1px solid transparent;
 }
 header #search input:focus{ width: 200px; border: 1px solid #333;}
 header #user-tools {display: flex; align-items: center;}

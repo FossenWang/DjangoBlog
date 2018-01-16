@@ -1,10 +1,10 @@
 from django.contrib import admin
 
-from .models import Category, Tag, Post, Comment
+from .models import Category, Tag, Article, Comment
 
 # Register your models here.
 
-class PostAdmin(admin.ModelAdmin):
+class ArticleAdmin(admin.ModelAdmin):
 
     class Media:
         # 在管理后台的HTML文件中加入js文件, 每一个路径都会追加STATIC_URL/
@@ -15,5 +15,5 @@ class PostAdmin(admin.ModelAdmin):
             'blog/js/textarea.js',
         )
 
-admin.site.register(Post, admin_class=PostAdmin)
+admin.site.register(Article, admin_class=ArticleAdmin)
 admin.site.register([Tag, Category, Comment])

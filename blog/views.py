@@ -1,20 +1,29 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post, Category, Tag, Comment
-from .forms import CommentForm
 from django.views.generic import ListView, DetailView, TemplateView
 from django.utils.text import slugify
+from django.utils import timezone
 from django.db.models import Q
 from markdown.extensions.toc import TocExtension
 import markdown
+
+from .models import Article, Category, Tag, Comment
+from .forms import CommentForm
 
 class HomeView(TemplateView):
     '首页视图'
     template_name = 'blog/home.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        recent_articles = Article.objects.filter(pub_date__lt=timezone.now())[:11]
+        context['latest_article'] = recent_articles[0]
+        context['articles'] = recent_articles[1:]
+        return context
+
 class IndexView(ListView):
-    model = Post
+    model = Article
     template_name = 'blog/index.html'
-    context_object_name = 'post_list'
+    context_object_name = 'article_list'
     paginate_by = 10
 
     def get_context_data(self, **kwargs):
@@ -84,36 +93,36 @@ class CategoryView(IndexView):
         return super(CategoryView, self).get_queryset().filter(category=cate)
 
 class TagView(IndexView):
-    model = Post
+    model = Article
     template_name = 'blog/index.html'
-    context_object_name = 'post_list'
+    context_object_name = 'article_list'
 
     def get_queryset(self):
         tag = get_object_or_404(Tag, pk=self.kwargs.get('pk'))
         return super(TagView, self).get_queryset().filter(tags=tag)
 '''
-class PostDetailView(DetailView):
-    model = Post
+class ArticleDetailView(DetailView):
+    model = Article
     template_name = 'blog/detail.html'
-    context_object_name = 'post'
+    context_object_name = 'article'
 
     def get(self, request, *args, **kwargs):
-        response = super(PostDetailView, self).get(request, *args, **kwargs)
+        response = super(ArticleDetailView, self).get(request, *args, **kwargs)
         self.object.increase_views()
         return response
 
     def get_object(self, queryset=None):
-        post = super(PostDetailView, self).get_object(queryset=None)
-        post.content = markdown.markdown(post.content,
+        article = super(ArticleDetailView, self).get_object(queryset=None)
+        article.content = markdown.markdown(article.content,
                                       extensions=[
                                           'markdown.extensions.extra',
                                           'markdown.extensions.codehilite',
                                           'markdown.extensions.toc',
                                       ])
-        return post
+        return article
 
     def get_context_data(self, **kwargs):
-        context = super(PostDetailView, self).get_context_data(**kwargs)
+        context = super(ArticleDetailView, self).get_context_data(**kwargs)
         form = CommentForm()
         comment_list = self.object.comment_set.all()
         context.update({
@@ -123,42 +132,42 @@ class PostDetailView(DetailView):
         return context
 '''
 def detail(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    post.increase_views()
+    article = get_object_or_404(Article, pk=pk)
+    article.increase_views()
     md = markdown.Markdown(extensions=[
         'markdown.extensions.extra',
         'markdown.extensions.codehilite',
         'markdown.extensions.toc',
         TocExtension(slugify=slugify),
         ])
-    post.content = md.convert(post.content)
-    post.toc = md.toc
+    article.content = md.convert(article.content)
+    article.toc = md.toc
     form = CommentForm()
-    comment_list = post.comment_set.all()
-    context = {'post': post,
+    comment_list = article.comment_set.all()
+    context = {'article': article,
                'form': form,
                'comment_list': comment_list
                }
     return render(request, 'blog/detail.html', context=context)
 
-def post_comment(request, post_pk):
-    post = get_object_or_404(Post, pk=post_pk)
+def article_comment(request, article_pk):
+    article = get_object_or_404(Article, pk=article_pk)
 
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.post = post
+            comment.article = article
             comment.save()
-            return redirect(post)
+            return redirect(article)
         else:
-            comment_list = post.comment_set.all()
-            context = {'post': post,
+            comment_list = article.comment_set.all()
+            context = {'article': article,
                        'form': form,
                        'comment_list': comment_list
                        }
             return render(request, 'blog/detail.html', context=context)
-    return redirect(post)
+    return redirect(article)
 
 def search(request):
     q = request.GET.get('q')
@@ -168,6 +177,6 @@ def search(request):
         error_msg = "请输入关键词"
         return render(request, 'blog/index.html', {'error_msg': error_msg})
 
-    post_list = Post.objects.filter(Q(title__icontains=q) | Q(content__icontains=q))
+    article_list = Article.objects.filter(Q(title__icontains=q) | Q(content__icontains=q))
     return render(request, 'blog/index.html', {'error_msg': error_msg,
-                                               'post_list': post_list})
+                                               'article_list': article_list})

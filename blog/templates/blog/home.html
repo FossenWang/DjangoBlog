@@ -1,5 +1,44 @@
 {% extends 'base.html' %}
 
 {% block main %}
-
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="white-board">
+                <article class="latest_article">
+                    <div class="title">
+                        <a href="{{ latest_article.get_absolute_url }}">{{ latest_article.title }}</a>
+                    </div>
+                    <div class="info">
+                        <a href="#">{{ latest_article.category }}</a>&nbsp;&nbsp;
+                        <a href="#">{{ latest_article.author }}</a>&nbsp;&nbsp;{{ latest_article.pub_date }}
+                    </div>
+                    <div class="content">{{ latest_article.content|striptags }}</div>
+                </article>
+                {% for article in articles %}
+                <article>
+                    <div class="title">
+                        <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+                    </div>
+                    <div class="info">
+                        <a href="#">{{ article.category }}</a>&nbsp;&nbsp;
+                        <a href="#">{{ article.author }}</a>&nbsp;&nbsp;{{ article.pub_date }}
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="white-board widget">
+                <div class="titile">
+                    <h5>关于Fossen</h5>
+                </div>
+                <div>
+                    <p>不知道写些什么。。。</p>
+                </div>
+            </div>
+            <div class="white-board widget">待定</div>
+        </div>
+    </div>
+</div>
 {% endblock main %}

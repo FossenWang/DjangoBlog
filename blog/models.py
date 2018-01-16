@@ -26,14 +26,13 @@ class Tag(models.Model):
         verbose_name='标签'
         verbose_name_plural='标签'
 
-class Post(models.Model):
-    '''
-    作者与分类的默认值为2和1,代表着相应数据库中id的字段,分别手动将其设置为了unknown和uncategorized
-    '''
+class Article(models.Model):
+    '文章'
     title = models.CharField('标题', max_length=100)
+    cover = models.ImageField(upload_to='blog/cover', blank=True, null=True, verbose_name='封面图')
     content = models.TextField('内容')
-    excerpt = models.CharField('摘要', max_length=200, blank=True)
     pub_date = models.DateTimeField('发布日期')
+    #作者与分类的默认值为2和1,代表着相应数据库中id的字段,分别手动将其设置为了unknown和uncategorized
     author = models.ForeignKey(User, default=2, on_delete=models.SET_DEFAULT, verbose_name='作者')
     category = models.ForeignKey(Category, default=1, on_delete=models.SET_DEFAULT, verbose_name='分类')
     tags = models.ManyToManyField(Tag, verbose_name='标签')
@@ -41,16 +40,6 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
-
-    def save(self, *args, **kwargs):    
-        # 如果没有填写摘要
-        if not self.excerpt:
-            md = markdown.Markdown(extensions=[
-                'markdown.extensions.extra',
-                'markdown.extensions.codehilite',
-            ])
-            self.excerpt = strip_tags(md.convert(self.content))[:100]
-        super(Post, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('blog:detail', kwargs={'pk': self.pk})
@@ -61,14 +50,14 @@ class Post(models.Model):
 
     class Meta:
         ordering=['-pub_date']
-        verbose_name='帖子'
-        verbose_name_plural='帖子'
+        verbose_name='文章'
+        verbose_name_plural='文章'
 
 class Comment(models.Model):
     content = models.CharField('评论', max_length=500)
     pub_date = models.DateTimeField('发布日期', auto_now_add=True)
 
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, verbose_name='帖子')
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, verbose_name='文章')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='评论人')
     
     def __str__(self):
