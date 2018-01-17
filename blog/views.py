@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, TemplateView
 from django.utils.text import slugify
 from django.utils import timezone
+from django.utils.html import strip_tags
 from django.db.models import Q
 from markdown.extensions.toc import TocExtension
 import markdown
@@ -16,6 +17,7 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         recent_articles = Article.objects.filter(pub_date__lt=timezone.now())[:11]
+        context['latest_article_content'] = strip_tags(recent_articles[0].content)[:100]
         context['latest_article'] = recent_articles[0]
         context['articles'] = recent_articles[1:]
         return context

@@ -1,6 +1,10 @@
+/* ------------------------------------------------------------------------- */
+/* -------------------------------------Commen------------------------------ */
+/* ------------------------------------------------------------------------- */
 
-a{color: #17375E; text-decoration: none;}
-a:hover {color: #0070C0; text-decoration: none;}
+a { color: #17375E; text-decoration: none; }
+a:hover { color: #0070C0; text-decoration: none; }
+img { max-width: 100%; height: auto; border-radius:5px; }
 
 body {
     color: #17375E; background-color:#f4f5f7; 
@@ -59,16 +63,25 @@ header { background-color: white; box-shadow: 0 1px 3px #ccc; }
 #userbar a:hover { color: #0070C0; }
 
 /* ------------------------------------------------------------------------- */
-/* ------------------------------------Section------------------------------ */
+/* -------------------------------------main-------------------------------- */
 /* ------------------------------------------------------------------------- */
 
-section { margin: 10px 0; }
+main { margin: 10px 0; }
 .white-board { margin: 5px -10px; padding: 10px; background-color: white; border-radius: 5px; box-shadow: 0 1px 3px #ccc; }
 article { padding: 10px; border-bottom: 1px solid lightgray; }
 article .title { font-size: 21px; }
 article .info { font-size: 14px; color: gray; }
 article .info a { color: gray; }
 article .info a:hover { color: #17375E; }
+article .wrap-text { width: auto; }
+article .cover { padding: auto 0 auto 0; width: 160px; height: 90px; text-align: center; display: inline-block; }
+article .cover>div { width: 100%; height: 100%; display: flex; align-items: center; }
+.latest_article .title { text-align: center; }
+.latest_article .info { text-align: center; }
+.latest_article .cover { padding: 10px; width: 100%; text-align: center; }
+.latest_article .cover>div { width: auto; height: auto; display: block; }
+
+.widget { margin-bottom: 10px; }
 
 /* ------------------------------------------------------------------------- */
 /* -------------------------------------Footer------------------------------ */
@@ -76,4 +89,12 @@ article .info a:hover { color: #17375E; }
 
 footer { background-color:white; border-top: 1px solid #eee; }
 .copy-right { text-align: center; padding-top: 20px; }
+
+/* ------------------------------------------------------------------------- */
+/* ------------------------------------Effects------------------------------ */
+/* ------------------------------------------------------------------------- */
+
+.zoom-container { overflow: hidden; }
+.zoom-container img { transition: all .5s ease; }
+.zoom-container:hover img { transform:scale(1.25); }
 
