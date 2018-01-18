@@ -2,53 +2,51 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8">
-            <div class="white-board">
-                <article class="latest_article">
-                    <div class="title">
-                        <a href="{{ latest_article.get_absolute_url }}">{{ latest_article.title }}</a>
-                    </div>
-                    <div class="info">
-                        {{ latest_article.pub_date }}&nbsp;&nbsp; 分类:&nbsp;
-                        <a href="#">{{ latest_article.category }}</a>
-                    </div>
-                    {% if latest_article.cover %}
-                    <div class="cover">
-                        <div class="zoom-container">
-                            <a href="{{ latest_article.get_absolute_url }}">
-                                <img src="{{ latest_article.cover.url }}">
-                            </a>
-                        </div>
-                    </div>
-                    {% endif %}
-                    <div class="content">
-                        &emsp;&emsp;{{ latest_article_content }} ...&emsp;
-                        <a href="{{ latest_article.get_absolute_url }}">阅读全文 &gt;</a>
-                    </div>
-                </article>
+            <div class="white-board ariticle-list">
+                <div class="list-title">最新文章</div>
                 {% for article in articles %}
                 <article>
                     <div class="row">
-                    {% if article.cover %}
-                    <div class="col-4 cover">
-                        <div class="zoom-container">
-                            <a href="{{ article.get_absolute_url }}">
-                                <img src="{{ article.cover.url }}">
-                            </a>
+                        {% if article.cover %}
+                        <div class="col-lg-4 cover">
+                            <div class="zoom-container">
+                                <a href="{{ article.get_absolute_url }}">
+                                    <img src="{{ article.cover.url }}">
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    {% endif %}
-                    <div class="col-8">
-                    <div class="title">
-                        <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
-                    </div>
-                    <div class="content">
-                        &emsp;&emsp;{{ article.content|striptags|truncatechars:54 }} ...&emsp;
-                        <a href="{{ article.get_absolute_url }}">阅读全文 &gt;</a>
-                    </div>
-                    <div class="info">
-                        {{ article.pub_date }}&nbsp;&nbsp; 分类:&nbsp;
-                        <a href="#">{{ article.category }}</a>
-                    </div></div>
+                        <div class="col-lg-8 info">
+                            <div class="title">
+                                <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+                            </div>
+                            <div class="abstract">
+                                {{ article.content|striptags|truncatechars:100|safe }}&emsp;
+                                <a href="{{ article.get_absolute_url }}">阅读全文 &gt;</a>
+                            </div>
+                            <div class="meta">
+                                {{ article.pub_date }}&nbsp;&nbsp; 分类:&nbsp;
+                                <a href="{% url 'blog:category' article.category.name %}">
+                                    {{ article.category }}
+                                </a>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="col-lg-12 info">
+                                <div class="title">
+                                    <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+                                </div>
+                                <div class="abstract">
+                                    {{ article.content|striptags|truncatechars:150|safe }}&emsp;
+                                    <a href="{{ article.get_absolute_url }}">阅读全文 &gt;</a>
+                                </div>
+                                <div class="meta">
+                                    {{ article.pub_date }}&nbsp;&nbsp; 分类:&nbsp;
+                                    <a href="{% url 'blog:category' article.category.name %}">
+                                        {{ article.category }}
+                                    </a>
+                                </div>
+                        </div>
+                        {% endif %}
                     </div>
                 </article>
                 {% endfor %}

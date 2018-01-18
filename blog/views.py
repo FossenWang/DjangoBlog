@@ -16,10 +16,7 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        recent_articles = Article.objects.filter(pub_date__lt=timezone.now())[:11]
-        context['latest_article_content'] = strip_tags(recent_articles[0].content)[:100]
-        context['latest_article'] = recent_articles[0]
-        context['articles'] = recent_articles[1:]
+        context['articles'] = Article.objects.filter(pub_date__lt=timezone.now())[:10]
         return context
 
 class IndexView(ListView):
@@ -102,26 +99,16 @@ class TagView(IndexView):
     def get_queryset(self):
         tag = get_object_or_404(Tag, pk=self.kwargs.get('pk'))
         return super(TagView, self).get_queryset().filter(tags=tag)
-'''
+
 class ArticleDetailView(DetailView):
     model = Article
     template_name = 'blog/detail.html'
     context_object_name = 'article'
 
-    def get(self, request, *args, **kwargs):
+    '''def get(self, request, *args, **kwargs):
         response = super(ArticleDetailView, self).get(request, *args, **kwargs)
         self.object.increase_views()
-        return response
-
-    def get_object(self, queryset=None):
-        article = super(ArticleDetailView, self).get_object(queryset=None)
-        article.content = markdown.markdown(article.content,
-                                      extensions=[
-                                          'markdown.extensions.extra',
-                                          'markdown.extensions.codehilite',
-                                          'markdown.extensions.toc',
-                                      ])
-        return article
+        return response'''
 
     def get_context_data(self, **kwargs):
         context = super(ArticleDetailView, self).get_context_data(**kwargs)
@@ -131,8 +118,9 @@ class ArticleDetailView(DetailView):
             'form': form,
             'comment_list': comment_list
         })
+        self.object.increase_views()
         return context
-'''
+
 def detail(request, pk):
     article = get_object_or_404(Article, pk=pk)
     article.increase_views()
