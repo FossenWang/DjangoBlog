@@ -19,11 +19,12 @@ class HomeView(TemplateView):
         context['articles'] = Article.objects.filter(pub_date__lt=timezone.now())[:10]
         return context
 
-class IndexView(ListView):
+class ArticleListView(ListView):
+    '文章列表视图'
     model = Article
-    template_name = 'blog/index.html'
-    context_object_name = 'article_list'
-    paginate_by = 10
+    template_name = 'blog/article_list.html'
+    context_object_name = 'articles'
+    paginate_by = 1
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -82,33 +83,28 @@ class IndexView(ListView):
 
         return data
 
-class ArchivesView(IndexView):
+class ArchivesView(ArticleListView):
     def get_queryset(self):
         return super(ArchivesView, self).get_queryset().filter(pub_date__startswith=str(self.kwargs.get('year'))+'-'+str(self.kwargs.get('month')))
 
-class CategoryView(IndexView):
+class CategoryView(ArticleListView):
     def get_queryset(self):
-        cate = get_object_or_404(Category, name=self.kwargs.get('name'))
+        cate = get_object_or_404(Category, pk=self.kwargs.get('category_pk'))
         return super(CategoryView, self).get_queryset().filter(category=cate)
 
-class TagView(IndexView):
+class TagView(ArticleListView):
     model = Article
     template_name = 'blog/index.html'
     context_object_name = 'article_list'
 
     def get_queryset(self):
-        tag = get_object_or_404(Tag, pk=self.kwargs.get('pk'))
+        tag = get_object_or_404(Tag, pk=self.kwargs.get('tag_pk'))
         return super(TagView, self).get_queryset().filter(tags=tag)
 
 class ArticleDetailView(DetailView):
     model = Article
     template_name = 'blog/detail.html'
     context_object_name = 'article'
-
-    '''def get(self, request, *args, **kwargs):
-        response = super(ArticleDetailView, self).get(request, *args, **kwargs)
-        self.object.increase_views()
-        return response'''
 
     def get_context_data(self, **kwargs):
         context = super(ArticleDetailView, self).get_context_data(**kwargs)
@@ -120,25 +116,6 @@ class ArticleDetailView(DetailView):
         })
         self.object.increase_views()
         return context
-
-def detail(request, pk):
-    article = get_object_or_404(Article, pk=pk)
-    article.increase_views()
-    md = markdown.Markdown(extensions=[
-        'markdown.extensions.extra',
-        'markdown.extensions.codehilite',
-        'markdown.extensions.toc',
-        TocExtension(slugify=slugify),
-        ])
-    article.content = md.convert(article.content)
-    article.toc = md.toc
-    form = CommentForm()
-    comment_list = article.comment_set.all()
-    context = {'article': article,
-               'form': form,
-               'comment_list': comment_list
-               }
-    return render(request, 'blog/detail.html', context=context)
 
 def article_comment(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)

@@ -6,8 +6,8 @@
                 <div class="breadcrumb-nav">
                     <a href="/">首页</a> &gt;
                     <a href="/">文章</a> &gt;
-                    <a href="{% url 'blog:category' article.category.name %}">
-                        {{ article.category.name }}
+                    <a href="{% url 'blog:category' article.category.pk %}">
+                        {{ article.category }}
                     </a>
                 </div>
                 <article>
@@ -23,7 +23,7 @@
                         <a href="#comment">
                             {{ article.comment_set.count }} 评论
                         </a>&emsp;分类:&nbsp;
-                        <a href="{% url 'blog:category' article.category.name %}">
+                        <a href="{% url 'blog:category' article.category.pk %}">
                             {{ article.category }}
                         </a>&emsp;标签:
                         {% for tag in article.tags.all %}

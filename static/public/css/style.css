@@ -73,7 +73,7 @@ main { margin: 10px 0; }
 .ariticle-list .list-title { padding: 10px; }
 .ariticle-list article { padding: 10px; border-top: 1px solid lightgray; }
 .ariticle-list .info { margin: auto 0; }
-.ariticle-list .title { font-size: 21px; }
+.ariticle-list .title { font-size: 21px; text-overflow:ellipsis; overflow: hidden; white-space: nowrap; }
 .ariticle-list .meta { font-size: 14px; color: gray; }
 .ariticle-list .meta a { color: gray; }
 .ariticle-list .meta a:hover { color: #17375E; }
@@ -89,6 +89,23 @@ main { margin: 10px 0; }
 .ariticle-detail .meta a:hover { color: #17375E; }
 
 #comment { padding: 10px; }
+
+.category-nav { border-bottom: 1px solid #e5e9ef; margin: 0 20px; padding-top: 20px; font-size: 15px;}
+.category-nav li {display: inline-block;}
+.category-nav a {padding: 3px 10px;}
+.category-nav span {font-size: 10px; color: gray;}
+.category-nav .on {border-bottom: 1px solid #17375E;}
+
+.f-pagination { margin: 20px 0; text-align: center; }
+.f-pagination a {
+    display: inline-block; margin: 0 3px; line-height: 38px; width: 40px;
+    text-align: center; border: 1px solid #ccc; border-radius: 4px;
+    transition: all .2s ease-in-out;
+}
+.f-pagination a:hover { color: #17375E; border: 1px solid #17375E; }
+.f-pagination .current-page { color: white; background-color: #17375E; }
+.f-pagination .current-page:hover { color: white; border-color: #17375E; }
+.f-pagination span { display: inline-block; font-size: 20px; line-height: 40px; padding: 0 8px; }
 
 .widget { margin-bottom: 10px; }
 

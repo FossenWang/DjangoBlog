@@ -25,7 +25,7 @@
                             </div>
                             <div class="meta">
                                 {{ article.pub_date }}&nbsp;&nbsp; 分类:&nbsp;
-                                <a href="{% url 'blog:category' article.category.name %}">
+                                <a href="{% url 'blog:category' article.category.pk %}">
                                     {{ article.category }}
                                 </a>
                             </div>
@@ -41,7 +41,7 @@
                                 </div>
                                 <div class="meta">
                                     {{ article.pub_date }}&nbsp;&nbsp; 分类:&nbsp;
-                                    <a href="{% url 'blog:category' article.category.name %}">
+                                    <a href="{% url 'blog:category' article.category.pk %}">
                                         {{ article.category }}
                                     </a>
                                 </div>
