@@ -1,6 +1,6 @@
 '模板标签'
 from django import template
-from ..models import Program, ProgramType, Exercise, ExerciseType
+from training.models import Program, ProgramType, Exercise, ExerciseType
 from django.db.models.aggregates import Count
 
 register = template.Library()

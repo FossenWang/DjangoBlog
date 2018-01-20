@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Category, Tag, Article, Comment
+from .models import Category, Topic, Article, Comment
 
 # Register your models here.
 
@@ -16,4 +16,4 @@ class ArticleAdmin(admin.ModelAdmin):
         )
 
 admin.site.register(Article, admin_class=ArticleAdmin)
-admin.site.register([Tag, Category, Comment])
+admin.site.register([Topic, Category, Comment])

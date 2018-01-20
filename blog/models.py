@@ -16,15 +16,15 @@ class Category(models.Model):
         verbose_name='分类'
         verbose_name_plural='分类'
 
-class Tag(models.Model):
-    name = models.CharField('标签', max_length=16)
+class Topic(models.Model):
+    name = models.CharField('话题', max_length=16)
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name='标签'
-        verbose_name_plural='标签'
+        verbose_name='话题'
+        verbose_name_plural='话题'
 
 class Article(models.Model):
     '文章'
@@ -35,7 +35,7 @@ class Article(models.Model):
     #作者与分类的默认值为2和1,代表着相应数据库中id的字段,分别手动将其设置为了unknown和uncategorized
     author = models.ForeignKey(User, default=2, on_delete=models.SET_DEFAULT, verbose_name='作者')
     category = models.ForeignKey(Category, default=1, on_delete=models.SET_DEFAULT, verbose_name='分类')
-    tags = models.ManyToManyField(Tag, verbose_name='标签')
+    topics = models.ManyToManyField(Topic, verbose_name='话题')
     views = models.PositiveIntegerField('阅读量', default=0)
 
     def __str__(self):

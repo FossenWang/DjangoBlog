@@ -7,7 +7,7 @@ from django.db.models import Q
 from markdown.extensions.toc import TocExtension
 import markdown
 
-from .models import Article, Category, Tag, Comment
+from .models import Article, Category, Topic, Comment
 from .forms import CommentForm
 
 class HomeView(TemplateView):
@@ -24,9 +24,10 @@ class ArticleListView(ListView):
     model = Article
     template_name = 'blog/article_list.html'
     context_object_name = 'articles'
-    paginate_by = 1
+    paginate_by = 2
 
     def get_context_data(self, **kwargs):
+        '处理分页数据'
         context = super().get_context_data(**kwargs)
         paginator = context.get('paginator')
         page = context.get('page_obj')
@@ -83,23 +84,25 @@ class ArticleListView(ListView):
 
         return data
 
-class ArchivesView(ArticleListView):
-    def get_queryset(self):
-        return super(ArchivesView, self).get_queryset().filter(pub_date__startswith=str(self.kwargs.get('year'))+'-'+str(self.kwargs.get('month')))
-
 class CategoryView(ArticleListView):
+    '文章分类视图'
     def get_queryset(self):
-        cate = get_object_or_404(Category, pk=self.kwargs.get('category_pk'))
-        return super(CategoryView, self).get_queryset().filter(category=cate)
+        if self.kwargs.get('category_pk') == '0':
+            return super(CategoryView, self).get_queryset()
+        else:
+            cate = get_object_or_404(Category, pk=self.kwargs.get('category_pk'))
+            return super(CategoryView, self).get_queryset().filter(category=cate)
 
-class TagView(ArticleListView):
-    model = Article
-    template_name = 'blog/index.html'
-    context_object_name = 'article_list'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category_pk'] = int(self.kwargs.get('category_pk'))
+        return context
+
+class TopicView(ArticleListView):
 
     def get_queryset(self):
-        tag = get_object_or_404(Tag, pk=self.kwargs.get('tag_pk'))
-        return super(TagView, self).get_queryset().filter(tags=tag)
+        topic = get_object_or_404(Topic, pk=self.kwargs.get('topic_pk'))
+        return super(TopicView, self).get_queryset().filter(topics=topic)
 
 class ArticleDetailView(DetailView):
     model = Article

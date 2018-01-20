@@ -1,6 +1,6 @@
 from django import template
 from django.db.models.aggregates import Count
-from blog.models import Article, Category, Tag
+from blog.models import Article, Category, Topic
 
 register = template.Library()
 
@@ -9,13 +9,18 @@ def get_recent_articles(num=5):
     return Article.objects.all().order_by('-pub_date')[:num]
 
 @register.simple_tag
-def archives():
-    return Article.objects.dates('pub_date', 'month', order='DESC')
+def get_article_category_names():
+    return Category.objects.filter(pk__gt=1)
 
 @register.simple_tag
-def get_categories():
-    return Category.objects.annotate(num_articles=Count('article')).filter(num_articles__gt=0)
+def get_article_categories():
+    return Category.objects.annotate(counts=Count('article')).filter(counts__gt=0)
 
 @register.simple_tag
-def get_tags():
-    return Tag.objects.annotate(num_articles=Count('article')).filter(num_articles__gt=0)
+def count_total_articles():
+    '文章总数'
+    return Article.objects.all().count()
+
+@register.simple_tag
+def get_topics():
+    return Topic.objects.annotate(counts=Count('article')).filter(counts__gt=0)

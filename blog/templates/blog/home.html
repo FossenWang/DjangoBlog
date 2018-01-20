@@ -1,7 +1,32 @@
-{% extends 'base.html' %} {% block main %}
+{% extends 'base.html' %} {% load blog_tags %} {% block main %}
 <div class="container">
     <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-4 order-lg-2">
+            <div class="white-board widget">
+                <h6 class="widget-title">关于Fossen</h6>
+                <p>不知道写些什么。。。</p>
+            </div>
+            <div class="white-board widget">
+                <h6 class="widget-title">分类</h6>
+                <ul class="category-widget">
+                    {% count_total_articles as total %}
+                    {% get_article_categories as categories %}
+                    <li>
+                        <a href="{% url 'blog:category' 0 %}">
+                            全部文章<span>&nbsp;&nbsp;( {{ total }} )</span>
+                        </a>
+                    </li>
+                    {% for cate in categories %}
+                    <li>
+                        <a href="{% url 'blog:category' cate.pk %}">
+                            {{ cate.name }}<span>&nbsp;&nbsp;( {{ cate.counts }} )</span>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-8 order-lg-1">
             <div class="white-board ariticle-list">
                 <div class="list-title">最新文章</div>
                 {% for article in articles %}
@@ -32,36 +57,28 @@
                         </div>
                         {% else %}
                         <div class="col-lg-12 info">
-                                <div class="title">
-                                    <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
-                                </div>
-                                <div class="abstract">
-                                    {{ article.content|striptags|truncatechars:150|safe }}&emsp;
-                                    <a href="{{ article.get_absolute_url }}">阅读全文 &gt;</a>
-                                </div>
-                                <div class="meta">
-                                    {{ article.pub_date }}&nbsp;&nbsp; 分类:&nbsp;
-                                    <a href="{% url 'blog:category' article.category.pk %}">
-                                        {{ article.category }}
-                                    </a>
-                                </div>
+                            <div class="title">
+                                <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+                            </div>
+                            <div class="abstract">
+                                {{ article.content|striptags|truncatechars:150|safe }}&emsp;
+                                <a href="{{ article.get_absolute_url }}">阅读全文 &gt;</a>
+                            </div>
+                            <div class="meta">
+                                {{ article.pub_date }}&nbsp;&nbsp; 分类:&nbsp;
+                                <a href="{% url 'blog:category' article.category.pk %}">
+                                    {{ article.category }}
+                                </a>
+                            </div>
                         </div>
                         {% endif %}
                     </div>
                 </article>
                 {% endfor %}
+                <article>
+                    <a href="{% url 'blog:category' 0 %}">更多文章 . . .</a>
+                </article>
             </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="white-board widget">
-                <div class="titile">
-                    <h5>关于Fossen</h5>
-                </div>
-                <div>
-                    <p>不知道写些什么。。。</p>
-                </div>
-            </div>
-            <div class="white-board widget">待定</div>
         </div>
     </div>
 </div>
