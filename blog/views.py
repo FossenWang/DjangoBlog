@@ -1,11 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, TemplateView
-from django.utils.text import slugify
 from django.utils import timezone
-from django.utils.html import strip_tags
 from django.db.models import Q
-from markdown.extensions.toc import TocExtension
-import markdown
 
 from .models import Article, Category, Topic, Comment
 from .forms import CommentForm

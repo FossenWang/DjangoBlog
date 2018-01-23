@@ -11,12 +11,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="https://cdn.bootcss.com/bootstrap/4.0.0-beta.3/css/bootstrap.css" rel="stylesheet">
-    <link href="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.css" rel="Stylesheet">
+    <link href="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.css" rel="stylesheet">
+    <link href="http://apps.bdimg.com/libs/ueditor/1.4.3.1/third-party/SyntaxHighlighter/shCoreDefault.css" rel="stylesheet">
     <link href="{% static 'public/css/style.css' %}" rel="stylesheet">
 
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
     <script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta.3/js/bootstrap.js"></script>
+    <script src="http://apps.bdimg.com/libs/ueditor/1.4.3.1/third-party/SyntaxHighlighter/shCore.js"></script>
+    <script src="{% static 'public/js/common.js' %}"></script>
 </head>
 
 <body>
@@ -122,36 +125,6 @@
             </div>
         </div>
     </footer>
-
-    <script type="text/javascript">
-        $(".menu-toggle").click(function () {
-            $("#menu").toggleClass("menu-show");
-        });
-        /* 浮动内容 */
-        $(window).scroll(function () {
-            var bodyTop = 0,
-                sideTop = $('.top-header').eq(0).height() + 10;
-            if (typeof window.pageYOffset != 'undefined') {
-                bodyTop = window.pageYOffset;
-            } else if (typeof document.compatMode != 'undefined' && document.compatMode != 'BackCompat') {
-                bodyTop = document.documentElement.scrollTop;
-            } else if (typeof document.body != 'undefined') {
-                bodyTop = document.body.scrollTop;
-            }
-            if (bodyTop > sideTop) {
-                $('.float-widget').css({
-                    'position': 'fixed',
-                    'top': '10px',
-                    'width': '374.6px'
-                });
-            } else {
-                $('.float-widget').css({
-                    'position': 'relative',
-                    'top': '0px',
-                });
-            }
-        });
-    </script>
 </body>
 
 </html>

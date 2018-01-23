@@ -70,15 +70,15 @@ header { background-color: white; box-shadow: 0 1px 3px #ccc; }
     .logo { margin: 0; }
     #menu { 
         display: block;  position: absolute; z-index: 1;
-        opacity: 0; visibility: hidden; transition: all .2s ease-in-out;
-        top: 50px;  background: white; border-radius: 5px;
-        box-shadow: 1px 1px 3px #ccc;
+        opacity: 0; visibility: hidden; margin-top: -20px;
+        transition: all .2s ease-in-out; top: 50px; background: white; 
+        border-radius: 5px; box-shadow: 1px 1px 3px #ccc;
         }
+    .menu-show { opacity: 1 !important; visibility: visible !important; margin-top: 0 !important;}
     #menu li { margin: 0; border-bottom: 1px solid lightgray;}
     #menu li:last-child { border-bottom: none; }
     #menu a { padding: 5px 25px; display: block; }
     #menu ul { display: none; }
-    .menu-show { opacity: 1 !important; visibility: visible !important; }
     .menu-toggle { display: block; padding-right: 15px; font-size: 30px; cursor: pointer; }
     #search input:focus { width: 100px; }
 }
